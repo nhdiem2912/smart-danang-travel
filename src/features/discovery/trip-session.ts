@@ -1,8 +1,11 @@
 import type {
-    LegCheckpoint,
-    LegResult,
-    TravelMode,
+  LegCheckpoint,
+  LegResult,
+  TravelMode,
 } from './trip-model';
+import {
+  assertCanStart,
+} from './trip-time-policy';
 
 import { assertLegResult } from './trip-metrics';
 import { tripStore } from './use-trip-draft';
@@ -23,7 +26,9 @@ export async function beginLeg(
     if (!target) {
       throw new Error('Điểm này đã bị xóa.');
     }
+    assertCanStart(draft, target);
 
+    if (target.progress) return draft;
     if (target.progress) return draft;
 
     if (draft.stops.some(stop => stop.progress)) {

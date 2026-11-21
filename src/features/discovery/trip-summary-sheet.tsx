@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { PlaceThumb } from './place-thumb';
 import {
-    dateForDay,
-    displayDate,
-    PERIODS,
-    sortedStops,
-    type DraftStop,
-    type TravelMode,
-    type TripSettings,
+  dateForDay,
+  displayDate,
+  PERIODS,
+  sortedStops,
+  type DraftStop,
+  type TravelMode,
+  type TripSettings,
 } from './trip-model';
 import { TripOriginPicker } from './trip-origin-picker';
 import { currentPlan } from './trip-plan';
@@ -28,10 +28,11 @@ export function TripSummarySheet({
   const [optimizing, setOptimizing] = useState(false);
   const busy = saving || optimizing;
 
-  const [startDate, setStartDate] = useState(
+  const [startDate] = useState(
     draft?.startDate ?? '',
   );
-  const [dayCount, setDayCount] = useState(
+
+  const [dayCount] = useState(
     String(draft?.dayCount ?? 3),
   );
   const [settings, setSettings] = useState<TripSettings>(
@@ -375,7 +376,7 @@ export function TripSummarySheet({
                   accessibilityLabel="Ngày bắt đầu chuyến đi"
                   style={s.input}
                   value={startDate}
-                  onChangeText={setStartDate}
+                  editable={false}
                   placeholder="2026-11-13"
                 />
               </View>
@@ -387,15 +388,16 @@ export function TripSummarySheet({
                   keyboardType="number-pad"
                   style={s.input}
                   value={dayCount}
-                  onChangeText={setDayCount}
+                 editable={false}
                 />
               </View>
             </View>
 
-            <Text style={s.muted}>
-              Từ 1 đến 14 ngày. Đổi ngày bắt đầu sẽ dời ngày
-              của các điểm đã chọn. Muốn giảm số ngày, chuyển
-              hoặc xóa điểm của các ngày bị bỏ trước.
+                        <Text style={s.muted}>
+              Đổi ngày tại màn Lộ trình → Đổi ngày.
+              Xác nhận đổi ngày sẽ xóa toàn bộ
+              địa điểm và tiến trình để chọn lại
+              từ đầu.
             </Text>
 
             <Text style={s.label}>

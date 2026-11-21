@@ -1,3 +1,11 @@
+import {
+  TripCalendarSheet,
+} from '@/features/discovery/trip-calendar-sheet';
+
+import {
+  TripSettingsSheet,
+} from '@/features/discovery/trip-settings-sheet';
+
 import TripGuidance from '@/features/discovery/trip-guidance';
 import { currentPlan } from '@/features/discovery/trip-plan';
 import {
@@ -7,6 +15,9 @@ import {
 import {
   TripStopCard,
 } from '@/features/discovery/trip-stop-card';
+import {
+  hasActiveTrip,
+} from '@/features/discovery/trip-time-policy';
 import { router } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
@@ -48,7 +59,11 @@ import {
 export default function ItineraryScreen() {
   const insets = useSafeAreaInsets();
   const { draft, ready, saving, error } = useTripDraft();
+  const [calendar, setCalendar] =
+    useState(false);
 
+  const [configuration, setConfiguration] =
+    useState(false);
   const [day, setDay] = useState(0);
   const [summary, setSummary] = useState(false);
   const [resultsOpen, setResultsOpen] = useState(false);
@@ -96,7 +111,56 @@ const closeGuidance = useCallback(
   () => setSession(null),
   [],
 );
-  if (!ready || !draft) {
+  if (
+    ready &&
+    draft &&
+    !hasActiveTrip(draft)
+  ) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          padding: 24,
+          paddingTop:
+            insets.top + 24,
+          gap: 18,
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={s.title}>
+          Chưa có chuyến đi
+        </Text>
+
+        <Text style={s.muted}>
+          Tạo chuyến mới, chọn ngày rồi thêm
+          địa điểm ở Khám phá. Chuyến đã hoàn
+          tất nằm trong Cài đặt → Lịch sử
+          chuyến đi.
+        </Text>
+
+        <Action
+          solid
+          label="Tạo chuyến đi mới"
+          onPress={() =>
+            setCalendar(true)
+          }
+        />
+
+        {calendar && (
+          <TripCalendarSheet
+            close={() =>
+              setCalendar(false)
+            }
+            onSaved={() => {
+              setDay(0);
+              setCalendar(false);
+            }}
+          />
+        )}
+      </View>
+    );
+  }  
+if (!ready || !draft) {
     return (
       <Loading
         error={error}
@@ -287,9 +351,11 @@ if (session) {
             </Text>
           </View>
 
-          <Action
+                    <Action
             label="Đổi ngày ›"
-            onPress={() => setSummary(true)}
+            onPress={() =>
+              setCalendar(true)
+            }
           />
         </View>
 
@@ -407,8 +473,10 @@ if (session) {
           </Text>
         </View>
                 <Action
-          label="◷ Cấu hình & xếp giờ"
-          onPress={() => setSummary(true)}
+          label="Quản lý giờ & tối ưu chuyến"
+          onPress={() =>
+            setConfiguration(true)
+          }
         />
 
         <Action
@@ -572,7 +640,29 @@ if (session) {
           onClose={() => setResultsOpen(false)}
         />
       )}
+      {calendar && (
+        <TripCalendarSheet
+          close={() =>
+            setCalendar(false)
+          }
+          onSaved={() => {
+            setDay(0);
+            setCalendar(false);
+            setSummary(false);
+            setEditing(undefined);
+            setResultsOpen(false);
+            setSession(null);
+          }}
+        />
+      )}
 
+      {configuration && (
+        <TripSettingsSheet
+          close={() =>
+            setConfiguration(false)
+          }
+        />
+      )}
       {summary && (
         <TripSummarySheet
           close={() => setSummary(false)}

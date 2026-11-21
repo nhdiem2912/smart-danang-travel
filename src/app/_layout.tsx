@@ -21,6 +21,10 @@ import {
   SettingsRuntime,
 } from '@/features/settings/settings-runtime';
 
+import {
+  AccountEntryGate,
+} from '@/features/profile/onboarding';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function TabLayout() {
@@ -44,7 +48,10 @@ export default function TabLayout() {
 
       <AnimatedSplashOverlay />
       <SettingsRuntime />
-      <AppTabs />
+
+      <AccountEntryGate>
+        <AppTabs />
+      </AccountEntryGate>
     </ThemeProvider>
   );
 }

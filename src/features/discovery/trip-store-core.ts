@@ -1,18 +1,34 @@
-import { assertLegResult } from './trip-metrics';
 import {
-    emptyDraft,
-    isValidDate,
-    PERIODS,
-    type TripDraft,
+  assertLegResult,
+} from './trip-metrics';
+
+import {
+  emptyDraft,
+  isValidDate,
+  PERIODS,
+  type TripDraft,
 } from './trip-model';
-import { validatePlan } from './trip-plan';
-import { validateStopExtras } from './trip-validation';
+
+import {
+  validatePlan,
+} from './trip-plan';
+
+import {
+  validateStopExtras,
+} from './trip-validation';
+
 export const STORAGE_KEY =
   '@smart-danang-travel/trip-draft:v1';
 
 type DraftStorage = {
-  getItem: (key: string) => Promise<string | null>;
-  setItem: (key: string, value: string) => Promise<unknown>;
+  getItem: (
+    key: string,
+  ) => Promise<string | null>;
+
+  setItem: (
+    key: string,
+    value: string,
+  ) => Promise<unknown>;
 };
 
 export type DraftSnapshot = {
@@ -29,7 +45,7 @@ export const SERVER_SNAPSHOT: DraftSnapshot = {
   error: null,
 };
 
-function validateDraft(
+export function validateDraft(
   value: unknown,
 ): asserts value is TripDraft {
   if (!value || typeof value !== 'object') {
@@ -53,6 +69,16 @@ function validateDraft(
       'Kiểm tra ngày bắt đầu và số ngày đi từ 1 đến 14.',
     );
   }
+
+  if (
+    draft.tripActive !== undefined &&
+    typeof draft.tripActive !== 'boolean'
+  ) {
+    throw new Error(
+      'Trạng thái chuyến không hợp lệ.',
+    );
+  }
+
   if (draft.review !== undefined) {
     const review = draft.review;
 
@@ -64,11 +90,16 @@ function validateDraft(
       typeof review.note !== 'string' ||
       review.note.length > 1000 ||
       typeof review.submittedAt !== 'string' ||
-      !Number.isFinite(Date.parse(review.submittedAt))
+      !Number.isFinite(
+        Date.parse(review.submittedAt),
+      )
     ) {
-      throw new Error('Đánh giá chuyến đi không hợp lệ.');
+      throw new Error(
+        'Đánh giá chuyến đi không hợp lệ.',
+      );
     }
   }
+
   const settings = draft.settings;
 
   const validTime = (time: unknown) =>
@@ -82,34 +113,51 @@ function validateDraft(
     !validTime(settings.startTime) ||
     !validTime(settings.endTime) ||
     settings.endTime <= settings.startTime ||
-    !['two_wheeler', 'driving', 'walking'].includes(
-      settings.travelMode,
+    ![
+      'two_wheeler',
+      'driving',
+      'walking',
+    ].includes(settings.travelMode) ||
+    !Number.isInteger(
+      settings.defaultVisitMinutes,
     ) ||
-    !Number.isInteger(settings.defaultVisitMinutes) ||
     settings.defaultVisitMinutes < 1 ||
     settings.defaultVisitMinutes > 720
   ) {
     throw new Error(
-      'Kiểm tra cấu hình chuyến đi. Giờ kết thúc phải sau giờ bắt đầu trong cùng ngày.',
+      'Kiểm tra cấu hình chuyến đi. ' +
+      'Giờ kết thúc phải sau giờ bắt đầu trong cùng ngày.',
     );
   }
 
   if (
     (settings.latitude === null) !==
       (settings.longitude === null) ||
-    (settings.latitude !== null &&
+    (
+      settings.latitude !== null &&
       (
         !Number.isFinite(settings.latitude) ||
         Math.abs(settings.latitude) > 90 ||
         !Number.isFinite(settings.longitude) ||
         Math.abs(settings.longitude!) > 180
-      ))
+      )
+    )
   ) {
-    throw new Error('Tọa độ xuất phát không hợp lệ.');
+    throw new Error(
+      'Tọa độ xuất phát không hợp lệ.',
+    );
   }
-  if (draft.stops.filter(stop => stop?.progress).length > 1) {
-    throw new Error('Chỉ có thể có một chặng đang dở.');
+
+  if (
+    draft.stops.filter(
+      stop => stop?.progress,
+    ).length > 1
+  ) {
+    throw new Error(
+      'Chỉ có thể có một chặng đang dở.',
+    );
   }
+
   const ids = new Set<string>();
   const selections = new Set<string>();
 
@@ -123,7 +171,9 @@ function validateDraft(
       !Number.isInteger(stop.dayIndex) ||
       stop.dayIndex < 0 ||
       stop.dayIndex >= draft.dayCount ||
-      !PERIODS.some(period => period.id === stop.period) ||
+      !PERIODS.some(
+        period => period.id === stop.period,
+      ) ||
       typeof stop.note !== 'string' ||
       stop.note.length > 1000 ||
       !Number.isInteger(stop.order) ||
@@ -139,13 +189,18 @@ function validateDraft(
       )
     ) {
       throw new Error(
-        'Điểm đã chọn không hợp lệ. Nếu giảm số ngày, hãy chuyển hoặc xóa điểm ở ngày bị bỏ trước.',
+        'Điểm đã chọn không hợp lệ. ' +
+        'Nếu giảm số ngày, hãy chuyển hoặc xóa ' +
+        'điểm ở ngày bị bỏ trước.',
       );
     }
+
     if (stop.result !== undefined) {
       assertLegResult(stop.result);
     }
-        validateStopExtras(stop);
+
+    validateStopExtras(stop);
+
     const selection =
       `${stop.dayIndex}:${stop.placeId}`;
 
@@ -165,26 +220,41 @@ function validateDraft(
   validatePlan(draft);
 }
 
-export function createTripStore(storage: DraftStorage) {
-  let snapshot: DraftSnapshot = SERVER_SNAPSHOT;
+export function createTripStore(
+  storage: DraftStorage,
+  storageKey = STORAGE_KEY,
+) {
+  let snapshot: DraftSnapshot =
+    SERVER_SNAPSHOT;
+
   let loading: Promise<void> | null = null;
-  let queue: Promise<unknown> = Promise.resolve();
+
+  let queue: Promise<unknown> =
+    Promise.resolve();
 
   const listeners = new Set<() => void>();
 
   function emit(next: DraftSnapshot) {
     snapshot = next;
-    listeners.forEach(listener => listener());
+
+    listeners.forEach(
+      listener => listener(),
+    );
   }
 
   function load(): Promise<void> {
-    if (snapshot.ready) return Promise.resolve();
+    if (snapshot.ready) {
+      return Promise.resolve();
+    }
+
     if (loading) return loading;
 
     loading = Promise.resolve()
       .then(async () => {
         try {
-          const raw = await storage.getItem(STORAGE_KEY);
+          const raw = await storage.getItem(
+            storageKey,
+          );
 
           const draft: unknown =
             raw === null
@@ -205,7 +275,8 @@ export function createTripStore(storage: DraftStorage) {
             ready: false,
             saving: false,
             error:
-              'Không đọc được bản nháp. Dữ liệu cũ được giữ nguyên; hãy thử lại.',
+              'Không đọc được bản nháp. ' +
+              'Dữ liệu cũ được giữ nguyên; hãy thử lại.',
           });
         }
       })
@@ -217,70 +288,81 @@ export function createTripStore(storage: DraftStorage) {
   }
 
   async function update(
-    transform: (draft: TripDraft) => TripDraft,
+    transform: (
+      draft: TripDraft,
+    ) => TripDraft | Promise<TripDraft>,
   ) {
     await load();
 
-    const operation = queue.then(async () => {
-      if (!snapshot.ready || !snapshot.draft) {
-        throw new Error(
-          'Chưa đọc được bản nháp, không thể ghi đè dữ liệu cũ.',
-        );
-      }
+    const operation = queue.then(
+      async () => {
+        if (
+          !snapshot.ready ||
+          !snapshot.draft
+        ) {
+          throw new Error(
+            'Chưa đọc được bản nháp, ' +
+            'không thể ghi đè dữ liệu cũ.',
+          );
+        }
 
-      const previous = snapshot.draft;
+        const previous = snapshot.draft;
 
-      try {
-        // Tạo bản sao để bảo vệ bản nháp hiện tại.
-        const editable = JSON.parse(
-          JSON.stringify(previous),
-        ) as TripDraft;
+        try {
+          const editable = JSON.parse(
+            JSON.stringify(previous),
+          ) as TripDraft;
 
-        const next = {
-          ...transform(editable),
-          updatedAt: new Date().toISOString(),
-        };
+          const transformed =
+            await transform(editable);
 
-        validateDraft(next);
+          const next = {
+            ...transformed,
+            updatedAt:
+              new Date().toISOString(),
+          };
 
-        emit({
-          draft: previous,
-          ready: true,
-          saving: true,
-          error: null,
-        });
+          validateDraft(next);
 
-        await storage.setItem(
-          STORAGE_KEY,
-          JSON.stringify(next),
-        );
+          emit({
+            draft: previous,
+            ready: true,
+            saving: true,
+            error: null,
+          });
 
-        emit({
-          draft: next,
-          ready: true,
-          saving: false,
-          error: null,
-        });
+          await storage.setItem(
+            storageKey,
+            JSON.stringify(next),
+          );
 
-        return next;
-      } catch (error) {
-        const message =
-          error instanceof Error && error.message
-            ? error.message
-            : 'Không lưu được bản nháp. Hãy thử lại.';
+          emit({
+            draft: next,
+            ready: true,
+            saving: false,
+            error: null,
+          });
 
-        emit({
-          draft: previous,
-          ready: true,
-          saving: false,
-          error: message,
-        });
+          return next;
+        } catch (error) {
+          const message =
+            error instanceof Error &&
+            error.message
+              ? error.message
+              : 'Không lưu được bản nháp. Hãy thử lại.';
 
-        throw new Error(message);
-      }
-    });
+          emit({
+            draft: previous,
+            ready: true,
+            saving: false,
+            error: message,
+          });
 
-    // Một lần ghi lỗi không chặn các lần ghi tiếp theo.
+          throw new Error(message);
+        }
+      },
+    );
+
     queue = operation.catch(() => {});
 
     return operation;
@@ -290,9 +372,13 @@ export function createTripStore(storage: DraftStorage) {
     load,
     update,
 
+    flush: () => queue,
+
     getSnapshot: () => snapshot,
 
-    subscribe: (listener: () => void) => {
+    subscribe: (
+      listener: () => void,
+    ) => {
       listeners.add(listener);
 
       return () => {

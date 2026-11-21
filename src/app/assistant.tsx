@@ -1,6 +1,7 @@
+import { personalizedQuestion } from '@/features/profile/personalization';
+import { useTravelerProfile } from '@/features/profile/profile-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useRef, useState } from 'react';
-
 import {
   ActivityIndicator,
   Alert,
@@ -102,6 +103,7 @@ function makeTurns(
 }
 
 export default function AssistantScreen() {
+    const { profile } = useTravelerProfile();
   const c = useSettingsColors();
   const insets = useSafeAreaInsets();
   const { settings } = useAppSettings();
@@ -292,7 +294,10 @@ export default function AssistantScreen() {
     const id = `message-${sequence.current}`;
 
     const assistantId = `${id}-assistant`;
-    const turns = makeTurns(history.current, text);
+    const turns = makeTurns(
+  history.current,
+  personalizedQuestion(text, profile),
+);
 
     setMessages(previous => [
       ...previous,

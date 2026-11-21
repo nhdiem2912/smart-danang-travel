@@ -1,3 +1,8 @@
+import { AccountProfileCard } from '@/features/account/account-profile-card';
+import {
+  TripHistoryCard,
+} from '@/features/discovery/trip-history-card';
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Constants from 'expo-constants';
 import {
@@ -12,7 +17,6 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
-  Image,
   KeyboardAvoidingView,
   Linking,
   Modal,
@@ -51,10 +55,6 @@ import {
   useSettingsColors,
 } from '@/features/settings/settings-colors';
 
-import {
-  chooseAvatar,
-  getAvatarUri,
-} from '@/features/settings/settings-avatar';
 
 import {
   notificationStatus,
@@ -88,31 +88,7 @@ const LOCALES = {
   zh: 'zh-CN',
 };
 
-function AvatarView({
-  uri,
-}: {
-  uri: string | null;
-}) {
-  const [broken, setBroken] = useState(false);
 
-  return uri && !broken ? (
-    <Image
-      source={{ uri }}
-      style={{
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-      }}
-      onError={() => setBroken(true)}
-    />
-  ) : (
-    <Ionicons
-      name="person"
-      size={25}
-      color="#3E8E4F"
-    />
-  );
-}
 
 function Panel({
   title,
@@ -557,9 +533,7 @@ export default function SettingsScreen() {
     notice => notice.readAt === null,
   ).length;
 
-  const avatarUri = getAvatarUri(
-    value.profile.avatar,
-  );
+
 
   const errorText =
     message?.text ??
@@ -676,96 +650,13 @@ export default function SettingsScreen() {
               fontWeight: '800',
             }}
           >
-            v{version}
+                       v{version}
           </Text>
         </View>
 
-        <View
-          style={[
-            card,
-            {
-              flexDirection: 'row',
-              padding: 15,
-              alignItems: 'center',
-              gap: 12,
-            },
-          ]}
-        >
-          <Pressable
-            disabled={busy}
-            onPress={() =>
-              void act(chooseAvatar)
-            }
-            accessibilityRole="button"
-            accessibilityLabel={t('avatar')}
-          >
-            <View
-              style={{
-                width: 50,
-                height: 50,
-                backgroundColor: '#E8F5E9',
-                borderRadius: 25,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <AvatarView
-                key={avatarUri ?? 'none'}
-                uri={avatarUri}
-              />
-            </View>
+              <AccountProfileCard />
 
-            <View
-              style={{
-                position: 'absolute',
-                right: -2,
-                bottom: -2,
-                backgroundColor: '#087F61',
-                borderRadius: 10,
-                padding: 3,
-                borderWidth: 2,
-                borderColor: c.card,
-              }}
-            >
-              <Ionicons
-                name="camera"
-                size={10}
-                color="#FFF"
-              />
-            </View>
-          </Pressable>
-
-          <View style={{ flex: 1, gap: 4 }}>
-            <Text
-              style={{
-                color: c.text,
-                fontWeight: '800',
-                fontSize: 14,
-              }}
-            >
-              {value.profile.name || t('guest')}
-            </Text>
-
-            <Text
-              style={{
-                color: c.muted,
-                fontSize: 10,
-              }}
-            >
-              {t('localProfile')}
-            </Text>
-          </View>
-
-          <SettingsButton
-            label={t('edit')}
-            disabled={busy}
-            onPress={() => {
-              setName(value.profile.name);
-              setMessage(null);
-              setPanel('profile');
-            }}
-          />
-        </View>
+        <TripHistoryCard />
 
         {heading(t('appearanceGroup'))}
 

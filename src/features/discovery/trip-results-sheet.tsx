@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import {
-    Modal,
-    Pressable,
-    ScrollView,
-    Text,
-    TextInput,
-    View,
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
+import {
+  finishTrip,
+} from './trip-lifecycle';
 
 import { formatTravelTime } from './trip-metrics';
 import type { LegResult } from './trip-model';
 import { Action, C, s } from './ui';
-import { tripStore, useTripDraft } from './use-trip-draft';
+import {
+  useTripDraft,
+} from './use-trip-draft';
 
 type Props = {
   result?: LegResult;
@@ -62,37 +67,32 @@ export function TripResultsSheet({
     results.some(item => item.gpsPartial) ||
     gpsResults.length !== results.length;
 
-  async function saveReview() {
-    if (busy || !rating) return;
+    async function saveReview() {
+    if (busy || !rating) {
+      return;
+    }
 
     setBusy(true);
     setError('');
 
     try {
-      await tripStore.update(current => {
-        if (
-          !current.stops.length ||
-          current.stops.some(stop => !stop.completed)
-        ) {
-          throw new Error(
-            'Hãy hoàn tất các địa điểm trước khi đánh giá.',
-          );
-        }
+      await finishTrip(
+        rating,
+        note,
+      );
 
-        return {
-          ...current,
-          review: {
-            rating,
-            note: note.trim(),
-            submittedAt: new Date().toISOString(),
-          },
-        };
-      });
+      setMessage(
+        'Đã lưu lịch sử vào tài khoản ' +
+        'và kết thúc chuyến đi.',
+      );
 
-      setMessage('Đã lưu đánh giá trên thiết bị.');
-    } catch (e) {
+      onClose();
+    } catch (caught) {
       setError(
-        e instanceof Error ? e.message : 'Chưa lưu được đánh giá.',
+        caught instanceof Error
+          ? caught.message
+          : 'Chưa lưu được lịch sử. ' +
+            'Chuyến hiện tại vẫn được giữ.',
       );
     } finally {
       setBusy(false);

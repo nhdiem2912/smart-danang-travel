@@ -1,189 +1,378 @@
-// import { StyleSheet, View } from 'react-native';
-// import { WebView } from 'react-native-webview';
-// import travelHtml from '../../data/sdt-html';
-// export default function HomeScreen() {
-//   return (
-//     <View style={styles.container}>
-//       <WebView
-//         originWhitelist={['*']}
-//         source={{ html: travelHtml, baseUrl: 'https://localhost/' }}
-//         javaScriptEnabled
-//         domStorageEnabled
-//         mixedContentMode="compatibility"
-//         scrollEnabled={false}
-//         style={styles.webview}
-//       />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: { flex: 1, backgroundColor: '#ffffff' },
-//   webview: { flex: 1, backgroundColor: '#ffffff' },
-// });
+import EventDirections from '@/features/home/event-directions';
+import { getEventPlace } from '@/features/home/home-events';
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 
-import travelHtml from '../../data/sdt-html';
+import oldHomeHtml from '../../data/sdt-html';
 
-const homeStyles = `
-<style>
-  .bottom-nav,
-  #bottom-main-nav {
-    display: none !important;
-  }
+import {
+  findPlaceById,
+  normalizeSearch,
+  places,
+} from '@/data/places.local';
 
-  .screen:not(#home),
-  .app-screen-view:not(#screen-s1) {
-    display: none !important;
-  }
+import type { Place } from '@/data/place.types';
 
-  #home,
-  #screen-s1 {
-    display: block !important;
-    padding-bottom: 16px !important;
-  }
-</style>
-`;
+import { useTravelerProfile } from '@/features/profile/profile-context';
+import { useSettingsColors } from '@/features/settings/settings-colors';
+import { useAppSettings } from '@/features/settings/settings-store';
 
-const homeHtml = travelHtml.replace(
-  /<\/head>/i,
-  `${homeStyles}</head>`,
-);
+import { AddStopSheet } from '@/features/discovery/add-stop-sheet';
+import { PlaceDetailsSheet } from '@/features/discovery/place-details-sheet';
+import { hasActiveTrip } from '@/features/discovery/trip-time-policy';
+import { useTripDraft } from '@/features/discovery/use-trip-draft';
 
-const bridge = String.raw`
-(function () {
-  if (window.__SDT_NAV_BRIDGE__) return;
-  window.__SDT_NAV_BRIDGE__ = true;
+import { HOME_HTML } from '@/features/home/home-html';
 
-  document.addEventListener('click', function (event) {
-    var target = event.target;
-    if (!target || !target.closest) return;
+import {
+  loadHomeWeather,
+  type HomeWeather,
+} from '@/features/home/home-weather';
 
-    var button = target.closest(
-      '[data-action="nav"], [onclick]'
-    );
+function oldPhoto(key: string): string | null {
+  return (
+    new RegExp(key + ": '([^']+)'")
+      .exec(oldHomeHtml)?.[1] || null
+  );
+}
 
-    if (!button) return;
+function catalogPlace(
+  names: string[],
+): Place | undefined {
+  return places.find(
+    place =>
+      (
+        place.category === 'tham_quan' ||
+        place.category === 'bai_bien' ||
+        place.category === 'giai_tri'
+      ) &&
+      names.includes(normalizeSearch(place.name)),
+  );
+}
 
-    var tab =
-      button.getAttribute('data-action') === 'nav'
-        ? button.getAttribute('data-tab')
-        : null;
+const EVENT_ITEMS = [
+  {
+    id: 'dragon',
+    title: 'Cầu Rồng Phun Lửa & Phun Nước',
+    when: '21:00 · Lịch tham khảo',
+    where: 'Khu vực Cầu Rồng, Đà Nẵng',
+    destination: 'Cầu Rồng, Đà Nẵng',
+    image: oldPhoto('caurong'),
+  },
+  {
+    id: 'market',
+    title: 'Chợ Đêm Sơn Trà & Ẩm Thực',
+    when: 'Buổi tối · Lịch tham khảo',
+    where: 'Mai Hắc Đế, Sơn Trà',
+    destination:
+      'Chợ đêm Sơn Trà, Mai Hắc Đế, Đà Nẵng',
+    image: oldPhoto('chodem'),
+  },
+  {
+    id: 'cruise',
+    title: 'Du Thuyền Sông Hàn Ngắm Cầu Rồng',
+    when: 'Theo lịch nhà vận hành',
+    where: 'Bến du thuyền sông Hàn',
+    destination: 'Bến du thuyền sông Hàn, Đà Nẵng',
+    image: oldPhoto('duthuyen'),
+  },
+  {
+    id: 'swing',
+    title: 'Cầu Quay Sông Hàn Trình Diễn Quay',
+    when: 'Lịch quay cần xác nhận',
+    where: 'Cầu Sông Hàn, Đà Nẵng',
+    destination: 'Cầu Sông Hàn, Đà Nẵng',
+    image: null,
+  },
+];
 
-    var code = button.getAttribute('onclick') || '';
-
-    var match = code.match(
-      /switchTab\s*\(\s*([1-4])\s*\)/
-    );
-
-    if (!tab && match) {
-      tab = {
-        '1': 'home',
-        '2': 'explore',
-        '3': 'planner',
-        '4': 'settings'
-      }[match[1]];
-    }
-
-    if (!tab && /openChatbotScreen\s*\(/.test(code)) {
-      tab = 'assistant';
-    }
-
-    var allowed = [
-      'home',
-      'explore',
-      'planner',
-      'itinerary',
-      'assistant',
-      'ai',
-      'settings'
-    ];
-
-    if (allowed.indexOf(tab) < 0) return;
-    if (!window.ReactNativeWebView) return;
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    window.ReactNativeWebView.postMessage(
-      JSON.stringify({
-        type: 'SDT_NAVIGATE',
-        tab: tab
-      })
-    );
-  }, true);
-})();
-true;
-`;
+const BANNERS = [
+  {
+    title: 'Bán đảo Sơn Trà – Hòn ngọc xanh',
+    tag: 'THIÊN NHIÊN HOANG SƠ',
+    subtitle:
+      'Khám phá rừng xanh và những góc nhìn ra biển',
+    image: oldPhoto('sontra'),
+    names: [
+      'ban dao son tra',
+      'son tra peninsula',
+    ],
+  },
+  {
+    title: 'Cầu Rồng – Biểu tượng Đà Nẵng',
+    tag: 'THÀNH PHỐ BÊN SÔNG HÀN',
+    subtitle:
+      'Khám phá cảnh sắc thành phố về đêm',
+    image: oldPhoto('caurong'),
+    names: [
+      'cau rong',
+      'dragon bridge',
+    ],
+  },
+  {
+    title: 'Chợ đêm Sơn Trà',
+    tag: 'TRẢI NGHIỆM VỀ ĐÊM',
+    subtitle:
+      'Ẩm thực và những trải nghiệm địa phương',
+    image: oldPhoto('chodem'),
+    names: [
+      'cho dem son tra',
+      'son tra night market',
+    ],
+  },
+];
 
 const routes = {
-  home: '/',
   explore: '/explore',
-  planner: '/itinerary',
   itinerary: '/itinerary',
   assistant: '/assistant',
-  ai: '/assistant',
   settings: '/settings',
 } as const;
 
 export default function HomeScreen() {
+
+  const c = useSettingsColors();
+  const insets = useSafeAreaInsets();
+
+  const { profile } = useTravelerProfile();
+  const { settings } = useAppSettings();
+  const { draft } = useTripDraft();
+
+  const webview = useRef<WebView<object>>(null);
+
+  const [weather, setWeather] =
+    useState<HomeWeather | null>(null);
+
+  const [weatherError, setWeatherError] = useState('');
+  const [attempt, setAttempt] = useState(0);
+
+  const [detail, setDetail] =
+    useState<Place | null>(null);
+
+  const [adding, setAdding] =
+    useState<Place | null>(null);
+const [directions, setDirections] =
+  useState<Place | null>(null);
+
+const [eventDetail, setEventDetail] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const timer = setTimeout(() => {
+      controller.abort();
+    }, 15000);
+
+    let alive = true;
+
+    void loadHomeWeather(controller.signal)
+      .then(value => {
+        if (alive) {
+          setWeather(value);
+          setWeatherError('');
+        }
+      })
+      .catch(() => {
+        if (alive) {
+          setWeather(null);
+          setWeatherError(
+            'Chưa tải được thời tiết · Nhấn làm mới',
+          );
+        }
+      })
+      .finally(() => {
+        clearTimeout(timer);
+      });
+
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [attempt]);
+
+  const featured = BANNERS.map(banner => {
+    const place = catalogPlace(banner.names);
+
+    return {
+      ...banner,
+      image:
+        banner.image ||
+        place?.image_url ||
+        null,
+      placeId: place?.id || null,
+      rating: place?.rating ?? null,
+    };
+  });
+
+  const active = draft && hasActiveTrip(draft);
+
+  const payload = {
+    name: profile?.displayName || 'Du khách',
+    colors: c,
+    featured,
+    events: EVENT_ITEMS,
+    weather,
+    weatherError,
+    tripActive: !!active,
+
+    tripTitle: active
+      ? `Chuyến đi ${draft.dayCount} ngày · ${draft.stops.length} địa điểm`
+      : 'Bạn chưa có chuyến đi',
+
+    tripNote: active
+      ? (
+          `${draft.startDate.split('-').reverse().join('/')} · ` +
+          `${draft.stops.filter(stop => stop.completed).length} điểm đã hoàn thành`
+        )
+      : 'Chọn ngày → chọn địa điểm → tối ưu lộ trình',
+  };
+
+  const serialized = JSON.stringify(payload)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+
+  const script =
+    `window.updateHome && window.updateHome(${serialized});true;`;
+
+  useEffect(() => {
+    webview.current?.injectJavaScript(script);
+  }, [script]);
+
   return (
-    <View style={styles.container}>
-      <WebView
-        originWhitelist={['*']}
-        source={{
-          html: homeHtml,
-          baseUrl: 'https://localhost/',
-        }}
-        javaScriptEnabled
-        domStorageEnabled
-        mixedContentMode="compatibility"
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top,
+        backgroundColor: c.background,
+      }}
+    >
+      <WebView<object>
+        ref={webview}
+        source={{ html: HOME_HTML }}
+        originWhitelist={['about:blank']}
         scrollEnabled={false}
-        injectedJavaScript={bridge}
-        onMessage={event => {
-          try {
-            const message = JSON.parse(
-              event.nativeEvent.data,
-            );
-
-            if (
-              message?.type !== 'SDT_NAVIGATE' ||
-              typeof message.tab !== 'string'
-            ) {
-              return;
-            }
-
-            if (
-              Object.prototype.hasOwnProperty.call(
-                routes,
-                message.tab,
-              )
-            ) {
-              router.navigate(
-                routes[
-                  message.tab as keyof typeof routes
-                ],
-              );
-            }
-          } catch {
-            // Bỏ qua thông điệp không thuộc điều hướng.
-          }
+        bounces={false}
+        onLoadEnd={() => {
+          webview.current?.injectJavaScript(script);
         }}
-        style={styles.webview}
+        style={{
+          flex: 1,
+          backgroundColor: c.background,
+        }}
+        onMessage={event => {
+          console.log('[HOME_CLICK]', event.nativeEvent.data);
+  try {
+    const message = JSON.parse(
+      event.nativeEvent.data,
+    );
+
+    if (
+      message.action === 'nav' &&
+      Object.hasOwn(routes, message.value)
+    ) {
+      router.navigate(
+        routes[
+          message.value as keyof typeof routes
+        ],
+      );
+    }
+
+    if (
+      message.action === 'place' &&
+      typeof message.value === 'string'
+    ) {
+      const place = findPlaceById(message.value);
+
+      if (place) {
+        setEventDetail(false);
+        setDetail(place);
+      }
+    }
+
+    if (
+      message.action === 'directions' ||
+      message.action === 'event-detail'
+    ) {
+      const place = getEventPlace(message.value);
+
+      if (!place) {
+        Alert.alert(
+          'Chưa có địa điểm',
+          'Chưa tìm thấy bản ghi tương ứng trong danh mục. Không tự chọn tọa độ gần đúng.',
+        );
+      } else if (message.action === 'directions') {
+        setDetail(null);
+        setDirections(place);
+      } else {
+        setEventDetail(true);
+        setDetail(place);
+      }
+    }
+
+    if (message.action === 'refresh') {
+      setAttempt(value => value + 1);
+    }
+
+    if (message.action === 'notifications') {
+      const notices =
+        settings?.inbox.slice(0, 4) || [];
+
+      Alert.alert(
+        'Thông báo',
+        notices.length
+          ? notices
+              .map(
+                notice =>
+                  `${notice.title}\n${notice.body}`,
+              )
+              .join('\n\n')
+          : 'Bạn chưa có thông báo.',
+      );
+    }
+  } catch {
+    // Bỏ qua thông điệp không hợp lệ.
+  }
+}}
       />
+
+      {!!detail && (
+  <PlaceDetailsSheet
+    place={detail}
+    close={() => setDetail(null)}
+    onNavigate={
+      eventDetail
+        ? () => {
+            setDirections(detail);
+            setDetail(null);
+          }
+        : undefined
+    }
+    onAdd={() => {
+      setAdding(detail);
+      setDetail(null);
+    }}
+  />
+)}
+      {!!directions && (
+  <EventDirections
+    place={directions}
+    close={() => setDirections(null)}
+  />
+)}
+      {!!adding && (
+        <AddStopSheet
+          place={adding}
+          close={() => setAdding(null)}
+          onSaved={() => {
+            setAdding(null);
+            router.navigate('/itinerary');
+          }}
+        />
+      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF',
-  },
-  webview: {
-    flex: 1,
-    backgroundColor: '#FFF',
-  },
-});

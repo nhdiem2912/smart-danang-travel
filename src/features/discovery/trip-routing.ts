@@ -438,3 +438,16 @@ export async function getRouteShape(
 
   return value;
 }
+// Dẫn đường nhanh, không tạo hoặc cập nhật địa điểm trong chuyến.
+export function getQuickNavigation(
+  from: RoutePoint,
+  to: RoutePoint,
+  mode: 'driving' | 'walking',
+): Promise<unknown> {
+  return routingJson(
+    'route',
+    [from, to],
+    mode,
+    'overview=full&geometries=geojson&steps=true&continue_straight=false',
+  );
+}

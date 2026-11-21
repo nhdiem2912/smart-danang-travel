@@ -29,9 +29,14 @@ export type TripReview = {
   note: string;
   submittedAt: string;
 };
+
 export const PERIOD_WINDOWS: Record<
   Period,
-  { start: number; end: number; label: string }
+  {
+    start: number;
+    end: number;
+    label: string;
+  }
 > = {
   morning: {
     start: 6 * 60 + 30,
@@ -132,6 +137,7 @@ export type TripPlan = {
 };
 
 export type TripDraft = {
+  tripActive?: boolean;
   version: 1;
   id: string;
   startDate: string;
@@ -140,19 +146,27 @@ export type TripDraft = {
   settings: TripSettings;
   updatedAt: string;
   review?: TripReview;
-    plan?: TripPlan;
+  plan?: TripPlan;
 };
 
 export function localISO(date = new Date()): string {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+
+  const month = String(
+    date.getMonth() + 1,
+  ).padStart(2, '0');
+
+  const day = String(
+    date.getDate(),
+  ).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
 }
 
 export function isValidDate(value: string): boolean {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return false;
+  }
 
   const date = new Date(`${value}T12:00:00`);
 
@@ -167,6 +181,7 @@ export function dateForDay(
   dayIndex: number,
 ): string {
   const date = new Date(`${startDate}T12:00:00`);
+
   date.setDate(date.getDate() + dayIndex);
 
   return localISO(date);
@@ -178,7 +193,9 @@ export function displayDate(value: string): string {
   return `${day}/${month}/${year}`;
 }
 
-export function sortedStops(stops: DraftStop[]): DraftStop[] {
+export function sortedStops(
+  stops: DraftStop[],
+): DraftStop[] {
   const periodIndex = (period: Period) =>
     PERIODS.findIndex(item => item.id === period);
 
@@ -194,7 +211,10 @@ export function sortedStops(stops: DraftStop[]): DraftStop[] {
 export function emptyDraft(): TripDraft {
   return {
     version: 1,
-    id: 'local-trip',
+    id:
+      `trip-${Date.now()}-` +
+      Math.random().toString(36).slice(2, 10),
+    tripActive: false,
     startDate: localISO(),
     dayCount: 3,
     stops: [],
@@ -203,10 +223,8 @@ export function emptyDraft(): TripDraft {
       latitude: null,
       longitude: null,
       startTime: '09:00',
-      endTime: '18:30',
-      travelMode: 'two_wheeler',
-
-      // Giá trị ước tính, người dùng có thể chỉnh sau.
+      endTime: '22:30',
+      travelMode: 'driving',
       defaultVisitMinutes: 60,
     },
     updatedAt: new Date().toISOString(),

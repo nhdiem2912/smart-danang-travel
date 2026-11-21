@@ -1,32 +1,32 @@
 import {
-    Camera,
-    GeoJSONSource,
-    Layer,
-    Map,
-    Marker,
-    type CameraRef,
+  Camera,
+  GeoJSONSource,
+  Layer,
+  Map,
+  Marker,
+  type CameraRef,
 } from '@maplibre/maplibre-react-native';
 
 import {
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
 
 import type { Feature, LineString } from 'geojson';
 import { Text, View } from 'react-native';
 
 import type {
-    OverviewMapProps,
+  OverviewMapProps,
 } from './selected-places-map';
 
 import type { TravelMode } from './trip-model';
 
 import {
-    getRouteShape,
-    validRoutePoint,
-    type RoutePoint,
+  getRouteShape,
+  validRoutePoint,
+  type RoutePoint,
 } from './trip-routing';
 
 export default function SelectedPlacesMap({

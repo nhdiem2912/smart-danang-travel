@@ -1,3 +1,6 @@
+import { openingHours } from '@/features/discovery/opening-hours';
+import { sortForProfile } from '@/features/profile/personalization';
+import { useTravelerProfile } from '@/features/profile/profile-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useDeferredValue, useMemo, useRef, useState } from 'react';
 import {
@@ -54,6 +57,8 @@ const categories: [PlaceCategory | 'all', string][] = [
 ];
 
 export default function ExploreScreen() {
+    const { profile } = useTravelerProfile();
+  const [recommended, setRecommended] = useState(true);
   const insets = useSafeAreaInsets();
   const { draft, ready, saving, error } = useTripDraft();
 
@@ -89,10 +94,28 @@ export default function ExploreScreen() {
     );
   }, [category, deferredQuery]);
 
-  const filtered = useMemo(
-    () => applyDiscoveryFilters(candidates, activeFilters, selected),
-    [candidates, activeFilters, selected],
-  );
+    const filtered = useMemo(() => {
+    const matches = applyDiscoveryFilters(
+      candidates,
+      activeFilters,
+      selected,
+    );
+
+    const shouldPersonalize =
+      recommended &&
+      activeFilters.radiusKm === null &&
+      !activeFilters.popularFirst;
+
+    return shouldPersonalize
+      ? sortForProfile(matches, profile)
+      : matches;
+  }, [
+    candidates,
+    activeFilters,
+    selected,
+    recommended,
+    profile,
+  ]);
 
   function openAdd(place: Place, stop?: DraftStop) {
     setDetails(null);
@@ -158,7 +181,29 @@ export default function ExploreScreen() {
           }}><Text style={{ color: C.deep, fontSize: 11, fontWeight: '700' }}>Xóa bộ lọc</Text></Pressable>
         </View>
       )}
+      <Pressable
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: recommended }}
+        onPress={() => {
+          setRecommended(value => !value);
+          setLimit(20);
+        }}
+        style={{ gap: 4 }}
+      >
+        <Text
+          style={{
+            color: C.deep,
+            fontWeight: '700',
+          }}
+        >
+          {recommended ? '✓' : '○'} Ưu tiên theo sở thích khảo sát
+        </Text>
 
+        <Text style={s.muted}>
+          Ưu tiên theo nhóm địa điểm; lọc bán kính hoặc nhiều đánh giá
+          vẫn có ưu tiên cao hơn.
+        </Text>
+      </Pressable>
       <View style={{ gap: 8 }}>
         <Text style={s.label}>DANH MỤC DỊCH VỤ</Text>
 
@@ -317,13 +362,19 @@ export default function ExploreScreen() {
               )}
 
               <Text
-                style={[s.muted, { fontSize: 9 }]}
-                numberOfLines={1}
-              >
-                {PLACE_CATEGORIES[item.category]} ·{' '}
-                {item.opening_hours_raw ??
-                  'Chưa có giờ mở cửa'}
-              </Text>
+  style={[
+    s.muted,
+    {
+      fontSize: 12,
+      lineHeight: 18,
+    },
+  ]}
+  numberOfLines={2}
+>
+  {PLACE_CATEGORIES[item.category]}
+  {' · '}
+  {openingHours(item.opening_hours_raw).summary}
+</Text>
 
               <View
                 style={{

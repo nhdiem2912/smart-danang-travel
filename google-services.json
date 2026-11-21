@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "828806067281",
+    "project_id": "smart-da-nang-travel-5f0b7",
+    "storage_bucket": "smart-da-nang-travel-5f0b7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828806067281:android:ead19b7e5e0d929b49f470",
+        "android_client_info": {
+          "package_name": "com.capstone.smartdanangtravel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828806067281-d09vf66cd7vo8g6hr8ls4qbveicpoke8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capstone.smartdanangtravel",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "828806067281-ggme0d1eqg4e8ts8vtctre8kg8srmikf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT_X_EOlNUo1fLQgLqE9b8KWORp0d8Tfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828806067281-ggme0d1eqg4e8ts8vtctre8kg8srmikf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
