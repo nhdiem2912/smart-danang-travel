@@ -1,98 +1,189 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+// import { StyleSheet, View } from 'react-native';
+// import { WebView } from 'react-native-webview';
+// import travelHtml from '../../data/sdt-html';
+// export default function HomeScreen() {
+//   return (
+//     <View style={styles.container}>
+//       <WebView
+//         originWhitelist={['*']}
+//         source={{ html: travelHtml, baseUrl: 'https://localhost/' }}
+//         javaScriptEnabled
+//         domStorageEnabled
+//         mixedContentMode="compatibility"
+//         scrollEnabled={false}
+//         style={styles.webview}
+//       />
+//     </View>
+//   );
+// }
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+// const styles = StyleSheet.create({
+//   container: { flex: 1, backgroundColor: '#ffffff' },
+//   webview: { flex: 1, backgroundColor: '#ffffff' },
+// });
+import { router } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
+import travelHtml from '../../data/sdt-html';
+
+const homeStyles = `
+<style>
+  .bottom-nav,
+  #bottom-main-nav {
+    display: none !important;
   }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
+
+  .screen:not(#home),
+  .app-screen-view:not(#screen-s1) {
+    display: none !important;
+  }
+
+  #home,
+  #screen-s1 {
+    display: block !important;
+    padding-bottom: 16px !important;
+  }
+</style>
+`;
+
+const homeHtml = travelHtml.replace(
+  /<\/head>/i,
+  `${homeStyles}</head>`,
+);
+
+const bridge = String.raw`
+(function () {
+  if (window.__SDT_NAV_BRIDGE__) return;
+  window.__SDT_NAV_BRIDGE__ = true;
+
+  document.addEventListener('click', function (event) {
+    var target = event.target;
+    if (!target || !target.closest) return;
+
+    var button = target.closest(
+      '[data-action="nav"], [onclick]'
     );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+
+    if (!button) return;
+
+    var tab =
+      button.getAttribute('data-action') === 'nav'
+        ? button.getAttribute('data-tab')
+        : null;
+
+    var code = button.getAttribute('onclick') || '';
+
+    var match = code.match(
+      /switchTab\s*\(\s*([1-4])\s*\)/
+    );
+
+    if (!tab && match) {
+      tab = {
+        '1': 'home',
+        '2': 'explore',
+        '3': 'planner',
+        '4': 'settings'
+      }[match[1]];
+    }
+
+    if (!tab && /openChatbotScreen\s*\(/.test(code)) {
+      tab = 'assistant';
+    }
+
+    var allowed = [
+      'home',
+      'explore',
+      'planner',
+      'itinerary',
+      'assistant',
+      'ai',
+      'settings'
+    ];
+
+    if (allowed.indexOf(tab) < 0) return;
+    if (!window.ReactNativeWebView) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({
+        type: 'SDT_NAVIGATE',
+        tab: tab
+      })
+    );
+  }, true);
+})();
+true;
+`;
+
+const routes = {
+  home: '/',
+  explore: '/explore',
+  planner: '/itinerary',
+  itinerary: '/itinerary',
+  assistant: '/assistant',
+  ai: '/assistant',
+  settings: '/settings',
+} as const;
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      <WebView
+        originWhitelist={['*']}
+        source={{
+          html: homeHtml,
+          baseUrl: 'https://localhost/',
+        }}
+        javaScriptEnabled
+        domStorageEnabled
+        mixedContentMode="compatibility"
+        scrollEnabled={false}
+        injectedJavaScript={bridge}
+        onMessage={event => {
+          try {
+            const message = JSON.parse(
+              event.nativeEvent.data,
+            );
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+            if (
+              message?.type !== 'SDT_NAVIGATE' ||
+              typeof message.tab !== 'string'
+            ) {
+              return;
+            }
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+            if (
+              Object.prototype.hasOwnProperty.call(
+                routes,
+                message.tab,
+              )
+            ) {
+              router.navigate(
+                routes[
+                  message.tab as keyof typeof routes
+                ],
+              );
+            }
+          } catch {
+            // Bỏ qua thông điệp không thuộc điều hướng.
+          }
+        }}
+        style={styles.webview}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#FFF',
   },
-  safeArea: {
+  webview: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+    backgroundColor: '#FFF',
   },
 });

@@ -41,3 +41,30 @@ example
 # generated native folders
 /ios
 /android
+node_modules/
+.expo/
+dist/
+web-build/
+
+.env
+.env.*
+!.env.example
+
+*.jks
+*.keystore
+*.p12
+*.p8
+*service-account*.json
+*firebase-adminsdk*.json
+
+*.log
+# Local backup files
+*.bak
+*.bak.*
+
+# Extra local files
+.settings-backup-*/
+*.bak-*
+*.lnk
+/git remote -v
+/h -u origin HEAD

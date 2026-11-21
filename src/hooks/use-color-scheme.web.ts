@@ -1,21 +1,32 @@
-import { useEffect, useState } from 'react';
-import { useColorScheme as useRNColorScheme } from 'react-native';
+import { useSyncExternalStore } from 'react';
+import {
+  useColorScheme as useSystemColorScheme,
+} from 'react-native';
 
-/**
- * To support static rendering, this value needs to be re-calculated on the client side for web
- */
+import {
+  useAppSettings,
+} from '@/features/settings/settings-store';
+
+const subscribe = () => () => {};
+const client = () => true;
+const server = () => false;
+
 export function useColorScheme() {
-  const [hasHydrated, setHasHydrated] = useState(false);
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    client,
+    server,
+  );
 
-  useEffect(() => {
-    setHasHydrated(true);
-  }, []);
+  const system = useSystemColorScheme();
+  const { settings } = useAppSettings();
 
-  const colorScheme = useRNColorScheme();
+  const selected = (
+    settings?.theme === 'light' ||
+    settings?.theme === 'dark'
+  )
+    ? settings.theme
+    : system ?? 'light';
 
-  if (hasHydrated) {
-    return colorScheme;
-  }
-
-  return 'light';
+  return hydrated ? selected : 'light';
 }

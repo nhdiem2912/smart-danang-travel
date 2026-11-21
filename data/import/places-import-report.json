@@ -1,0 +1,11 @@
+{
+  "incoming": 387,
+  "reused_existing_ids": 0,
+  "new_ids": 387,
+  "old_records_retained_for_itineraries": 650,
+  "total_stored": 1037,
+  "discovery_visible": 387,
+  "all_previous_ids_preserved": true,
+  "old_google_ids_with_multiple_records": [],
+  "backup": "D:\\CAPSTONE_PROJECT_2\\smart-danang-travel\\src\\data\\places.json.bak-2026-11-21T07-03-14-834Z"
+}

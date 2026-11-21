@@ -1,180 +1,507 @@
-import { Image } from 'expo-image';
-import { SymbolView } from 'expo-symbols';
-import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useDeferredValue, useMemo, useRef, useState } from 'react';
+import {
+  FlatList,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ExternalLink } from '@/components/external-link';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
+import {
+  PLACE_CATEGORIES,
+  type Place,
+  type PlaceCategory,
+} from '@/data/place.types';
+import {
+  findPlaceById,
+  normalizeSearch,
+  places,
+} from '@/data/places.local';
 
-export default function TabTwoScreen() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const insets = {
-    ...safeAreaInsets,
-    bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
-  };
-  const theme = useTheme();
+import { AddStopSheet } from '@/features/discovery/add-stop-sheet';
+import { AdvancedPlaceFiltersSheet } from '@/features/discovery/advanced-place-filters-sheet';
+import { PlaceDetailsSheet } from '@/features/discovery/place-details-sheet';
+import {
+  applyDiscoveryFilters, defaultDiscoveryFilters, discoveryAreas, discoveryFilterCount,
+  distanceFromPlace, hasDiscoveryPriceData, type DiscoveryFilters,
+} from '@/features/discovery/place-filters';
+import { PlaceThumb } from '@/features/discovery/place-thumb';
+import type { DraftStop } from '@/features/discovery/trip-model';
+import { TripSummarySheet } from '@/features/discovery/trip-summary-sheet';
+import {
+  Action,
+  C,
+  Loading,
+  s,
+} from '@/features/discovery/ui';
+import {
+  tripStore,
+  useTripDraft,
+} from '@/features/discovery/use-trip-draft';
 
-  const contentPlatformStyle = Platform.select({
-    android: {
-      paddingTop: insets.top,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-      paddingBottom: insets.bottom,
-    },
-    web: {
-      paddingTop: Spacing.six,
-      paddingBottom: Spacing.four,
-    },
-  });
+const categories: [PlaceCategory | 'all', string][] = [
+  ['all', '🌐 Tất cả'],
+  ['tham_quan', '♜ Tham quan'],
+  ['khach_san', '▥ Khách sạn'],
+  ['nha_hang', '♨ Ăn uống'],
+  ['mua_sam', '♧ Mua sắm'],
+  ['giai_tri', '✧ Giải trí'],
+  ['bai_bien', '☀ Bãi biển'],
+];
+
+export default function ExploreScreen() {
+  const insets = useSafeAreaInsets();
+  const { draft, ready, saving, error } = useTripDraft();
+
+  const [query, setQuery] = useState('');
+  const [category, setCategory] =
+    useState<PlaceCategory | 'all'>('all');
+  const [limit, setLimit] = useState(20);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [activeFilters, setActiveFilters] = useState<DiscoveryFilters>(defaultDiscoveryFilters);
+  const listRef = useRef<FlatList<Place>>(null);
+  const onlySelected = activeFilters.onlySelected;
+  const activeFilterCount = discoveryFilterCount(activeFilters);
+  const areaOptions = useMemo(() => discoveryAreas(places), []);
+  const priceAvailable = useMemo(() => hasDiscoveryPriceData(places), []);
+
+  const [addPlace, setAddPlace] = useState<Place | null>(null);
+  const [editing, setEditing] = useState<DraftStop | undefined>();
+  const [details, setDetails] = useState<Place | null>(null);
+  const [summary, setSummary] = useState(false);
+
+  const deferredQuery = useDeferredValue(query);
+
+  const selected = useMemo(
+    () => new Set(draft?.stops.map(stop => stop.placeId) ?? []),
+    [draft?.stops],
+  );
+
+  const candidates = useMemo(() => {
+    const term = normalizeSearch(deferredQuery);
+    return places.filter(place =>
+      (category === 'all' || place.category === category) &&
+      (!term || normalizeSearch(place.search_text || `${place.name} ${place.address ?? ''}`).includes(term)),
+    );
+  }, [category, deferredQuery]);
+
+  const filtered = useMemo(
+    () => applyDiscoveryFilters(candidates, activeFilters, selected),
+    [candidates, activeFilters, selected],
+  );
+
+  function openAdd(place: Place, stop?: DraftStop) {
+    setDetails(null);
+    setSummary(false);
+    setEditing(stop);
+    setAddPlace(place);
+  }
+
+  function editStop(stop: DraftStop) {
+    const place = findPlaceById(stop.placeId);
+
+    if (place) openAdd(place, stop);
+  }
+
+  if (!ready || !draft) {
+    return (
+      <Loading
+        error={error}
+        retry={() => void tripStore.load()}
+      />
+    );
+  }
+
+  const header = (
+    <View style={{ gap: 14, paddingBottom: 10 }}>
+      <View style={st.search}>
+        <Text style={{ fontSize: 23, color: '#94A3B8' }}>
+          ⌕
+        </Text>
+
+        <TextInput
+          accessibilityLabel="Tìm địa điểm"
+          value={query}
+          onChangeText={value => {
+            setQuery(value);
+            setLimit(20);
+          }}
+          placeholder="Tìm địa điểm, khách sạn, nhà hàng, bãi biển"
+          placeholderTextColor="#94A3B8"
+          style={st.searchInput}
+        />
+
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Bộ lọc địa điểm"
+          onPress={() => setFiltersOpen(true)}
+          style={st.filterButton}
+        >
+          <Ionicons name="options-outline" color={C.green} size={22} />
+          {activeFilterCount > 0 && (
+            <Text style={st.filterBadge}>{activeFilterCount}</Text>
+          )}
+        </Pressable>
+      </View>
+
+      {activeFilterCount > 0 && (
+        <View style={s.between}>
+          <Text style={[s.muted, { color: C.deep }]}>Đang áp dụng {activeFilterCount} nhóm lọc</Text>
+          <Pressable accessibilityRole="button" onPress={() => {
+            setActiveFilters(defaultDiscoveryFilters());
+            setLimit(20);
+            listRef.current?.scrollToOffset({ offset: 0, animated: false });
+          }}><Text style={{ color: C.deep, fontSize: 11, fontWeight: '700' }}>Xóa bộ lọc</Text></Pressable>
+        </View>
+      )}
+
+      <View style={{ gap: 8 }}>
+        <Text style={s.label}>DANH MỤC DỊCH VỤ</Text>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: 7 }}
+        >
+          {categories.map(([id, label]) => (
+            <Pressable
+              key={id}
+              accessibilityRole="button"
+              accessibilityLabel={label}
+              accessibilityState={{
+                selected: category === id,
+              }}
+              onPress={() => {
+                setCategory(id);
+                setLimit(20);
+              }}
+              style={[
+                s.pill,
+                st.category,
+                category === id && s.pillActive,
+              ]}
+            >
+              <Text
+                style={{
+                  fontSize: 11,
+                  fontWeight: '700',
+                  color:
+                    category === id ? C.deep : '#596579',
+                }}
+              >
+                {label}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+      </View>
+
+      <View style={s.between}>
+        <Text style={[s.label, { color: C.ink }]}>
+          ĐỊA ĐIỂM {onlySelected ? 'ĐÃ CHỌN' : 'KHÁM PHÁ'}
+        </Text>
+
+        <Text style={s.muted}>
+          {filtered.length} địa điểm
+          {query ? ' phù hợp' : ''}
+        </Text>
+      </View>
+
+      {!!error && (
+        <Text style={s.error}>{error}</Text>
+      )}
+    </View>
+  );
 
   return (
-    <ScrollView
-      style={[styles.scrollView, { backgroundColor: theme.background }]}
-      contentInset={insets}
-      contentContainerStyle={[styles.contentContainer, contentPlatformStyle]}>
-      <ThemedView style={styles.container}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">Explore</ThemedText>
-          <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This starter app includes example{'\n'}code to help you get started.
-          </ThemedText>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: C.bg,
+        paddingTop: insets.top,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+      }}
+    >
+      <FlatList
+        ref={listRef}
+        data={filtered.slice(0, limit)}
+        keyExtractor={item => item.id}
+        ListHeaderComponent={header}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={st.content}
+        initialNumToRender={8}
+        maxToRenderPerBatch={8}
+        windowSize={7}
+        onEndReachedThreshold={0.4}
+        onEndReached={() => {
+          if (limit < filtered.length) {
+            setLimit(current =>
+              Math.min(current + 20, filtered.length),
+            );
+          }
+        }}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: 10 }} />
+        )}
+        ListEmptyComponent={
+          <View style={s.card}>
+            <Text style={s.title}>
+              Không tìm thấy địa điểm
+            </Text>
+            <Text style={s.muted}>
+              Thử từ khóa, danh mục khác hoặc tắt bộ lọc đã chọn.
+            </Text>
+          </View>
+        }
+        ListFooterComponent={
+          <View style={{ paddingVertical: 16, gap: 5 }}>
+            <Text style={s.muted}>
+              Đã hiển thị {Math.min(limit, filtered.length)}
+              /{filtered.length} địa điểm · Cuộn để xem thêm
+            </Text>
 
-          <ExternalLink href="https://docs.expo.dev" asChild>
-            <Pressable style={({ pressed }) => pressed && styles.pressed}>
-              <ThemedView type="backgroundElement" style={styles.linkButton}>
-                <ThemedText type="link">Expo documentation</ThemedText>
-                <SymbolView
-                  tintColor={theme.text}
-                  name={{ ios: 'arrow.up.right.square', android: 'link', web: 'link' }}
-                  size={12}
-                />
-              </ThemedView>
+            <Text style={s.muted}>
+              Ảnh và đánh giá theo dữ liệu thu thập, có thể thay đổi.
+              Khoảng cách hiển thị là đường chim bay.
+            </Text>
+          </View>
+        }
+        renderItem={({ item }) => {
+          const distance = distanceFromPlace(item, activeFilters.origin);
+          return (
+          <View style={st.placeCard}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`Chi tiết ${item.name}`}
+              onPress={() => setDetails(item)}
+            >
+              <PlaceThumb place={item} size={78} />
             </Pressable>
-          </ExternalLink>
-        </ThemedView>
 
-        <ThemedView style={styles.sectionsWrapper}>
-          <Collapsible title="File-based routing">
-            <ThemedText type="small">
-              This app has two screens: <ThemedText type="code">src/app/index.tsx</ThemedText> and{' '}
-              <ThemedText type="code">src/app/explore.tsx</ThemedText>
-            </ThemedText>
-            <ThemedText type="small">
-              The layout file in <ThemedText type="code">src/app/_layout.tsx</ThemedText> sets up
-              the tab navigator.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/router/introduction">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+            <View style={{ flex: 1, gap: 4 }}>
+              {item.rating !== null && (
+                <Text style={st.rating}>
+                  ★ {item.rating}
+                  {item.rating_count === null
+                    ? ''
+                    : ` (${item.rating_count})`}
+                </Text>
+              )}
 
-          <Collapsible title="Android, iOS, and web support">
-            <ThemedView type="backgroundElement" style={styles.collapsibleContent}>
-              <ThemedText type="small">
-                You can open this project on Android, iOS, and the web. To open the web version,
-                press <ThemedText type="smallBold">w</ThemedText> in the terminal running this
-                project.
-              </ThemedText>
-              <Image
-                source={require('@/assets/images/tutorial-web.png')}
-                style={styles.imageTutorial}
-              />
-            </ThemedView>
-          </Collapsible>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={`Xem ${item.name}`}
+                onPress={() => setDetails(item)}
+              >
+                <Text
+                  style={[s.title, { fontSize: 12 }]}
+                  numberOfLines={2}
+                >
+                  {item.name}
+                </Text>
+              </Pressable>
 
-          <Collapsible title="Images">
-            <ThemedText type="small">
-              For static images, you can use the <ThemedText type="code">@2x</ThemedText> and{' '}
-              <ThemedText type="code">@3x</ThemedText> suffixes to provide files for different
-              screen densities.
-            </ThemedText>
-            <Image source={require('@/assets/images/react-logo.png')} style={styles.imageReact} />
-            <ExternalLink href="https://reactnative.dev/docs/images">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+              <Text style={s.muted} numberOfLines={2}>
+                📍 {item.address ?? 'Chưa cập nhật địa chỉ'}
+              </Text>
 
-          <Collapsible title="Light and dark mode components">
-            <ThemedText type="small">
-              This template has light and dark mode support. The{' '}
-              <ThemedText type="code">useColorScheme()</ThemedText> hook lets you inspect what the
-              user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+              {distance !== null && (
+                <Text style={[s.muted, { color: C.deep }]}>
+                  ↔ {distance < 1 ? `${Math.round(distance * 1000)} m` : `${distance.toFixed(1)} km`} · đường chim bay
+                </Text>
+              )}
 
-          <Collapsible title="Animations">
-            <ThemedText type="small">
-              This template includes an example of an animated component. The{' '}
-              <ThemedText type="code">src/components/ui/collapsible.tsx</ThemedText> component uses
-              the powerful <ThemedText type="code">react-native-reanimated</ThemedText> library to
-              animate opening this hint.
-            </ThemedText>
-          </Collapsible>
-        </ThemedView>
-        {Platform.OS === 'web' && <WebBadge />}
-      </ThemedView>
-    </ScrollView>
+              <Text
+                style={[s.muted, { fontSize: 9 }]}
+                numberOfLines={1}
+              >
+                {PLACE_CATEGORIES[item.category]} ·{' '}
+                {item.opening_hours_raw ??
+                  'Chưa có giờ mở cửa'}
+              </Text>
+
+              <View
+                style={{
+                  alignItems: 'flex-end',
+                  marginTop: 3,
+                }}
+              >
+                <Action
+                  label={
+                    selected.has(item.id)
+                      ? '✓ Đã thêm'
+                      : '＋ Thêm'
+                  }
+                  disabled={saving}
+                  solid
+                  style={[
+                    { paddingVertical: 5 },
+                    selected.has(item.id) && {
+                      backgroundColor: '#334155',
+                      borderColor: '#334155',
+                    },
+                  ]}
+                  onPress={() =>
+                    openAdd(
+                      item,
+                      draft.stops.find(
+                        stop => stop.placeId === item.id,
+                      ),
+                    )
+                  }
+                />
+              </View>
+            </View>
+          </View>
+          );
+        }}
+      />
+
+      {draft.stops.length > 0 && (
+        <View
+          style={[
+            st.footer,
+            { paddingBottom: Math.max(8, insets.bottom) },
+          ]}
+        >
+          <Action
+            label={
+              `☷ Danh sách đã chọn (${draft.stops.length})`
+            }
+            solid
+            onPress={() => setSummary(true)}
+            style={{ flex: 1 }}
+          />
+        </View>
+      )}
+
+      {addPlace && (
+        <AddStopSheet
+          key={`${addPlace.id}-${editing?.id ?? 'new'}`}
+          place={addPlace}
+          editing={editing}
+          onDuplicate={() => setEditing(undefined)}
+          close={() => setAddPlace(null)}
+          onSaved={() => {
+          setAddPlace(null);
+          setEditing(undefined);
+          setSummary(false);
+        }}
+        />
+      )}
+
+      {details && (
+        <PlaceDetailsSheet
+          place={details}
+          close={() => setDetails(null)}
+          onAdd={() =>
+            openAdd(
+              details,
+              draft.stops.find(
+                stop => stop.placeId === details.id,
+              ),
+            )
+          }
+        />
+      )}
+
+      {summary && (
+        <TripSummarySheet
+          close={() => setSummary(false)}
+          onEdit={editStop}
+        />
+      )}
+
+      {filtersOpen && (
+        <AdvancedPlaceFiltersSheet
+          initialFilters={activeFilters}
+          areas={areaOptions}
+          priceAvailable={priceAvailable}
+          candidates={candidates}
+          selected={selected}
+          close={() => setFiltersOpen(false)}
+          onApply={value => {
+            setActiveFilters(value);
+            setLimit(20);
+            setFiltersOpen(false);
+            listRef.current?.scrollToOffset({ offset: 0, animated: false });
+          }}
+        />
+      )}
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  container: {
-    maxWidth: MaxContentWidth,
-    flexGrow: 1,
-  },
-  titleContainer: {
-    gap: Spacing.three,
-    alignItems: 'center',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.six,
-  },
-  centerText: {
-    textAlign: 'center',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  linkButton: {
-    flexDirection: 'row',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.five,
-    justifyContent: 'center',
-    gap: Spacing.one,
-    alignItems: 'center',
-  },
-  sectionsWrapper: {
-    gap: Spacing.five,
-    paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.three,
-  },
-  collapsibleContent: {
-    alignItems: 'center',
-  },
-  imageTutorial: {
+const st = StyleSheet.create({
+  content: {
+    padding: 14,
+    paddingBottom: 18,
     width: '100%',
-    aspectRatio: 296 / 171,
-    borderRadius: Spacing.three,
-    marginTop: Spacing.two,
+    maxWidth: 680,
+    alignSelf: 'center',
   },
-  imageReact: {
-    width: 100,
-    height: 100,
+  search: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: C.line,
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  searchInput: {
+    flex: 1,
+    minWidth: 0,
+    fontSize: 12,
+    color: C.ink,
+    paddingVertical: 10,
+  },
+  filterBadge: {
+    position: 'absolute', top: 0, right: -2, minWidth: 16, height: 16,
+    paddingHorizontal: 3, borderRadius: 8, backgroundColor: '#087F61',
+    color: '#FFF', fontSize: 9, fontWeight: '800', textAlign: 'center', lineHeight: 16,
+  },
+  filterButton: {
+    padding: 8,
+    borderLeftWidth: 1,
+    borderLeftColor: C.line,
+  },
+  category: {
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    borderRadius: 18,
+  },
+  placeCard: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    padding: 11,
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: C.line,
+  },
+  rating: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#D99A20',
+  },
+  footer: {
+    flexDirection: 'row',
+    paddingTop: 8,
+    paddingHorizontal: 14,
+    backgroundColor: '#FFFFFFF2',
+    borderTopWidth: 1,
+    borderTopColor: C.line,
+    width: '100%',
+    maxWidth: 680,
     alignSelf: 'center',
   },
 });
