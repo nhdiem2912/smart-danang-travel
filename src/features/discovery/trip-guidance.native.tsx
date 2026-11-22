@@ -1,46 +1,46 @@
 import { getTripLocation } from './trip-location';
-
 import {
-    beginLeg,
-    finishLeg,
-    saveLeg,
+  finishLeg,
+  saveLeg,
 } from './trip-session';
+import { requestLegStart } from './trip-start-prompt';
+import { assertCanStart } from './trip-time-policy';
 
 import { Ionicons } from '@expo/vector-icons';
 import {
-    Camera,
-    GeoJSONSource,
-    Layer,
-    Map,
-    Marker,
-    type CameraRef,
+  Camera,
+  GeoJSONSource,
+  Layer,
+  Map,
+  Marker,
+  type CameraRef,
 } from '@maplibre/maplibre-react-native';
 import * as Location from 'expo-location';
 import { useFocusEffect } from 'expo-router';
 import type { Feature, LineString } from 'geojson';
 import {
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-    type ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ComponentProps,
 } from 'react';
 import {
-    ActivityIndicator,
-    AppState,
-    BackHandler,
-    Linking,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    useWindowDimensions,
-    View,
+  ActivityIndicator,
+  AppState,
+  BackHandler,
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-    queueRoutingRequest,
+  queueRoutingRequest,
 } from './trip-routing';
 
 import { findPlaceById } from '@/data/places.local';
@@ -48,11 +48,11 @@ import { formatTravelTime, LegTracker } from './trip-metrics';
 import type { DraftStop, LegResult, TravelMode } from './trip-model';
 import { TripResultsSheet } from './trip-results-sheet';
 import {
-    buildNavigation,
-    TurnNavigator,
-    type NavFix,
-    type NavigationRoute,
-    type TurnGuidance,
+  buildNavigation,
+  TurnNavigator,
+  type NavFix,
+  type NavigationRoute,
+  type TurnGuidance,
 } from './turn-guidance';
 import { tripStore } from './use-trip-draft';
 
@@ -423,7 +423,36 @@ export default function TripGuidance({
           }
 
           if (!existing.progress) {
-            await beginLeg(target.id, mode);
+            const started = await requestLegStart(
+  target.id,
+  mode,
+  valid,
+);
+
+if (!valid()) return;
+
+if (!started) {
+  onClose();
+  return;
+}
+
+const startedStop = started.stops.find(
+  item => item.progress,
+);
+
+if (startedStop?.id !== target.id) {
+  const nextIndex = plan.findIndex(
+    item => item.id === startedStop?.id,
+  );
+
+  if (nextIndex >= 0) {
+    setIndex(nextIndex);
+  } else {
+    onClose();
+  }
+
+  return;
+}
 
             if (!valid()) return;
 
@@ -706,7 +735,25 @@ export default function TripGuidance({
             setPhase('paused');
             return;
           }
+const liveDraft =
+  tripStore.getSnapshot().draft;
 
+const liveTarget = liveDraft?.stops.find(
+  item => item.id === target.id,
+);
+
+if (!liveDraft || !liveTarget) {
+  throw new Error(
+    'Chặng đã thay đổi. Hãy quay lại danh sách.',
+  );
+}
+
+assertCanStart(
+  liveDraft,
+  liveTarget,
+  Date.now(),
+  nextRoute.duration,
+);
           tracker.current.resume();
           tracker.current.sample(location, mode);
 
@@ -750,7 +797,7 @@ export default function TripGuidance({
       void start();
 
       return stopWork;
-    }, [index, mode, plan, retry, stopWork]),
+    }, [index, mode, plan, retry, stopWork, onClose]),
   );
 
   useEffect(() => {

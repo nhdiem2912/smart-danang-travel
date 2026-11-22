@@ -1,15 +1,17 @@
 import {
+  usePlacesCatalog,
+} from '@/data/use-places-catalog';
+import {
   TripCalendarSheet,
 } from '@/features/discovery/trip-calendar-sheet';
-
 import {
   TripSettingsSheet,
 } from '@/features/discovery/trip-settings-sheet';
+import { requestLegStart } from '@/features/discovery/trip-start-prompt';
 
 import TripGuidance from '@/features/discovery/trip-guidance';
 import { currentPlan } from '@/features/discovery/trip-plan';
 import {
-  beginLeg,
   cancelLeg,
 } from '@/features/discovery/trip-session';
 import {
@@ -18,8 +20,8 @@ import {
 import {
   hasActiveTrip,
 } from '@/features/discovery/trip-time-policy';
-import { router } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
+import { router, useFocusEffect, } from 'expo-router';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -57,6 +59,18 @@ import {
 } from '@/features/discovery/ui';
 
 export default function ItineraryScreen() {
+  usePlacesCatalog();
+    const startAlive = useRef(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      startAlive.current = true;
+
+      return () => {
+        startAlive.current = false;
+      };
+    }, []),
+  );
   const insets = useSafeAreaInsets();
   const { draft, ready, saving, error } = useTripDraft();
   const [calendar, setCalendar] =
@@ -92,15 +106,14 @@ export default function ItineraryScreen() {
     [draft?.stops, activeDay],
   );
 
-  const mapPlaces = useMemo(
-    () =>
-      stops
-        .map(stop => findPlaceById(stop.placeId))
-        .filter(
-          (place): place is Place =>
-            !!place && place.coordinates_valid,
-        ),
-    [stops],
+ const mapPlaces = stops
+  .map(stop =>
+    findPlaceById(stop.placeId),
+  )
+  .filter(
+    (place): place is Place =>
+      !!place &&
+      place.coordinates_valid,
   );
 const [session, setSession] = useState<{
   stops: DraftStop[];
@@ -109,7 +122,7 @@ const [session, setSession] = useState<{
 
 const closeGuidance = useCallback(
   () => setSession(null),
-  [],
+  [setSession],
 );
   if (
     ready &&
@@ -189,54 +202,67 @@ if (session) {
       );
     }
   }
-  async function openLeg(id: string) {
+    async function openLeg(id: string) {
     if (starting || saving) return;
 
     setStarting(true);
 
     try {
-      const current = tripStore.getSnapshot().draft;
+      const current =
+        tripStore.getSnapshot().draft;
 
       const existing = current?.stops.find(
         stop => stop.id === id,
       );
 
       if (!current || !existing) {
-        throw new Error('Điểm này đã bị xóa.');
+        throw new Error(
+          'Điểm này đã bị xóa.',
+        );
       }
 
       const mode =
         existing.progress?.travelMode ??
         current.settings.travelMode;
 
-      const next = await beginLeg(id, mode);
+      const next = await requestLegStart(
+        id,
+        mode,
+        () => startAlive.current,
+      );
+
+      if (!next) {
+        setMessage('');
+        return;
+      }
 
       const target = next.stops.find(
-        stop => stop.id === id,
+        stop => !!stop.progress,
       );
 
       if (!target) {
-        throw new Error('Không tìm thấy chặng.');
+        throw new Error(
+          'Không tìm thấy chặng đang bắt đầu.',
+        );
       }
 
       const ordered = sortedStops(
         next.stops.filter(
-          item => item.dayIndex === target.dayIndex,
+          stop =>
+            stop.dayIndex === target.dayIndex,
         ),
       );
 
       const position = ordered.findIndex(
-        item => item.id === target.id,
+        stop => stop.id === target.id,
       );
 
-      const plan = target.completed
-        ? [target]
-        : [
-            target,
-            ...ordered
-              .slice(position + 1)
-              .filter(item => !item.completed),
-          ];
+      const plan = [
+        target,
+        ...ordered
+          .slice(position + 1)
+          .filter(stop => !stop.completed),
+      ];
 
       setSession({
         stops: plan,
@@ -303,36 +329,7 @@ if (session) {
           alignSelf: 'center',
         }}
       >
-        <View
-          style={[
-            s.row,
-            {
-              backgroundColor: '#E5EBF3',
-              padding: 5,
-              borderRadius: 14,
-            },
-          ]}
-        >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: '#FFF',
-              padding: 8,
-              borderRadius: 10,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 12,
-                fontWeight: '800',
-                color: C.green,
-              }}
-            >
-              ♧ Lộ trình của tôi
-            </Text>
-          </View>
-        </View>
+      
 
         <View style={[s.card, s.between]}>
           <View style={{ flex: 1 }}>

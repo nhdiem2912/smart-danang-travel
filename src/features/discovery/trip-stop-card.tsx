@@ -1,17 +1,17 @@
 import {
-    Alert,
-    Pressable,
-    Text,
-    View,
+  Alert,
+  Pressable,
+  Text,
+  View,
 } from 'react-native';
 
 import { findPlaceById } from '@/data/places.local';
 import { formatTravelTime } from './trip-metrics';
 
 import {
-    minuteToTime,
-    type DraftStop,
-    type StopSchedule
+  minuteToTime,
+  type DraftStop,
+  type StopSchedule
 } from './trip-model';
 
 import { Action, s } from './ui';
@@ -70,7 +70,7 @@ export function TripStopCard({
       ? '#F1FCF6'
       : '#F6F8FC';
 
-  const wanted =
+    const wanted =
     stop.visitMinutes ??
     place?.visit_duration_minutes ??
     defaultMinutes;
@@ -358,14 +358,14 @@ export function TripStopCard({
               />
 
               <Action
-                label={
-                  stop.completed
-                    ? 'Bỏ check-in'
-                    : 'Check-in thủ công'
-                }
-                disabled={disabled}
-                onPress={onCheckIn}
-              />
+  label={
+    stop.completed
+      ? 'Đã check-in'
+      : 'Check-in thủ công'
+  }
+  disabled={disabled || stop.completed}
+  onPress={onCheckIn}
+/>
             </>
           )}
         </View>

@@ -1,7 +1,6 @@
 import {
   findPlaceById,
 } from '@/data/places.local';
-
 import {
   dateForDay,
   PERIOD_WINDOWS,
@@ -11,6 +10,12 @@ import {
   type StopSchedule,
   type TripDraft,
 } from './trip-model';
+import {
+  earliestVisit,
+  latestDeparture,
+  stopWindows,
+  type OpeningWindows,
+} from './venue-scheduler';
 
 import {
   assertSchedule,
@@ -83,76 +88,7 @@ function wantedMinutes(
   return Math.ceil(value);
 }
 
-function fitVisits(
-  wanted: number[],
-  budget: number,
-): number[] {
-  const minimum = wanted.map(
-    value =>
-      Math.min(
-        MIN_VISIT,
-        value,
-      ),
-  );
 
-  const low = minimum.reduce(
-    (sum, value) => sum + value,
-    0,
-  );
-
-  const high = wanted.reduce(
-    (sum, value) => sum + value,
-    0,
-  );
-
-  if (budget < low) {
-    throw new Error(
-      'Không đủ giờ tham quan tối thiểu.',
-    );
-  }
-
-  if (budget >= high) {
-    return wanted;
-  }
-
-  const values = wanted.map(
-    (value, index) =>
-      minimum[index] +
-      Math.floor(
-        (
-          value -
-          minimum[index]
-        ) *
-        (budget - low) /
-        (high - low),
-      ),
-  );
-
-  let remainder =
-    budget -
-    values.reduce(
-      (sum, value) =>
-        sum + value,
-      0,
-    );
-
-  for (
-    let index = 0;
-    index < values.length &&
-    remainder > 0;
-    index++
-  ) {
-    if (
-      values[index] <
-      wanted[index]
-    ) {
-      values[index]++;
-      remainder--;
-    }
-  }
-
-  return values;
-}
 
 export async function solveDayOrder(
   stops: DraftStop[],
@@ -161,22 +97,11 @@ export async function solveDayOrder(
   dayStart: number,
   dayEnd: number,
   earliestNew = dayStart,
+  openings: OpeningWindows = stops.map(
+    () => [[0, 1440]],
+  ),
 ): Promise<number[]> {
-  let states =
-    new Map<string, Label[]>([
-      [
-        '0:-1',
-        [
-          {
-            mask: 0,
-            last: -1,
-            minute: dayStart,
-            meters: 0,
-            path: [],
-          },
-        ],
-      ],
-    ]);
+  if (!stops.length) return [];
 
   const locked = stops.map(
     stop =>
@@ -184,207 +109,221 @@ export async function solveDayOrder(
       !!stop.orderLocked,
   );
 
-  let work = 0;
+  const ready = Math.max(
+    dayStart,
+    earliestNew,
+  );
 
-  for (
-    let slot = 0;
-    slot < stops.length;
-    slot++
-  ) {
-    const next =
-      new Map<string, Label[]>();
+  async function search(
+    visits: number[],
+  ): Promise<number[] | null> {
+    let states = new Map<string, Label[]>([
+      [
+        '0:-1',
+        [
+          {
+            mask: 0,
+            last: -1,
+            minute: ready,
+            meters: 0,
+            path: [],
+          },
+        ],
+      ],
+    ]);
 
-    const period =
-      stops[slot].period;
-
-    const window =
-      PERIOD_WINDOWS[period];
+    let work = 0;
 
     for (
-      const labels
-      of states.values()
+      let slot = 0;
+      slot < stops.length;
+      slot++
     ) {
-      for (
-        const state
-        of labels
-      ) {
-        for (
-          let index = 0;
-          index < stops.length;
-          index++
-        ) {
-          if (
-            (
-              state.mask &
-              (1 << index)
-            ) ||
-            stops[index].period !==
-              period ||
-            (
-              locked[slot]
-                ? index !== slot
-                : locked[index]
-            )
+      const next =
+        new Map<string, Label[]>();
+
+      const period = stops[slot].period;
+      const window = PERIOD_WINDOWS[period];
+
+      for (const labels of states.values()) {
+        for (const state of labels) {
+          for (
+            let index = 0;
+            index < stops.length;
+            index++
           ) {
-            continue;
-          }
-
-          const seconds =
-            table.seconds[
-              state.last + 1
-            ][index + 1];
-
-          const meters =
-            table.meters[
-              state.last + 1
-            ][index + 1];
-
-          if (
-            seconds === null ||
-            meters === null
-          ) {
-            continue;
-          }
-
-          const travel =
-            Math.ceil(
-              seconds / 60,
-            );
-
-          const fixed =
-            stops[index].completed
-              ? stops[index].schedule
-              : undefined;
-
-          let finish: number;
-
-          if (fixed) {
             if (
-              state.minute >
-                fixed.departureMinute ||
-              fixed.departureMinute <
-                Math.max(
-                  dayStart,
-                  window.start,
-                ) ||
-              fixed.departureMinute +
-                travel >
-                fixed.arrivalMinute
+              (
+                state.mask &
+                (1 << index)
+              ) ||
+              stops[index].period !== period ||
+              (
+                locked[slot]
+                  ? index !== slot
+                  : locked[index]
+              )
             ) {
               continue;
             }
 
-            finish =
-              fixed.endMinute;
-          } else {
-            finish =
-              Math.max(
+            const seconds =
+              table.seconds[
+                state.last + 1
+              ][index + 1];
+
+            const meters =
+              table.meters[
+                state.last + 1
+              ][index + 1];
+
+            if (
+              seconds === null ||
+              meters === null
+            ) {
+              continue;
+            }
+
+            const travel = Math.ceil(
+              seconds / 60,
+            );
+
+            const fixed =
+              stops[index].completed
+                ? stops[index].schedule
+                : undefined;
+
+            let finish: number;
+
+            if (fixed) {
+              if (
+                state.minute >
+                  fixed.departureMinute ||
+                fixed.departureMinute <
+                  Math.max(
+                    dayStart,
+                    window.start,
+                  ) ||
+                fixed.departureMinute +
+                  travel >
+                  fixed.arrivalMinute
+              ) {
+                continue;
+              }
+
+              finish = fixed.endMinute;
+            } else {
+              const visit = earliestVisit(
+                stops[index],
+                openings[index],
                 state.minute,
-                earliestNew,
+                travel,
+                visits[index],
                 dayStart,
-                window.start,
-              ) +
-              travel +
-              BUFFER +
-              Math.min(
-                MIN_VISIT,
-                wanted[index],
+                dayEnd,
               );
-          }
 
-          if (
-            finish >
-            Math.min(
-              dayEnd,
-              window.end,
-            )
-          ) {
-            continue;
-          }
+              if (!visit) continue;
 
-          const candidate: Label = {
-            mask:
-              state.mask |
-              (1 << index),
-            last: index,
-            minute: finish,
-            meters:
-              state.meters +
-              meters,
-            path: [
-              ...state.path,
-              index,
-            ],
-          };
+              finish = visit.end;
+            }
 
-          const key =
-            `${candidate.mask}:${index}`;
+            if (
+              finish >
+              Math.min(dayEnd, window.end)
+            ) {
+              continue;
+            }
 
-          const existing =
-            next.get(key) ?? [];
+            const candidate: Label = {
+              mask:
+                state.mask |
+                (1 << index),
+              last: index,
+              minute: finish,
+              meters: state.meters + meters,
+              path: [
+                ...state.path,
+                index,
+              ],
+            };
 
-          const dominated =
-            existing.some(
-              label =>
-                label.minute <=
-                  finish &&
-                label.meters <=
-                  candidate.meters,
-            );
+            const key =
+              `${candidate.mask}:${index}`;
 
-          if (dominated) {
-            continue;
-          }
+            const existing =
+              next.get(key) ?? [];
 
-          next.set(key, [
-            ...existing.filter(
-              label =>
-                !(
-                  finish <=
-                    label.minute &&
-                  candidate.meters <=
-                    label.meters
-                ),
-            ),
-            candidate,
-          ]);
+            if (
+              existing.some(
+                label =>
+                  label.minute <= finish &&
+                  label.meters <=
+                    candidate.meters,
+              )
+            ) {
+              continue;
+            }
 
-          if (
-            ++work % 2000 === 0
-          ) {
-            await new Promise<void>(
-              resolve =>
-                setTimeout(
-                  resolve,
-                  0,
-                ),
-            );
+            next.set(key, [
+              ...existing.filter(
+                label =>
+                  !(
+                    finish <= label.minute &&
+                    candidate.meters <=
+                      label.meters
+                  ),
+              ),
+              candidate,
+            ]);
+
+            if (++work % 2000 === 0) {
+              await new Promise<void>(
+                resolve =>
+                  setTimeout(resolve, 0),
+              );
+            }
           }
         }
       }
+
+      if (!next.size) return null;
+
+      states = next;
     }
 
-    if (!next.size) {
-      throw new Error(
-        `${window.label}: ` +
-        'không xếp đủ điểm trong giờ cho phép, ' +
-        'hoặc không có tuyến nối. ' +
-        'Hãy điều chỉnh buổi/giờ; ' +
-        'điểm đã hoàn thành và lịch cũ ' +
-        'được giữ nguyên.',
-      );
-    }
+    const best = [...states.values()]
+      .flat()
+      .sort(
+        (a, b) =>
+          a.minute - b.minute ||
+          a.meters - b.meters,
+      )[0];
 
-    states = next;
+    return best?.path ?? null;
   }
 
-  return [...states.values()]
-    .flat()
-    .sort(
-      (a, b) =>
-        a.meters - b.meters ||
-        a.minute - b.minute,
-    )[0].path;
+  // Thử giữ đủ thời gian tham quan trước.
+  const full = await search(wanted);
+
+  if (full) return full;
+
+  // Giữ cơ chế rút ngắn dự kiến khi lịch quá chật.
+  const shortened = await search(
+    wanted.map(
+      minutes =>
+        Math.min(MIN_VISIT, minutes),
+    ),
+  );
+
+  if (shortened) return shortened;
+
+  throw new Error(
+    'Không xếp đủ địa điểm trong giờ mở cửa ' +
+    'và khung giờ đã chọn. ' +
+    'Hãy đổi buổi, giờ hoặc giảm số địa điểm. ' +
+    'Lịch cũ được giữ nguyên.',
+  );
 }
 
 function schedulePath(
@@ -395,217 +334,207 @@ function schedulePath(
   start: number,
   end: number,
   earliestNew = start,
+  openings: OpeningWindows = stops.map(
+    () => [[0, 1440]],
+  ),
 ): Record<string, StopSchedule> {
-  const path = order.map(
-    index => stops[index],
-  );
-
-  const travel = order.map(
-    (index, position) => {
-      const previous =
-        position === 0
-          ? 0
-          : order[
-              position - 1
-            ] + 1;
-
-      return {
-        seconds:
-          table.seconds[
-            previous
-          ][index + 1]!,
-        meters:
-          table.meters[
-            previous
-          ][index + 1]!,
-      };
-    },
-  );
-
-  const fixed = path.map(
-    stop =>
-      stop.completed
-        ? stop.schedule
-        : undefined,
-  );
-
-  const latest =
-    new Array<number>(
-      path.length + 1,
-    ).fill(end);
-
-  for (
-    let index =
-      path.length - 1;
-    index >= 0;
-    index--
-  ) {
-    const window =
-      PERIOD_WINDOWS[
-        path[index].period
-      ];
-
-    latest[index] =
-      fixed[index]
-        ?.departureMinute ??
-      (
-        Math.min(
-          end,
-          window.end,
-          latest[index + 1],
-        ) -
-        Math.ceil(
-          travel[index].seconds /
-          60,
-        ) -
-        BUFFER -
-        Math.min(
-          MIN_VISIT,
-          wanted[
-            order[index]
-          ],
-        )
-      );
-  }
-
-  const entries:
+    const fullEntries:
     Record<string, StopSchedule> = {};
 
-  let cursor = start;
-  let index = 0;
+  let fullCursor = Math.max(
+    start,
+    earliestNew,
+  );
 
-  while (
-    index < path.length
+  let fitsFull = true;
+
+  for (
+    let k = 0;
+    k < order.length;
+    k++
   ) {
-    if (fixed[index]) {
-      entries[
-        path[index].id
-      ] = {
-        ...fixed[index]!,
+    const index = order[k];
+    const stop = stops[index];
+
+    if (
+      stop.completed &&
+      stop.schedule
+    ) {
+      fullEntries[stop.id] = {
+        ...stop.schedule,
       };
 
-      cursor =
-        fixed[index]!.endMinute;
+      fullCursor =
+        stop.schedule.endMinute;
 
-      index++;
       continue;
     }
 
-    const window =
-      PERIOD_WINDOWS[
-        path[index].period
-      ];
+    const previous =
+      k === 0
+        ? 0
+        : order[k - 1] + 1;
 
-    let endIndex =
-      index + 1;
+    const seconds =
+      table.seconds[
+        previous
+      ][index + 1]!;
 
-    while (
-      endIndex < path.length &&
-      path[endIndex].period ===
-        path[index].period &&
-      !fixed[endIndex]
-    ) {
-      endIndex++;
-    }
+    const meters =
+      table.meters[
+        previous
+      ][index + 1]!;
 
-    cursor = Math.max(
-      cursor,
+    const slot = earliestVisit(
+      stop,
+      openings[index],
+      fullCursor,
+      Math.ceil(seconds / 60),
+      wanted[index],
       start,
-      earliestNew,
-      window.start,
+      end,
     );
 
-    const fixedMinutes =
-      travel
-        .slice(
-          index,
-          endIndex,
-        )
-        .reduce(
-          (sum, leg) =>
-            sum +
-            Math.ceil(
-              leg.seconds / 60,
-            ) +
-            BUFFER,
-          0,
-        );
-
-    const budget =
-      Math.min(
-        end,
-        window.end,
-        latest[endIndex],
-      ) -
-      cursor -
-      fixedMinutes;
-
-    const visits = fitVisits(
-      order
-        .slice(
-          index,
-          endIndex,
-        )
-        .map(
-          stopIndex =>
-            wanted[stopIndex],
-        ),
-      budget,
-    );
-
-    for (
-      let position = index;
-      position < endIndex;
-      position++
-    ) {
-      const arrival =
-        cursor +
-        Math.ceil(
-          travel[position].seconds /
-          60,
-        );
-
-      const visitStart =
-        arrival + BUFFER;
-
-      const finish =
-        visitStart +
-        visits[position - index];
-
-      entries[
-        path[position].id
-      ] = {
-        departureMinute:
-          cursor,
-        arrivalMinute:
-          arrival,
-        visitStartMinute:
-          visitStart,
-        endMinute:
-          finish,
-        travelSeconds:
-          travel[position].seconds,
-        travelMeters:
-          travel[position].meters,
-        bufferMinutes:
-          BUFFER,
-        visitMinutes:
-          visits[position - index],
-        requestedVisitMinutes:
-          wanted[
-            order[position]
-          ],
-      };
-
-      cursor = finish;
+    if (!slot) {
+      fitsFull = false;
+      break;
     }
 
-    index = endIndex;
+    fullEntries[stop.id] = {
+      departureMinute: slot.departure,
+      arrivalMinute: slot.arrival,
+      visitStartMinute:
+        slot.arrival + BUFFER,
+      endMinute: slot.end,
+      travelSeconds: seconds,
+      travelMeters: meters,
+      bufferMinutes: BUFFER,
+      visitMinutes: wanted[index],
+      requestedVisitMinutes:
+        wanted[index],
+    };
+
+    fullCursor = slot.end;
   }
 
-  Object.values(
-    entries,
-  ).forEach(assertSchedule);
+  if (fitsFull) {
+    Object.values(fullEntries)
+      .forEach(assertSchedule);
+
+    return fullEntries;
+  }
+  const path = order.map(i => stops[i]);
+
+  const travel = order.map((index, k) => {
+    const previous =
+      k === 0 ? 0 : order[k - 1] + 1;
+
+    return {
+      seconds:
+        table.seconds[previous][index + 1]!,
+      meters:
+        table.meters[previous][index + 1]!,
+    };
+  });
+
+  const latest = new Array<number>(
+    path.length + 1,
+  ).fill(end);
+
+  for (let i = path.length - 1; i >= 0; i--) {
+    const value = latestDeparture(
+      path[i],
+      openings[order[i]],
+      latest[i + 1],
+      Math.ceil(travel[i].seconds / 60),
+      Math.min(
+        MIN_VISIT,
+        wanted[order[i]],
+      ),
+      start,
+    );
+
+    if (value === null) {
+      throw new Error(
+        'Không đủ thời gian trong giờ mở cửa. ' +
+        'Hãy đổi buổi hoặc giảm số địa điểm.',
+      );
+    }
+
+    latest[i] = value;
+  }
+
+  const entries: Record<string, StopSchedule> = {};
+  let cursor = Math.max(start, earliestNew);
+
+  for (let i = 0; i < path.length; i++) {
+    const stop = path[i];
+    const index = order[i];
+
+    const minutes = Math.ceil(
+      travel[i].seconds / 60,
+    );
+
+    const minimum = Math.min(
+      MIN_VISIT,
+      wanted[index],
+    );
+
+    const slot = earliestVisit(
+      stop,
+      openings[index],
+      cursor,
+      minutes,
+      minimum,
+      start,
+      Math.min(end, latest[i + 1]),
+    );
+
+    if (!slot) {
+      throw new Error(
+        'Không xếp được lịch phù hợp giờ mở cửa. ' +
+        'Các địa điểm đã chọn vẫn được giữ nguyên.',
+      );
+    }
+
+    const closing = openings[index].find(
+      ([open, close]) =>
+        slot.arrival >= open &&
+        slot.arrival < close,
+    )![1];
+
+    const limit = Math.min(
+      closing,
+      PERIOD_WINDOWS[stop.period].end,
+      end,
+      latest[i + 1],
+      1439,
+    );
+
+    const visit = Math.min(
+      wanted[index],
+      limit - slot.arrival - BUFFER,
+    );
+
+    const finish =
+      slot.arrival + BUFFER + visit;
+
+    entries[stop.id] = {
+      departureMinute: slot.departure,
+      arrivalMinute: slot.arrival,
+      visitStartMinute: slot.arrival + BUFFER,
+      endMinute: finish,
+      travelSeconds: travel[i].seconds,
+      travelMeters: travel[i].meters,
+      bufferMinutes: BUFFER,
+      visitMinutes: visit,
+      requestedVisitMinutes: wanted[index],
+    };
+
+    cursor = finish;
+  }
+
+  Object.values(entries).forEach(assertSchedule);
 
   return entries;
 }
@@ -868,19 +797,24 @@ export async function optimizeTrip(
           )
         : start;
 
-    const order =
-      await solveDayOrder(
-        stops,
-        table,
-        wanted,
-        start,
-        end,
-        earliestNew,
-      );
+        const openings = stopWindows(
+      stops,
+      dayDate,
+    );
+
+    const order = await solveDayOrder(
+      stops,
+      table,
+      wanted,
+      start,
+      end,
+      earliestNew,
+      openings,
+    );
 
     Object.assign(
       entries,
-      schedulePath(
+           schedulePath(
         stops,
         order,
         table,
@@ -888,6 +822,7 @@ export async function optimizeTrip(
         start,
         end,
         earliestNew,
+        openings,
       ),
     );
 

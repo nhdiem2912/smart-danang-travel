@@ -1,12 +1,10 @@
 import {
   findPlaceById,
 } from '@/data/places.local';
-
 import {
   useEffect,
   useSyncExternalStore,
 } from 'react';
-
 import {
   isValidDate,
   sortedStops,
@@ -14,6 +12,8 @@ import {
   type TripDraft,
   type TripSettings,
 } from './trip-model';
+import { recordManualCheckIn } from './trip-runtime';
+import { withoutPendingDay } from './trip-summary-view';
 
 import {
   planSignature,
@@ -33,7 +33,7 @@ import {
 
 import {
   assertCanAdd,
-  assertCanStart,
+  assertCanManualCheckIn,
   resetTripDates,
   slotError,
 } from './trip-time-policy';
@@ -225,7 +225,20 @@ export const tripActions = {
       });
     });
   },
-
+  removePendingDay(
+    dayIndex: number,
+    tripId: string,
+  ) {
+    return tripStore.update(draft =>
+      invalidateSchedules(
+        withoutPendingDay(
+          draft,
+          dayIndex,
+          tripId,
+        ),
+      ),
+    );
+  },
   clear() {
     return tripStore.update(draft => {
       requireNoActiveLeg(draft);
@@ -243,39 +256,23 @@ export const tripActions = {
     return tripStore.update(draft => {
       requireNoActiveLeg(draft);
 
-      const target =
-        draft.stops.find(
-          stop => stop.id === id,
-        );
+      const target = draft.stops.find(
+        stop => stop.id === id,
+      );
 
-      if (
-        !target ||
-        target.completed
-      ) {
+      if (!target || target.completed) {
         throw new Error(
           'Không thay đổi điểm đã hoàn tất.',
         );
       }
 
-      assertCanStart(
-        draft,
-        target,
-      );
+      assertCanManualCheckIn(draft, target);
 
-      return {
-        ...draft,
-        review: undefined,
-        stops: draft.stops.map(
-          stop =>
-            stop.id === id
-              ? {
-                  ...stop,
-                  completed:
-                    !stop.completed,
-                }
-              : stop,
-        ),
-      };
+      return recordManualCheckIn(
+        draft,
+        id,
+        new Date().toISOString(),
+      );
     });
   },
 

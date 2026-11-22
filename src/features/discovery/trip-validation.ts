@@ -23,7 +23,60 @@ export function validateStopExtras(stop: DraftStop) {
   ) {
     fail();
   }
+  if (stop.actual !== undefined) {
+    const actual = stop.actual;
 
+    if (
+      !actual ||
+      typeof actual !== 'object' ||
+      Array.isArray(actual)
+    ) {
+      fail();
+    }
+
+    for (
+      const key of [
+        'startedAt',
+        'arrivedAt',
+        'leftAt',
+        'manualRecordedAt',
+      ] as const
+    ) {
+      if (
+        actual[key] !== undefined &&
+        !date(actual[key])
+      ) {
+        fail();
+      }
+    }
+
+    if (
+      actual.checkInMethod !== undefined &&
+      !['navigation', 'manual'].includes(
+        actual.checkInMethod,
+      )
+    ) {
+      fail();
+    }
+
+    if (
+      actual.startedAt &&
+      actual.arrivedAt &&
+      Date.parse(actual.arrivedAt) <
+        Date.parse(actual.startedAt)
+    ) {
+      fail();
+    }
+
+    if (
+      actual.arrivedAt &&
+      actual.leftAt &&
+      Date.parse(actual.leftAt) <
+        Date.parse(actual.arrivedAt)
+    ) {
+      fail();
+    }
+  }
   if (stop.result !== undefined) {
     assertLegResult(stop.result);
   }

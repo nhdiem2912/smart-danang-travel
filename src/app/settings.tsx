@@ -1,8 +1,3 @@
-import { AccountProfileCard } from '@/features/account/account-profile-card';
-import {
-  TripHistoryCard,
-} from '@/features/discovery/trip-history-card';
-
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Constants from 'expo-constants';
 import {
@@ -10,14 +5,11 @@ import {
   useState,
   useSyncExternalStore,
   type ComponentProps,
-  type ReactNode,
 } from 'react';
-
 import {
   ActivityIndicator,
   Alert,
   FlatList,
-  KeyboardAvoidingView,
   Linking,
   Modal,
   Platform,
@@ -26,18 +18,24 @@ import {
   StyleSheet,
   Switch,
   Text,
-  TextInput,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AccountProfileCard } from '@/features/account/account-profile-card';
 import {
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-import packageInfo from '../../package.json';
-
+  accountActions,
+  useAccount,
+} from '@/features/account/account-store';
+import { TripHistoryCard } from '@/features/discovery/trip-history-card';
+import { useSettingsColors } from '@/features/settings/settings-colors';
+import { translate } from '@/features/settings/settings-i18n';
 import {
-  CURRENCIES,
+  notificationStatus,
+  sendTestNotification,
+  setDailyReminder,
+} from '@/features/settings/settings-notifications';
+import {
   LANGUAGES,
   LANGUAGE_LABELS,
   SettingsError,
@@ -46,347 +44,18 @@ import {
   type ThemeMode,
 } from '@/features/settings/settings-store';
 
-import {
-  translate,
-} from '@/features/settings/settings-i18n';
+import packageInfo from '../../package.json';
 
-import {
-  SETTINGS_COLORS,
-  useSettingsColors,
-} from '@/features/settings/settings-colors';
+type PanelName = 'theme' | 'language' | 'inbox';
 
-
-import {
-  notificationStatus,
-  sendTestNotification,
-  setDailyReminder,
-} from '@/features/settings/settings-notifications';
-
-type IconName = ComponentProps<typeof Ionicons>['name'];
-type Colors = typeof SETTINGS_COLORS.light;
-
-type PanelName =
-  | 'profile'
-  | 'theme'
-  | 'language'
-  | 'currency'
-  | 'inbox';
-
-const MONEY_LABELS = {
-  VND: 'VNĐ (₫)',
-  USD: 'USD ($)',
-  EUR: 'EUR (€)',
-  KRW: 'KRW (₩)',
-  JPY: 'JPY (¥)',
-};
-
-const LOCALES = {
-  vi: 'vi-VN',
-  en: 'en-US',
-  ko: 'ko-KR',
-  ja: 'ja-JP',
-  zh: 'zh-CN',
-};
-
-
-
-function Panel({
-  title,
-  closeLabel,
-  close,
-  children,
-  colors,
-  scroll = true,
-  message,
-  messageColor,
-}: {
-  title: string;
-  closeLabel: string;
-  close: () => void;
-  children: ReactNode;
-  colors: Colors;
-  scroll?: boolean;
-  message?: string;
-  messageColor?: string;
-}) {
-  const insets = useSafeAreaInsets();
-
-  return (
-    <Modal
-      visible
-      transparent
-      animationType="slide"
-      onRequestClose={close}
-    >
-      <KeyboardAvoidingView
-        behavior={
-          Platform.OS === 'ios'
-            ? 'padding'
-            : 'height'
-        }
-        style={{
-          flex: 1,
-          backgroundColor: colors.overlay,
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        }}
-      >
-        <Pressable
-          style={StyleSheet.absoluteFill}
-          onPress={close}
-          accessibilityLabel={closeLabel}
-        />
-
-        <View
-          accessibilityViewIsModal
-          style={{
-            width: '100%',
-            maxWidth: 650,
-            maxHeight: '88%',
-            ...(scroll ? {} : { height: '80%' }),
-            backgroundColor: colors.card,
-            borderTopLeftRadius: 24,
-            borderTopRightRadius: 24,
-            paddingBottom: Math.max(
-              insets.bottom,
-              12,
-            ),
-          }}
-        >
-          <View
-            style={{
-              padding: 18,
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderBottomWidth: 1,
-              borderColor: colors.line,
-            }}
-          >
-            <Text
-              style={{
-                flex: 1,
-                color: colors.text,
-                fontSize: 17,
-                fontWeight: '800',
-              }}
-            >
-              {title}
-            </Text>
-
-            <Pressable
-              onPress={close}
-              hitSlop={12}
-              accessibilityRole="button"
-              accessibilityLabel={closeLabel}
-            >
-              <Ionicons
-                name="close"
-                size={23}
-                color={colors.muted}
-              />
-            </Pressable>
-          </View>
-
-          {!!message && (
-            <Text
-              accessibilityRole="alert"
-              style={{
-                padding: 14,
-                color:
-                  messageColor ??
-                  colors.danger,
-              }}
-            >
-              {message}
-            </Text>
-          )}
-
-          {scroll ? (
-            <ScrollView
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={{
-                padding: 18,
-                gap: 12,
-              }}
-            >
-              {children}
-            </ScrollView>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                padding: 16,
-                gap: 12,
-              }}
-            >
-              {children}
-            </View>
-          )}
-        </View>
-      </KeyboardAvoidingView>
-    </Modal>
-  );
-}
-
-function Row({
-  icon,
-  tint,
-  title,
-  hint,
-  value,
-  onPress,
-  right,
-  disabled,
-  last = false,
-}: {
-  icon: IconName;
-  tint: string;
-  title: string;
-  hint?: string;
-  value?: string;
-  onPress?: () => void;
-  right?: ReactNode;
-  disabled?: boolean;
-  last?: boolean;
-}) {
-  const c = useSettingsColors();
-
-  const style = {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    padding: 14,
-    gap: 11,
-    borderBottomWidth: last ? 0 : 1,
-    borderColor: c.line,
-  };
-
-  const content = (
-    <>
-      <View
-        style={{
-          width: 33,
-          height: 33,
-          borderRadius: 11,
-          backgroundColor: tint + '18',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Ionicons
-          name={icon}
-          size={18}
-          color={tint}
-        />
-      </View>
-
-      <View style={{ flex: 1, gap: 3 }}>
-        <Text
-          style={{
-            color: c.text,
-            fontSize: 13,
-            fontWeight: '600',
-          }}
-        >
-          {title}
-        </Text>
-
-        {!!hint && (
-          <Text
-            style={{
-              color: c.muted,
-              fontSize: 10,
-              lineHeight: 15,
-            }}
-          >
-            {hint}
-          </Text>
-        )}
-      </View>
-
-      {right ?? (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 5,
-          }}
-        >
-          {!!value && (
-            <Text
-              style={{
-                color: c.green,
-                fontSize: 11,
-                fontWeight: '700',
-              }}
-            >
-              {value}
-            </Text>
-          )}
-
-          <Ionicons
-            name="chevron-forward"
-            size={15}
-            color={c.muted}
-          />
-        </View>
-      )}
-    </>
-  );
-
-  return onPress ? (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="button"
-      style={style}
-    >
-      {content}
-    </Pressable>
-  ) : (
-    <View style={style}>
-      {content}
-    </View>
-  );
-}
-
-function SettingsButton({
-  label,
-  onPress,
-  disabled = false,
-}: {
-  label: string;
-  onPress: () => void;
-  disabled?: boolean;
-}) {
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="button"
-      style={{
-        paddingVertical: 11,
-        paddingHorizontal: 14,
-        backgroundColor: '#087F61',
-        borderRadius: 12,
-        alignItems: 'center',
-        opacity: disabled ? 0.5 : 1,
-      }}
-    >
-      <Text
-        style={{
-          color: '#FFF',
-          fontSize: 12,
-          fontWeight: '800',
-        }}
-      >
-        {label}
-      </Text>
-    </Pressable>
-  );
-}
+type IconName =
+  ComponentProps<typeof Ionicons>['name'];
 
 export default function SettingsScreen() {
   const snapshot = useAppSettings();
+  const account = useAccount();
+  const c = useSettingsColors();
+  const insets = useSafeAreaInsets();
 
   const native = useSyncExternalStore(
     notificationStatus.subscribe,
@@ -394,22 +63,14 @@ export default function SettingsScreen() {
     notificationStatus.getServerSnapshot,
   );
 
-  const c = useSettingsColors();
-  const insets = useSafeAreaInsets();
-
   const [panel, setPanel] =
     useState<PanelName | null>(null);
 
-  const [name, setName] = useState('');
+  const [height, setHeight] = useState(0);
   const [working, setWorking] = useState(false);
+  const [message, setMessage] = useState('');
 
   const lock = useRef(false);
-
-  const [message, setMessage] = useState<{
-    text: string;
-    ok: boolean;
-  } | null>(null);
-
   const value = snapshot.settings;
   const language = value?.language ?? 'vi';
 
@@ -418,6 +79,17 @@ export default function SettingsScreen() {
   ) => translate(language, key);
 
   const busy = working || snapshot.saving;
+  const dense = height > 0 && height < 620;
+
+  const error =
+    message ||
+    (
+      snapshot.error
+        ? t(snapshot.error)
+        : native.error
+          ? t(native.error)
+          : ''
+    );
 
   const version =
     Constants.expoConfig?.version ??
@@ -425,39 +97,28 @@ export default function SettingsScreen() {
 
   async function act(
     operation: () => Promise<unknown>,
-    success?: string,
+    success = '',
   ) {
-    if (
-      lock.current ||
-      snapshot.saving
-    ) {
+    if (lock.current || snapshot.saving) {
       return false;
     }
 
     lock.current = true;
     setWorking(true);
-    setMessage(null);
+    setMessage('');
 
     try {
       await operation();
-
-      if (success) {
-        setMessage({
-          text: success,
-          ok: true,
-        });
-      }
-
+      setMessage(success);
       return true;
-    } catch (error) {
-      setMessage({
-        text: t(
-          error instanceof SettingsError
-            ? error.code
+    } catch (e) {
+      setMessage(
+        t(
+          e instanceof SettingsError
+            ? e.code
             : 'nativeError',
         ),
-        ok: false,
-      });
+      );
 
       return false;
     } finally {
@@ -466,47 +127,140 @@ export default function SettingsScreen() {
     }
   }
 
+  function logout() {
+    if (account.busy || busy) return;
+
+    Alert.alert(
+      'Đăng xuất?',
+      'Bạn có thể đăng nhập lại bằng Google.',
+      [
+        {
+          text: t('close'),
+          style: 'cancel',
+        },
+        {
+          text: 'Đăng xuất',
+          style: 'destructive',
+          onPress: () => {
+            void accountActions.signOut();
+          },
+        },
+      ],
+    );
+  }
+
+  function row(
+    icon: IconName,
+    label: string,
+    text: string,
+    press: () => void,
+  ) {
+    return (
+      <Pressable
+        accessibilityRole="button"
+        disabled={busy}
+        onPress={press}
+        style={[
+          st.row,
+          {
+            minHeight: dense ? 40 : 48,
+            borderColor: c.line,
+          },
+        ]}
+      >
+        <Ionicons
+          name={icon}
+          size={20}
+          color={c.green}
+        />
+
+        <Text
+          numberOfLines={1}
+          style={[st.label, { color: c.text }]}
+        >
+          {label}
+        </Text>
+
+        <Text
+          numberOfLines={1}
+          style={{
+            color: c.muted,
+            fontSize: 12,
+            maxWidth: '42%',
+          }}
+        >
+          {text}
+        </Text>
+
+        <Ionicons
+          name="chevron-forward"
+          size={17}
+          color={c.muted}
+        />
+      </Pressable>
+    );
+  }
+
+  function option(
+    label: string,
+    selected: boolean,
+    choose: () => Promise<unknown>,
+  ) {
+    return (
+      <Pressable
+        key={label}
+        accessibilityRole="button"
+        accessibilityState={{ selected }}
+        disabled={busy}
+        onPress={() => {
+          void act(choose).then(ok => {
+            if (ok) setPanel(null);
+          });
+        }}
+        style={[
+          st.option,
+          {
+            backgroundColor:
+              selected ? c.pale : c.input,
+          },
+        ]}
+      >
+        <Text
+          style={{
+            flex: 1,
+            color: c.text,
+            fontSize: 14,
+          }}
+        >
+          {label}
+        </Text>
+
+        {selected && (
+          <Ionicons
+            name="checkmark-circle"
+            size={21}
+            color={c.green}
+          />
+        )}
+      </Pressable>
+    );
+  }
+
   const card = {
     backgroundColor: c.card,
-    borderWidth: 1,
     borderColor: c.line,
-    borderRadius: 18,
+    borderWidth: 1,
+    borderRadius: 16,
     overflow: 'hidden' as const,
-  };
-
-  const heading = (text: string) => (
-    <Text
-      style={{
-        color: c.muted,
-        fontSize: 10,
-        fontWeight: '800',
-        textTransform: 'uppercase',
-        marginLeft: 4,
-      }}
-    >
-      {text}
-    </Text>
-  );
-
-  const close = () => {
-    if (
-      !lock.current &&
-      !snapshot.saving
-    ) {
-      setPanel(null);
-    }
   };
 
   if (!snapshot.ready || !value) {
     return (
       <View
-        style={{
-          flex: 1,
-          padding: 24,
-          justifyContent: 'center',
-          gap: 14,
-          backgroundColor: c.background,
-        }}
+        style={[
+          st.loading,
+          { backgroundColor: c.background },
+        ]}
       >
         {snapshot.error ? (
           <>
@@ -514,13 +268,15 @@ export default function SettingsScreen() {
               {t(snapshot.error)}
             </Text>
 
-            <SettingsButton
-              label={t('retry')}
+            <Pressable
               onPress={() =>
                 void settingsStore.load()
               }
-              disabled={busy}
-            />
+            >
+              <Text style={{ color: c.green }}>
+                {t('retry')}
+              </Text>
+            </Pressable>
           </>
         ) : (
           <ActivityIndicator color={c.green} />
@@ -533,61 +289,6 @@ export default function SettingsScreen() {
     notice => notice.readAt === null,
   ).length;
 
-
-
-  const errorText =
-    message?.text ??
-    (
-      snapshot.error
-        ? t(snapshot.error)
-        : native.error
-          ? t(native.error)
-          : undefined
-    );
-
-  const option = (
-    label: string,
-    selected: boolean,
-    choose: () => Promise<unknown>,
-  ) => (
-    <Pressable
-      key={label}
-      disabled={busy}
-      onPress={() => {
-        void act(choose).then(ok => {
-          if (ok) setPanel(null);
-        });
-      }}
-      style={{
-        padding: 14,
-        borderRadius: 12,
-        backgroundColor:
-          selected ? c.pale : c.input,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-      }}
-    >
-      <Text
-        style={{
-          flex: 1,
-          color: c.text,
-          fontWeight: selected ? '800' : '500',
-        }}
-      >
-        {label}
-      </Text>
-
-      {selected && (
-        <Ionicons
-          name="checkmark-circle"
-          size={20}
-          color={c.green}
-        />
-      )}
-    </Pressable>
-  );
-
   return (
     <View
       style={{
@@ -598,182 +299,143 @@ export default function SettingsScreen() {
         paddingRight: insets.right,
       }}
     >
-      <ScrollView
-        contentContainerStyle={{
-          padding: 14,
-          gap: 14,
-          paddingBottom: Math.max(
-            24,
-            insets.bottom,
-          ),
-          width: '100%',
-          maxWidth: 680,
-          alignSelf: 'center',
-        }}
+      <View
+        onLayout={event =>
+          setHeight(event.nativeEvent.layout.height)
+        }
+        style={[
+          st.page,
+          {
+            gap: dense ? 6 : 10,
+            paddingVertical: dense ? 8 : 12,
+          },
+        ]}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          <View style={{ flex: 1, gap: 4 }}>
-            <Text
-              style={{
-                fontSize: 19,
-                fontWeight: '900',
-                color: c.text,
-              }}
-            >
-              {t('title')}
-            </Text>
-
-            <Text
-              style={{
-                color: c.muted,
-                fontSize: 11,
-              }}
-            >
-              {t('subtitle')}
-            </Text>
-          </View>
-
+        <View style={st.header}>
           <Text
             style={{
-              paddingHorizontal: 9,
-              paddingVertical: 5,
-              backgroundColor: c.pale,
-              color: c.green,
-              borderRadius: 12,
-              fontSize: 10,
+              flex: 1,
+              color: c.text,
+              fontSize: 20,
               fontWeight: '800',
             }}
           >
-                       v{version}
+            {t('title')}
+          </Text>
+
+          <Text
+            style={{
+              color: c.green,
+              fontSize: 11,
+            }}
+          >
+            v{version}
           </Text>
         </View>
 
-              <AccountProfileCard />
+        <AccountProfileCard />
 
-        <TripHistoryCard />
-
-        {heading(t('appearanceGroup'))}
+        <TripHistoryCard compact />
 
         <View style={card}>
-          <Row
-            icon="moon-outline"
-            tint="#9364D8"
-            title={t('appearance')}
-            hint={t('appearanceScope')}
-            value={t(value.theme)}
-            disabled={busy}
-            onPress={() => setPanel('theme')}
-          />
-
-          <Row
-            icon="language-outline"
-            tint="#4388DF"
-            title={t('language')}
-            value={
-              LANGUAGE_LABELS[value.language]
-            }
-            hint={t('languageScope')}
-            disabled={busy}
-            onPress={() => setPanel('language')}
-          />
-
-          <Row
-            icon="cash-outline"
-            tint="#22A775"
-            title={t('currency')}
-            value={MONEY_LABELS[value.currency]}
-            hint={t('currencyScope')}
-            disabled={busy}
-            onPress={() => setPanel('currency')}
-          />
-
-          <Row
-            icon="notifications-outline"
-            tint="#D89A24"
-            title={t('reminder')}
-            hint={
-              Platform.OS === 'web'
-                ? t('unsupported')
-                : value.remindersEnabled &&
-                    native.ready &&
-                    !native.granted
-                  ? t('blocked')
-                  : t('reminderHint')
-            }
-            right={
-              <Switch
-                value={value.remindersEnabled}
-                disabled={
-                  busy ||
-                  Platform.OS === 'web'
-                }
-                accessibilityLabel={t('reminder')}
-                trackColor={{
-                  false: c.line,
-                  true: '#3E8E4F',
-                }}
-                thumbColor="#FFF"
-                onValueChange={enabled =>
-                  void act(() =>
-                    setDailyReminder(enabled),
-                  )
-                }
-              />
-            }
-            last
-          />
-        </View>
-
-        {Platform.OS !== 'web' &&
-          native.ready &&
-          !native.granted && (
-            <Pressable
-              onPress={() =>
-                void act(() =>
-                  Linking.openSettings(),
-                )
-              }
-            >
-              <Text
-                style={{
-                  color: c.green,
-                  fontSize: 11,
-                }}
-              >
-                {t('openSettings')}
-              </Text>
-            </Pressable>
+          {row(
+            'moon-outline',
+            t('appearance'),
+            t(value.theme),
+            () => setPanel('theme'),
           )}
 
-        {heading(t('support'))}
+          {row(
+            'language-outline',
+            t('language'),
+            LANGUAGE_LABELS[value.language],
+            () => setPanel('language'),
+          )}
 
-        <View style={card}>
-          <Row
-            icon="mail-outline"
-            tint="#22A775"
-            title={t('inbox')}
-            value={String(unread)}
+          <View
+            style={[
+              st.row,
+              {
+                minHeight: dense ? 40 : 48,
+                borderBottomWidth: 0,
+              },
+            ]}
+          >
+            <Ionicons
+              name="notifications-outline"
+              size={20}
+              color={c.green}
+            />
+
+            <Text
+              style={[
+                st.label,
+                { color: c.text },
+              ]}
+            >
+              {t('reminder')}
+            </Text>
+
+            <Switch
+              accessibilityLabel={t('reminder')}
+              value={value.remindersEnabled}
+              disabled={
+                busy || Platform.OS === 'web'
+              }
+              trackColor={{
+                false: c.line,
+                true: c.green,
+              }}
+              thumbColor="#FFF"
+              onValueChange={enabled => {
+                void act(() =>
+                  setDailyReminder(enabled),
+                );
+              }}
+            />
+          </View>
+        </View>
+
+        <View style={[card, st.support]}>
+          <Pressable
+            accessibilityRole="button"
             disabled={busy}
             onPress={() => {
-              setMessage(null);
+              setMessage('');
               setPanel('inbox');
+            }}
+            style={st.supportButton}
+          >
+            <Ionicons
+              name="notifications-outline"
+              size={19}
+              color={c.green}
+            />
+
+            <Text
+              style={{
+                color: c.text,
+                fontSize: 12,
+              }}
+            >
+              {t('inbox')}
+              {unread ? ` (${unread})` : ''}
+            </Text>
+          </Pressable>
+
+          <View
+            style={{
+              width: 1,
+              height: 22,
+              backgroundColor: c.line,
             }}
           />
 
-          <Row
-            icon="call-outline"
-            tint="#20A3BE"
-            title={t('hotline')}
-            value="1022"
-            last
+          <Pressable
+            accessibilityRole="button"
             disabled={busy}
-            onPress={() => {
+            style={st.supportButton}
+            onPress={() =>
               Alert.alert(
                 t('hotline'),
                 '1022',
@@ -784,325 +446,476 @@ export default function SettingsScreen() {
                   },
                   {
                     text: t('call'),
-                    onPress: () =>
+                    onPress: () => {
                       void act(() =>
-                        Linking.openURL(
-                          'tel:1022',
-                        ),
-                      ),
+                        Linking.openURL('tel:1022'),
+                      );
+                    },
                   },
                 ],
-              );
-            }}
-          />
+              )
+            }
+          >
+            <Ionicons
+              name="call-outline"
+              size={19}
+              color={c.green}
+            />
+
+            <Text
+              style={{
+                color: c.text,
+                fontSize: 12,
+              }}
+            >
+              1022
+            </Text>
+          </Pressable>
         </View>
 
-        {busy && (
-          <ActivityIndicator color={c.green} />
-        )}
-
-        {!!errorText && (
-          <Text
-            accessibilityRole="alert"
-            style={{
-              color:
-                message?.ok
-                  ? c.green
-                  : c.danger,
-              fontSize: 12,
-              lineHeight: 18,
-            }}
+        {!!error && !panel && (
+          <Pressable
+            accessibilityRole="button"
+            onPress={() =>
+              setPanel('inbox')
+            }
           >
-            {errorText}
-          </Text>
+            <Text
+              numberOfLines={2}
+              style={{
+                color: c.danger,
+                fontSize: 12,
+              }}
+            >
+              {error}
+            </Text>
+          </Pressable>
         )}
 
-        <Text
-          style={{
-            color: c.muted,
-            fontSize: 10,
-            lineHeight: 16,
-          }}
-        >
-          {t('localOnly')}
-        </Text>
+        <View style={{ flex: 1 }} />
 
-        <Text
-          style={{
-            color: c.muted,
-            textAlign: 'center',
-            fontSize: 10,
-          }}
-        >
-          Smart Da Nang Travel
-        </Text>
-      </ScrollView>
+        {account.user && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Đăng xuất"
+            disabled={account.busy || busy}
+            onPress={logout}
+            style={[
+              st.logout,
+              {
+                borderColor: c.line,
+                backgroundColor: c.card,
+                opacity: account.busy ? 0.5 : 1,
+              },
+            ]}
+          >
+            {account.busy ? (
+              <ActivityIndicator color={c.danger} />
+            ) : (
+              <Ionicons
+                name="log-out-outline"
+                size={20}
+                color={c.danger}
+              />
+            )}
+
+            <Text
+              style={{
+                color: c.danger,
+                fontSize: 14,
+                fontWeight: '700',
+              }}
+            >
+              Đăng xuất
+            </Text>
+          </Pressable>
+        )}
+      </View>
 
       {panel && (
-        <Panel
-          colors={c}
-          title={t(
-            panel === 'profile'
-              ? 'edit'
-              : panel === 'theme'
-                ? 'appearance'
-                : panel,
-          )}
-          closeLabel={t('close')}
-          close={close}
-          scroll={panel !== 'inbox'}
-          message={errorText}
-          messageColor={
-            message?.ok ? c.green : c.danger
-          }
+        <Modal
+          visible
+          transparent
+          animationType="slide"
+          onRequestClose={() => {
+            if (!busy) setPanel(null);
+          }}
         >
-          {panel === 'profile' && (
-            <>
-              <Text style={{ color: c.muted }}>
-                {t('name')}
-              </Text>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              backgroundColor: c.overlay,
+            }}
+          >
+            <Pressable
+              accessibilityLabel={t('close')}
+              style={StyleSheet.absoluteFill}
+              onPress={() => {
+                if (!busy) setPanel(null);
+              }}
+            />
 
-              <TextInput
-                value={name}
-                onChangeText={setName}
-                maxLength={60}
-                editable={!busy}
-                accessibilityLabel={t('name')}
-                placeholder={t('guest')}
-                placeholderTextColor={c.muted}
-                style={{
-                  backgroundColor: c.input,
-                  borderColor: c.line,
-                  borderWidth: 1,
-                  borderRadius: 12,
-                  color: c.text,
-                  padding: 12,
-                }}
-              />
-
-              <SettingsButton
-                label={
-                  busy
-                    ? t('saving')
-                    : t('save')
-                }
-                disabled={busy}
-                onPress={() => {
-                  void act(() =>
-                    settingsStore.update(
-                      settings => ({
-                        ...settings,
-                        profile: {
-                          ...settings.profile,
-                          name: name.trim(),
-                        },
-                      }),
-                    ),
-                  ).then(ok => {
-                    if (ok) setPanel(null);
-                  });
-                }}
-              />
-            </>
-          )}
-
-          {panel === 'theme' &&
-            (
-              [
-                'system',
-                'light',
-                'dark',
-              ] as ThemeMode[]
-            ).map(theme =>
-              option(
-                t(theme),
-                value.theme === theme,
-                () =>
-                  settingsStore.update(
-                    settings => ({
-                      ...settings,
-                      theme,
-                    }),
+            <View
+              accessibilityViewIsModal
+              style={[
+                st.sheet,
+                {
+                  backgroundColor: c.card,
+                  paddingBottom: Math.max(
+                    insets.bottom,
+                    16,
                   ),
-              ),
-            )}
+                },
+              ]}
+            >
+              <View style={st.header}>
+                <Text
+                  style={{
+                    flex: 1,
+                    color: c.text,
+                    fontSize: 18,
+                    fontWeight: '700',
+                  }}
+                >
+                  {t(
+                    panel === 'theme'
+                      ? 'appearance'
+                      : panel,
+                  )}
+                </Text>
 
-          {panel === 'language' &&
-            LANGUAGES.map(language =>
-              option(
-                LANGUAGE_LABELS[language],
-                value.language === language,
-                () =>
-                  settingsStore.update(
-                    settings => ({
-                      ...settings,
-                      language,
-                    }),
-                  ),
-              ),
-            )}
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t('close')}
+                  disabled={busy}
+                  onPress={() => setPanel(null)}
+                  style={{ padding: 8 }}
+                >
+                  <Ionicons
+                    name="close"
+                    size={23}
+                    color={c.muted}
+                  />
+                </Pressable>
+              </View>
 
-          {panel === 'currency' &&
-            CURRENCIES.map(currency =>
-              option(
-                MONEY_LABELS[currency],
-                value.currency === currency,
-                () =>
-                  settingsStore.update(
-                    settings => ({
-                      ...settings,
-                      currency,
-                    }),
-                  ),
-              ),
-            )}
+              {!!error && (
+                <Text
+                  accessibilityRole="alert"
+                  style={{
+                    color: c.danger,
+                    fontSize: 12,
+                  }}
+                >
+                  {error}
+                </Text>
+              )}
 
-          {panel === 'inbox' && (
-            <>
-              <FlatList
-                data={value.inbox}
-                keyExtractor={item => item.id}
-                style={{ flex: 1 }}
-                contentContainerStyle={{
-                  gap: 10,
-                  flexGrow: 1,
-                }}
-                ListEmptyComponent={
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      padding: 35,
-                      gap: 10,
-                    }}
-                  >
-                    <Ionicons
-                      name="notifications-off-outline"
-                      size={36}
-                      color={c.muted}
-                    />
-
-                    <Text
-                      style={{
-                        color: c.muted,
-                      }}
-                    >
-                      {t('emptyInbox')}
-                    </Text>
-                  </View>
-                }
-                renderItem={({ item }) => (
-                  <Pressable
-                    disabled={busy}
-                    onPress={() =>
-                      void act(() =>
+              {panel === 'theme' && (
+                <View style={{ gap: 8 }}>
+                  {(
+                    [
+                      'system',
+                      'light',
+                      'dark',
+                    ] as ThemeMode[]
+                  ).map(theme =>
+                    option(
+                      t(theme),
+                      value.theme === theme,
+                      () =>
                         settingsStore.update(
                           settings => ({
                             ...settings,
-                            inbox:
-                              settings.inbox.map(
-                                notice =>
-                                  notice.id ===
-                                  item.id
-                                    ? {
-                                        ...notice,
-                                        readAt:
-                                          notice.readAt ??
-                                          new Date().toISOString(),
-                                      }
-                                    : notice,
-                              ),
+                            theme,
                           }),
                         ),
-                      )
-                    }
-                    style={{
-                      backgroundColor:
-                        item.readAt
-                          ? c.input
-                          : c.pale,
-                      borderRadius: 13,
-                      padding: 13,
-                      gap: 6,
+                    ),
+                  )}
+                </View>
+              )}
+
+              {panel === 'language' && (
+                <ScrollView
+                  contentContainerStyle={{ gap: 8 }}
+                >
+                  {LANGUAGES.map(next =>
+                    option(
+                      LANGUAGE_LABELS[next],
+                      value.language === next,
+                      () =>
+                        settingsStore.update(
+                          settings => ({
+                            ...settings,
+                            language: next,
+                          }),
+                        ),
+                    ),
+                  )}
+                </ScrollView>
+              )}
+
+              {panel === 'inbox' && (
+                <>
+                  {Platform.OS !== 'web' &&
+                    native.ready &&
+                    !native.granted && (
+                      <Pressable
+                        accessibilityRole="button"
+                        onPress={() =>
+                          void act(() =>
+                            Linking.openSettings(),
+                          )
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: c.green,
+                            fontSize: 12,
+                          }}
+                        >
+                          {t('openSettings')}
+                        </Text>
+                      </Pressable>
+                    )}
+
+                  <FlatList
+                    data={value.inbox}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={{
+                      gap: 8,
+                      flexGrow: 1,
                     }}
-                  >
-                    <Text
-                      style={{
-                        color: c.text,
-                        fontWeight: '800',
-                      }}
-                    >
-                      {item.title}
-                    </Text>
+                    style={{ flex: 1 }}
+                    ListEmptyComponent={
+                      <Text
+                        style={{
+                          color: c.muted,
+                          paddingVertical: 24,
+                        }}
+                      >
+                        {t('emptyInbox')}
+                      </Text>
+                    }
+                    renderItem={({ item }) => (
+                      <Pressable
+                        disabled={busy}
+                        style={[
+                          st.option,
+                          {
+                            flexDirection: 'column',
+                            alignItems: 'stretch',
+                            backgroundColor:
+                              item.readAt
+                                ? c.input
+                                : c.pale,
+                          },
+                        ]}
+                        onPress={() =>
+                          void act(() =>
+                            settingsStore.update(
+                              settings => ({
+                                ...settings,
+                                inbox:
+                                  settings.inbox.map(
+                                    notice =>
+                                      notice.id === item.id
+                                        ? {
+                                            ...notice,
+                                            readAt:
+                                              notice.readAt ??
+                                              new Date().toISOString(),
+                                          }
+                                        : notice,
+                                  ),
+                              }),
+                            ),
+                          )
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: c.text,
+                            fontSize: 14,
+                            fontWeight: '700',
+                          }}
+                        >
+                          {item.title}
+                        </Text>
 
-                    <Text
-                      style={{
-                        color: c.text,
-                        fontSize: 12,
-                        lineHeight: 18,
-                      }}
-                    >
-                      {item.body}
-                    </Text>
+                        <Text
+                          style={{
+                            color: c.text,
+                            fontSize: 13,
+                            lineHeight: 19,
+                          }}
+                        >
+                          {item.body}
+                        </Text>
 
-                    <Text
-                      style={{
-                        color: c.muted,
-                        fontSize: 10,
-                      }}
-                    >
-                      {new Date(
-                        item.createdAt,
-                      ).toLocaleString(
-                        LOCALES[language],
-                      )}
-                    </Text>
-                  </Pressable>
-                )}
-              />
+                        <Text
+                          style={{
+                            color: c.muted,
+                            fontSize: 11,
+                          }}
+                        >
+                          {new Date(
+                            item.createdAt,
+                          ).toLocaleString(
+                            language,
+                            {
+                              timeZone:
+                                'Asia/Ho_Chi_Minh',
+                            },
+                          )}
+                        </Text>
+                      </Pressable>
+                    )}
+                  />
 
-              <SettingsButton
-                label={t('readAll')}
-                disabled={
-                  busy ||
-                  unread === 0
-                }
-                onPress={() =>
-                  void act(() =>
-                    settingsStore.update(
-                      settings => ({
-                        ...settings,
-                        inbox:
-                          settings.inbox.map(
-                            notice => ({
-                              ...notice,
-                              readAt:
-                                notice.readAt ??
-                                new Date().toISOString(),
+                  <View style={st.support}>
+                    <Pressable
+                      disabled={busy || !unread}
+                      style={st.supportButton}
+                      onPress={() =>
+                        void act(() =>
+                          settingsStore.update(
+                            settings => ({
+                              ...settings,
+                              inbox:
+                                settings.inbox.map(
+                                  notice => ({
+                                    ...notice,
+                                    readAt:
+                                      notice.readAt ??
+                                      new Date().toISOString(),
+                                  }),
+                                ),
                             }),
                           ),
-                      }),
-                    ),
-                  )
-                }
-              />
+                        )
+                      }
+                    >
+                      <Text
+                        style={{
+                          color: c.green,
+                          fontSize: 12,
+                        }}
+                      >
+                        {t('readAll')}
+                      </Text>
+                    </Pressable>
 
-              <SettingsButton
-                label={t('test')}
-                onPress={() =>
-                  void act(
-                    sendTestNotification,
-                    t('testSent'),
-                  )
-                }
-                disabled={
-                  busy ||
-                  Platform.OS === 'web'
-                }
-              />
-            </>
-          )}
-        </Panel>
+                    <Pressable
+                      disabled={
+                        busy ||
+                        Platform.OS === 'web'
+                      }
+                      style={st.supportButton}
+                      onPress={() =>
+                        void act(
+                          sendTestNotification,
+                          t('testSent'),
+                        )
+                      }
+                    >
+                      <Text
+                        style={{
+                          color: c.green,
+                          fontSize: 12,
+                        }}
+                      >
+                        {t('test')}
+                      </Text>
+                    </Pressable>
+                  </View>
+                </>
+              )}
+
+              {busy && (
+                <ActivityIndicator color={c.green} />
+              )}
+            </View>
+          </View>
+        </Modal>
       )}
     </View>
   );
 }
+
+const st = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    padding: 24,
+  },
+  page: {
+    flex: 1,
+    paddingHorizontal: 14,
+    paddingBottom: 16,
+    width: '100%',
+    maxWidth: 680,
+    alignSelf: 'center',
+  },
+  header: {
+    minHeight: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  label: {
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  support: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  supportButton: {
+    flex: 1,
+    minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingHorizontal: 8,
+  },
+  logout: {
+    minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 9,
+    borderWidth: 1,
+    borderRadius: 14,
+  },
+  sheet: {
+    height: '78%',
+    padding: 16,
+    gap: 12,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    maxWidth: 680,
+    width: '100%',
+    alignSelf: 'center',
+  },
+  option: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    padding: 14,
+    borderRadius: 12,
+  },
+});

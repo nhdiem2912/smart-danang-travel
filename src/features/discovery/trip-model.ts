@@ -53,10 +53,10 @@ export const PERIOD_WINDOWS: Record<
     end: 18 * 60,
     label: '14:00–18:00',
   },
-  evening: {
+   evening: {
     start: 18 * 60,
-    end: 22 * 60 + 30,
-    label: '18:00–22:30',
+    end: 24 * 60,
+    label: '18:00–24:00',
   },
 };
 
@@ -102,7 +102,18 @@ export type LegProgress = {
   savedAt: string;
   checkpoint: LegCheckpoint;
 };
+export type StopActual = {
+  startedAt?: string;
+  arrivedAt?: string;
+  leftAt?: string;
+  manualRecordedAt?: string;
+  checkInMethod?: 'navigation' | 'manual';
+};
 
+export type SkippedStop = {
+  stop: DraftStop;
+  skippedAt: string;
+};  
 export type DraftStop = {
   id: string;
   placeId: string;
@@ -112,11 +123,20 @@ export type DraftStop = {
   order: number;
   visitMinutes: number | null;
   completed: boolean;
+
   result?: LegResult;
   previousResults?: LegResult[];
   progress?: LegProgress;
   orderLocked?: boolean;
   schedule?: StopSchedule;
+
+  actual?: {
+    startedAt?: string;
+    arrivedAt?: string;
+    leftAt?: string;
+    manualRecordedAt?: string;
+    checkInMethod?: 'navigation' | 'manual';
+  };
 };
 
 export type TripSettings = {
@@ -143,6 +163,12 @@ export type TripDraft = {
   startDate: string;
   dayCount: number;
   stops: DraftStop[];
+
+  skippedStops?: {
+    stop: DraftStop;
+    skippedAt: string;
+  }[];
+
   settings: TripSettings;
   updatedAt: string;
   review?: TripReview;

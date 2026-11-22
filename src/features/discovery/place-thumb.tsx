@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { Text, View } from 'react-native';
 
 import {
-    PLACE_CATEGORIES,
-    type Place,
+  PLACE_CATEGORIES,
+  type Place,
 } from '@/data/place.types';
 
 const icons = {
   tham_quan: '🏛️',
-  nha_hang: '🍽️',
+  an_uong: '🍽️',
   mua_sam: '🛍️',
   khach_san: '🏨',
   giai_tri: '🎡',

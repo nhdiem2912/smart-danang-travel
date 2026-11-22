@@ -159,6 +159,230 @@ h2,h3,p{margin:0}
   text-align:left;
   padding:0
 }
+  .avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.avatar-image[hidden] {
+  display: none;
+}
+.avatar-button {
+  padding: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+  /* Cân ba khối chính */
+.app,
+.app.week {
+  grid-template-rows:
+    44px
+    repeat(3, minmax(0, 1fr))
+    48px;
+  gap: 8px;
+}
+
+/* Bỏ những dòng phụ lặp lại */
+.hero .subtitle,
+.account,
+.night > .row small,
+.trip p {
+  display: none;
+}
+
+.identity small {
+  font-size: 11px;
+}
+
+.identity strong {
+  font-size: 14px;
+}
+
+.weather {
+  padding: 8px;
+  gap: 4px;
+}
+
+.weather h3,
+.night h3 {
+  font-size: 14px;
+}
+
+.condition {
+  font-size: 11px;
+}
+
+.stats,
+.forecast-header,
+.switch button {
+  font-size: 11px;
+}
+
+.forecast-header .refresh {
+  font-size: 11px;
+  white-space: nowrap;
+  padding: 3px 0;
+}
+
+/* Dự báo giờ và tuần đều vuốt ngang */
+.forecast-track {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  min-height: 0;
+  flex-shrink: 0;
+}
+
+.forecast-track::-webkit-scrollbar {
+  display: none;
+}
+
+.forecast-card {
+  flex: 0 0 68px;
+  background: #ffffff20;
+  border-radius: 9px;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.forecast-card strong,
+.forecast-card small {
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.forecast-card b {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.event-content strong {
+  font-size: 13px;
+  line-height: 17px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-content small {
+  font-size: 11px;
+}
+
+.event .tag {
+  font-size: 10px;
+}
+
+.navigate,
+.hero-open {
+  font-size: 11px;
+}
+
+.trip strong {
+  font-size: 13px;
+}
+
+.trip .cta {
+  font-size: 11px;
+}
+
+/* Màn hình thấp: giảm nội dung phụ */
+@media (max-height: 600px) {
+  .weather {
+    padding: 8px;
+    gap: 4px;
+  }
+
+  .weather .stats {
+    display: none;
+  }
+
+  .condition {
+    font-size: 10px;
+  }
+
+  .forecast-card {
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .temperature {
+    font-size: 24px;
+  }
+}
+
+@media (max-height: 500px) {
+  .app,
+  .app.week {
+    padding: 6px 10px;
+    gap: 6px;
+    grid-template-rows:
+      40px
+      repeat(3, minmax(0, 1fr))
+      40px;
+  }
+
+  .weather .condition,
+  .weather-small {
+    display: none;
+  }
+
+  .forecast-card {
+    padding: 3px;
+    gap: 1px;
+  }
+
+  .weather h3,
+  .night h3 {
+    font-size: 12px;
+  }
+
+  .forecast-header {
+    font-size: 10px;
+  }
+
+  .weather {
+    padding: 6px;
+  }
+
+  .temperature {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .switch button {
+    line-height: 14px;
+    padding: 2px 6px;
+  }
+}
+  .header > .icon:not(.avatar-button) {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--pale, #ecfdf5);
+}
+
+.header .icon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
 </style>
 </head>
 
@@ -166,7 +390,19 @@ h2,h3,p{margin:0}
 <main class="app" id="app">
 
   <header class="header">
-    <button class="icon" data-nav="settings" aria-label="Hồ sơ">◉</button>
+    <button
+  class="icon avatar-button"
+  data-nav="settings"
+  aria-label="Hồ sơ"
+>
+  <img
+    id="avatar-image"
+    class="avatar-image"
+    alt=""
+    hidden
+  >
+  <span id="avatar-fallback">D</span>
+</button>
 
     <div class="identity">
       <small class="muted">Xin chào</small>
@@ -176,8 +412,25 @@ h2,h3,p{margin:0}
       </div>
     </div>
 
-    <button class="icon" data-action="notifications" aria-label="Thông báo">♧</button>
-    <button class="icon" data-nav="settings" aria-label="Cài đặt">⚙</button>
+    <button
+  class="icon"
+  data-action="notifications"
+  aria-label="Thông báo"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
+  </svg>
+</button>
+<button
+  class="icon"
+  data-nav="settings"
+  aria-label="Cài đặt"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="m9 3-.6 2.2-2 .9-2-.6L2.8 9l1.5 1.6v2.8L2.8 15l1.6 3.5 2-.6 2 .9L9 21h6l.6-2.2 2-.9 2 .6 1.6-3.5-1.5-1.6v-2.8L21.2 9l-1.6-3.5-2 .6-2-.9L15 3Z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </svg>
+</button>
   </header>
 
   <section class="hero" id="hero">
@@ -421,110 +674,116 @@ h2,h3,p{margin:0}
     }
   }
 
-  function renderWeather() {
-    var weather = state.weather;
+ function renderWeather() {
+  var w = state.weather;
 
-    el('temperature').textContent =
-      weather ? weather.temperature + '°' : '—°';
+  el('temperature').textContent =
+    w ? w.temperature + '°' : '—°';
 
-    el('weather-icon').textContent =
-      weather ? weather.icon : '⛅';
+  el('weather-icon').textContent =
+    w ? w.icon : '⛅';
 
-    el('condition').textContent =
-      weather
-        ? weather.description + ' · ' + weather.updated
-        : state.weatherError || 'Đang tải thời tiết…';
+  el('condition').textContent = w
+    ? w.description + ' · ' + w.updated
+    : state.weatherError || 'Đang tải thời tiết…';
 
-    el('today-range').textContent =
-      weather && weather.days[0]
-        ? weather.days[0].low + '° / ' +
-          weather.days[0].high + '°'
-        : '— / —';
+  el('today-range').textContent =
+    w && w.days[0]
+      ? w.days[0].low + '° / ' + w.days[0].high + '°'
+      : '— / —';
 
-    el('humidity').textContent =
-      'Độ ẩm ' + (weather ? weather.humidity + '%' : '—');
+  el('humidity').textContent =
+    'Độ ẩm ' + (w ? w.humidity + '%' : '—');
 
-    el('uv').textContent =
-      'UV ' + (
-        weather && weather.uv !== null
-          ? weather.uv.toFixed(1)
-          : '—'
-      );
+  el('uv').textContent =
+    'UV ' +
+    (
+      w && w.uv !== null
+        ? w.uv.toFixed(1)
+        : '—'
+    );
 
-    el('wind').textContent =
-      'Gió ' + (weather ? weather.wind + ' km/h' : '—');
+  el('wind').textContent =
+    'Gió ' + (w ? w.wind + ' km/h' : '—');
 
-    el('app').classList.toggle('week', mode === 'week');
-    el('mode-hour').classList.toggle('active', mode === 'hour');
-    el('mode-week').classList.toggle('active', mode === 'week');
+  el('app').classList.toggle(
+    'week',
+    mode === 'week',
+  );
 
-    el('forecast-label').textContent =
-      mode === 'hour'
-        ? 'Dự báo theo giờ ↻'
-        : 'Dự báo theo tuần ↻';
+  el('mode-hour').classList.toggle(
+    'active',
+    mode === 'hour',
+  );
 
-    var forecast = el('forecast');
-    forecast.className = mode === 'hour' ? 'hourly' : 'weekly';
-    forecast.replaceChildren();
+  el('mode-week').classList.toggle(
+    'active',
+    mode === 'week',
+  );
 
-    if (!weather) return;
+  el('forecast-label').textContent = 'Dự báo ↻';
+
+  var forecast = el('forecast');
+  forecast.className = 'forecast-track';
+  forecast.replaceChildren();
+
+  if (!w) return;
+
+  var rows =
+    mode === 'hour' ? w.hours : w.days;
+
+  rows.forEach(function (item, index) {
+    var card = document.createElement('div');
+    card.className = 'forecast-card';
+
+    var label;
 
     if (mode === 'hour') {
-      weather.hours.forEach(function (hour) {
-        var cell = document.createElement('div');
-        cell.className = 'hour';
-
-        cell.append(
-          text('small', hour.time),
-          text('span', hour.icon),
-          text('b', hour.temperature + '°'),
-          text(
-            'small',
-            hour.rain === null ? '—' : hour.rain + '%'
-          )
-        );
-
-        forecast.append(cell);
-      });
+      label = item.time;
+    } else if (index === 0) {
+      label = 'Hôm nay';
     } else {
-      weather.days.forEach(function (day, index) {
-        var row = document.createElement('div');
-        row.className = 'day';
-
-        var range = document.createElement('div');
-        range.className = 'range';
-
-        range.append(
-          text('span', day.low + '°'),
-          text('span', '', 'bar')
-        );
-
-        var label =
-          index === 0
-            ? 'Hôm nay'
-            : new Intl.DateTimeFormat('vi-VN', {
-                weekday: 'short',
-                timeZone: 'Asia/Ho_Chi_Minh'
-              }).format(
-                new Date(day.date + 'T12:00:00+07:00')
-              );
-
-        row.append(
-          text('strong', label),
-          text('span', day.icon),
-          range,
-          text('strong', day.high + '°'),
-          text(
-            'span',
-            day.rain === null ? '—' : day.rain + '%'
-          )
-        );
-
-        row.title = day.description;
-        forecast.append(row);
-      });
+      label = new Intl.DateTimeFormat(
+        'vi-VN',
+        {
+          weekday: 'short',
+          timeZone: 'Asia/Ho_Chi_Minh',
+        },
+      ).format(
+        new Date(
+          item.date + 'T12:00:00+07:00',
+        ),
+      );
     }
-  }
+
+    var temperature =
+      mode === 'hour'
+        ? item.temperature
+        : item.high;
+
+    var rain =
+      item.rain === null
+        ? '—'
+        : item.rain + '%';
+
+    card.append(
+      text('strong', label),
+      text(
+        'b',
+        item.icon + ' ' + temperature + '°',
+      ),
+      text(
+        'small',
+        mode === 'hour'
+          ? rain
+          : item.low + '° · ' + rain,
+      ),
+    );
+
+    card.title = item.description || label;
+    forecast.append(card);
+  });
+}
 
   function navigateButton(event) {
     var button = text(
@@ -626,37 +885,79 @@ h2,h3,p{margin:0}
     }
   }
 
-  window.updateHome = function (next) {
-    state = next;
+  window.updateHome = function(next) {
+  state = next;
 
-    el('name').textContent = next.name || 'Du khách';
+  var avatar = el('avatar-image');
+  var fallback = el('avatar-fallback');
 
-    Object.keys(next.colors || {}).forEach(function (key) {
-      document.body.style.setProperty(
-        '--' + key,
-        next.colors[key]
-      );
-    });
+  fallback.textContent = (
+    next.name || 'Du khách'
+  ).trim().slice(0, 1).toUpperCase();
 
-    slide = slide % Math.max(
-      1,
-      (next.featured || []).length
-    );
+  var photo = '';
 
-    hero();
-    renderWeather();
-    renderEvents();
+  if (
+    typeof next.avatar === 'string' &&
+    (
+      next.avatar.indexOf('https://') === 0 ||
+      next.avatar.indexOf('http://') === 0 ||
+      next.avatar.indexOf('data:image/') === 0
+    )
+  ) {
+    photo = next.avatar;
+  }
 
-    el('trip-title').textContent = next.tripTitle;
-    el('trip-note').textContent = next.tripNote;
-
-    el('trip-cta').textContent =
-      next.tripActive
-        ? 'Xem lộ trình →'
-        : 'Tạo lịch trình →';
-
-    restart();
+  avatar.onerror = function() {
+    avatar.hidden = true;
+    fallback.hidden = false;
   };
+
+  if (avatar.getAttribute('src') !== photo) {
+    avatar.hidden = !photo;
+    fallback.hidden = !!photo;
+
+    if (photo) {
+      avatar.src = photo;
+    } else {
+      avatar.removeAttribute('src');
+    }
+  }
+
+  el('name').textContent =
+    next.name || 'Du khách';
+
+  Object.keys(
+    next.colors || {}
+  ).forEach(function(k) {
+    document.body.style.setProperty(
+      '--' + k,
+      next.colors[k]
+    );
+  });
+
+  slide = slide % Math.max(
+    1,
+    (next.featured || []).length
+  );
+
+  hero();
+  renderWeather();
+  renderEvents();
+
+  el('trip-title').textContent =
+    next.tripTitle;
+
+  el('trip-note').textContent =
+    next.tripNote;
+
+  el('trip-cta').textContent =
+    next.tripActive
+      ? 'Xem lộ trình →'
+      : 'Tạo lịch trình →';
+
+  restart();
+};
 
   document.addEventListener('click', function (event) {
     var button = event.target.closest('button');

@@ -1,56 +1,56 @@
 import {
-    TripAccountGate,
+  TripAccountGate,
 } from '@/features/discovery/trip-account-gate';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import {
-    useEffect,
-    useRef,
-    useState,
-    type ReactNode,
+  router,
+  useRootNavigationState,
+} from 'expo-router';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
 } from 'react';
 
 import {
-    router,
-    useRootNavigationState,
-} from 'expo-router';
-
-import {
-    ActivityIndicator,
-    ImageBackground,
-    Modal,
-    Pressable,
-    ScrollView,
-    Text,
-    TextInput,
-    View,
+  ActivityIndicator,
+  ImageBackground,
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
 import {
-    useSafeAreaInsets,
+  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
 import {
-    accountActions,
-    useAccount,
+  accountActions,
+  useAccount,
 } from '@/features/account/account-store';
 
 import {
-    GoogleAccountCard,
+  GoogleAccountCard,
 } from '@/features/account/google-account-card';
 
 import {
-    useSettingsColors,
+  useSettingsColors,
 } from '@/features/settings/settings-colors';
 
 import {
-    TravelerProfileProvider,
-    useTravelerProfile,
+  TravelerProfileProvider,
+  useTravelerProfile,
 } from './profile-context';
 
 import {
-    initialPreferences,
-    OPTIONS,
-    profileInputError,
-    type ProfileInput,
+  initialPreferences,
+  OPTIONS,
+  profileInputError,
+  type ProfileInput,
 } from './profile-model';
 
 function Button({
@@ -788,7 +788,12 @@ export function AccountEntryGate({
 
 export function TravelerProfileSettings() {
   const c = useSettingsColors();
-  const { profile, offline } = useTravelerProfile();
+
+  const {
+    profile,
+    offline,
+  } = useTravelerProfile();
+
   const [open, setOpen] = useState(false);
 
   if (!profile) return null;
@@ -803,9 +808,8 @@ export function TravelerProfileSettings() {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 12,
-          paddingVertical: 12,
+          paddingVertical: 8,
           borderTopWidth: 1,
-          borderBottomWidth: 1,
           borderColor: c.line,
         }}
       >
@@ -820,37 +824,38 @@ export function TravelerProfileSettings() {
             Sở thích du lịch
           </Text>
 
-          <Text
-            style={{
-              color: c.muted,
-              fontSize: 11,
-            }}
-          >
-            {offline
-              ? 'Bản lưu offline · Chạm để chỉnh sửa'
-              : 'Chỉnh sửa khảo sát của bạn'}
-          </Text>
+          {offline && (
+            <Text
+              style={{
+                color: c.muted,
+                fontSize: 11,
+              }}
+            >
+              Bản lưu offline
+            </Text>
+          )}
         </View>
 
-        <Text
-          style={{
-            color: c.green,
-            fontSize: 22,
-          }}
-        >
-          ›
-        </Text>
+        <Ionicons
+          name="chevron-forward"
+          size={18}
+          color={c.green}
+        />
       </Pressable>
 
       <Modal
         visible={open}
         animationType="slide"
-        onRequestClose={() => setOpen(false)}
+        onRequestClose={() =>
+          setOpen(false)
+        }
       >
         {open && (
           <PreferenceSurvey
             initial={profile}
-            onCancel={() => setOpen(false)}
+            onCancel={() =>
+              setOpen(false)
+            }
           />
         )}
       </Modal>

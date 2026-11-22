@@ -30,6 +30,7 @@ export function planSignature(
           place?.latitude,
           place?.longitude,
           place?.visit_duration_minutes,
+          place?.opening_hours_raw,
         ];
       }),
   ]);

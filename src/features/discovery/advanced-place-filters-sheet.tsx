@@ -1,25 +1,20 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useMemo, useRef, useState, type ComponentProps, type ReactNode } from 'react';
 import {
-    ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View,
-    type GestureResponderEvent,
+  ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View,
+  type GestureResponderEvent,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-    applyDiscoveryFilters, copyDiscoveryFilters, defaultDiscoveryFilters,
-    discoveryFilterError, type DiscoveryFilters, type FilterablePlace, type PricePreset,
+  applyDiscoveryFilters, copyDiscoveryFilters, defaultDiscoveryFilters,
+  discoveryFilterError, type DiscoveryFilters, type FilterablePlace
 } from './place-filters';
 import { getTripLocation } from './trip-location';
 
 const FILTER_COLORS = { background: '#F7FAFE', card: '#FFFFFF', text: '#334155', muted: '#64748B', line: '#E2E8F0', input: '#F1F5F9', green: '#087F61', pale: '#ECFDF5', danger: '#DC2626' };
 
 type IconName = ComponentProps<typeof Ionicons>['name'];
-const money = (value: number) => `${value.toLocaleString('vi-VN')}đ`;
-const prices: { id: PricePreset; label: string }[] = [
-  { id: 'all', label: 'Tất cả' }, { id: 'free', label: 'Miễn phí' },
-  { id: 'under200', label: '< 200k' }, { id: '200to500', label: '200k – 500k' },
-  { id: 'over500', label: '> 500k' },
-];
+
 
 function Chip({ label, active, disabled = false, onPress }: {
   label: string; active: boolean; disabled?: boolean; onPress: () => void;
@@ -80,15 +75,28 @@ function RangeControl({ value, min, max, step, onChange, label, disabled = false
   </View>;
 }
 
-export function AdvancedPlaceFiltersSheet({ initialFilters, areas, priceAvailable, candidates, selected, onApply, close }: {
-  initialFilters: DiscoveryFilters; areas: readonly string[]; priceAvailable: boolean;
-  candidates: readonly FilterablePlace[]; selected: ReadonlySet<string>;
-  onApply: (filters: DiscoveryFilters) => void; close: () => void;
+export function AdvancedPlaceFiltersSheet({
+  initialFilters,
+  areas,
+  candidates,
+  selected,
+  onApply,
+  close,
+}: {
+  initialFilters: DiscoveryFilters;
+  areas: readonly string[];
+  candidates: readonly FilterablePlace[];
+  selected: ReadonlySet<string>;
+  onApply: (filters: DiscoveryFilters) => void;
+  close: () => void;
 }) {
   const c = FILTER_COLORS;
   const insets = useSafeAreaInsets();
-  const [draft, setDraft] = useState(() => ({ ...copyDiscoveryFilters(initialFilters), pricePreset: priceAvailable ? initialFilters.pricePreset : 'all' as PricePreset }));
-  const [locating, setLocating] = useState(false);
+const [draft, setDraft] = useState(
+  () => copyDiscoveryFilters(initialFilters),
+);
+
+const [areasOpen, setAreasOpen] = useState(false);  const [locating, setLocating] = useState(false);
   const [error, setError] = useState('');
   const active = useRef(true);
   const locationRequest = useRef<AbortController | null>(null);
@@ -117,14 +125,6 @@ export function AdvancedPlaceFiltersSheet({ initialFilters, areas, priceAvailabl
       if (active.current) setLocating(false);
     }
   }
-  const priceBadge = !priceAvailable ? 'Chưa có giá/người'
-    : draft.pricePreset === 'all' ? 'Không giới hạn'
-    : draft.pricePreset === 'free' ? 'Miễn phí'
-    : draft.pricePreset === 'under200' ? '< 200k'
-    : draft.pricePreset === '200to500' ? '200k – 500k'
-    : draft.pricePreset === 'over500' ? '> 500k' : `Tối đa: ${money(draft.maxPriceVnd)}`;
-  const priceValue = draft.pricePreset === 'free' ? 0 : draft.pricePreset === 'under200' ? 200000
-    : draft.pricePreset === '200to500' ? 500000 : draft.pricePreset === 'over500' ? 1000000 : draft.maxPriceVnd;
 
   return <Modal visible transparent animationType="slide" onRequestClose={close}>
     <View style={{ flex: 1, backgroundColor: '#0F172A66', justifyContent: 'flex-end', alignItems: 'center' }}>
@@ -135,7 +135,7 @@ export function AdvancedPlaceFiltersSheet({ initialFilters, areas, priceAvailabl
           <View style={{ padding: 9, borderRadius: 20, backgroundColor: c.pale }}><Ionicons name="options-outline" size={20} color={c.green} /></View>
           <View style={{ flex: 1, gap: 3 }}>
             <Text style={{ fontSize: 15, fontWeight: '800', color: c.text }}>Bộ lọc nâng cao</Text>
-            <Text style={{ fontSize: 10, color: c.muted }}>Khoảng cách, khu vực, giá và đánh giá</Text>
+            <Text style={{ fontSize: 10, color: c.muted }}>Khoảng cách, khu vực và đánh giá</Text>
           </View>
           <Pressable onPress={close} accessibilityRole="button" accessibilityLabel="Đóng bộ lọc" hitSlop={10}
             style={{ backgroundColor: c.input, padding: 7, borderRadius: 20 }}><Ionicons name="close" size={17} color={c.muted} /></Pressable>
@@ -157,23 +157,139 @@ export function AdvancedPlaceFiltersSheet({ initialFilters, areas, priceAvailabl
               {draft.radiusKm !== null && !draft.origin ? 'Cần lấy GPS để áp dụng bán kính. ' : ''}Khoảng cách đường chim bay từ vị trí đã lấy.
             </Text>
           </Section>
-          <Section icon="map" tint="#319664" title="KHU VỰC">
-            <View style={st.wrap}>
-              <Chip label="Tất cả" active={!draft.areas.length} onPress={() => edit('areas', [])} />
-              {areas.map(area => <Chip key={area} label={area} active={draft.areas.includes(area)}
-                onPress={() => edit('areas', draft.areas.includes(area) ? draft.areas.filter(value => value !== area) : [...draft.areas, area])} />)}
-            </View>
-            <Text style={{ color: c.muted, fontSize: 10 }}>Có thể chọn nhiều khu vực.</Text>
-          </Section>
-          <Section icon="card-outline" tint="#EE9B12" title="MỨC GIÁ / NGƯỜI" badge={priceBadge}>
-            <RangeControl label="Giá tối đa theo VND mỗi người" value={priceValue} min={0} max={1000000} step={50000} disabled={!priceAvailable}
-              onChange={value => { setDraft(previous => ({ ...previous, pricePreset: 'custom', maxPriceVnd: value })); setError(''); }} />
-            <View style={st.wrap}>{prices.map(price => <Chip key={price.id} label={price.label} active={draft.pricePreset === price.id}
-              disabled={!priceAvailable && price.id !== 'all'} onPress={() => edit('pricePreset', price.id)} />)}</View>
-            <Text style={{ color: c.muted, fontSize: 10, lineHeight: 15 }}>{priceAvailable
-              ? 'Khi lọc giá, chỉ hiện điểm có khoảng giá/người phù hợp và đầy đủ dữ liệu.'
-              : 'Chưa có giá/người để lọc. Giá phòng khách sạn không được dùng thay.'}</Text>
-          </Section>
+          <Section
+  icon="map"
+  tint="#319664"
+  title="KHU VỰC"
+>
+  <Pressable
+    accessibilityRole="button"
+    accessibilityLabel="Chọn khu vực"
+    accessibilityState={{
+      expanded: areasOpen,
+    }}
+    onPress={() =>
+      setAreasOpen(value => !value)
+    }
+    style={[
+      st.areaSelect,
+      {
+        borderColor: c.line,
+        backgroundColor: c.input,
+      },
+    ]}
+  >
+    <Text
+      numberOfLines={1}
+      style={{
+        flex: 1,
+        fontSize: 12,
+        fontWeight: '600',
+        color: c.text,
+      }}
+    >
+      {!draft.areas.length
+        ? 'Tất cả khu vực'
+        : draft.areas.length === 1
+          ? draft.areas[0]
+          : `Đã chọn ${draft.areas.length} khu vực`}
+    </Text>
+
+    <Ionicons
+      name={
+        areasOpen
+          ? 'chevron-up'
+          : 'chevron-down'
+      }
+      size={17}
+      color={c.green}
+    />
+  </Pressable>
+
+  {areasOpen && (
+    <ScrollView
+      nestedScrollEnabled
+      style={{ maxHeight: 180 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Pressable
+        accessibilityRole="checkbox"
+        accessibilityState={{
+          checked: !draft.areas.length,
+        }}
+        onPress={() => edit('areas', [])}
+        style={st.areaOption}
+      >
+        <Text style={{
+          flex: 1,
+          color: c.text,
+          fontSize: 12,
+        }}>
+          Tất cả khu vực
+        </Text>
+
+        <Ionicons
+          name={
+            !draft.areas.length
+              ? 'checkbox'
+              : 'square-outline'
+          }
+          size={20}
+          color={c.green}
+        />
+      </Pressable>
+
+      {areas.map(area => (
+        <Pressable
+          key={area}
+          accessibilityRole="checkbox"
+          accessibilityState={{
+            checked: draft.areas.includes(area),
+          }}
+          onPress={() =>
+            edit(
+              'areas',
+              draft.areas.includes(area)
+                ? draft.areas.filter(
+                    value => value !== area,
+                  )
+                : [...draft.areas, area],
+            )
+          }
+          style={st.areaOption}
+        >
+          <Text style={{
+            flex: 1,
+            color: c.text,
+            fontSize: 12,
+          }}>
+            {area}
+          </Text>
+
+          <Ionicons
+            name={
+              draft.areas.includes(area)
+                ? 'checkbox'
+                : 'square-outline'
+            }
+            size={20}
+            color={c.green}
+          />
+        </Pressable>
+      ))}
+    </ScrollView>
+  )}
+
+  <Text style={{
+    color: c.muted,
+    fontSize: 10,
+  }}>
+    {draft.areas.length
+      ? draft.areas.join(' · ')
+      : 'Có thể chọn một hoặc nhiều khu vực.'}
+  </Text>
+</Section>
+          
           <Section icon="star" tint="#EEB321" title="ĐÁNH GIÁ (RATING)">
             <View style={st.wrap}>
               <Chip label="Tất cả" active={draft.minRating === null} onPress={() => edit('minRating', null)} />
@@ -203,6 +319,22 @@ export function AdvancedPlaceFiltersSheet({ initialFilters, areas, priceAvailabl
 }
 
 const st = StyleSheet.create({
+  areaSelect: {
+  minHeight: 44,
+  paddingHorizontal: 12,
+  borderWidth: 1,
+  borderRadius: 12,
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,
+},
+areaOption: {
+  minHeight: 44,
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 10,
+  paddingHorizontal: 6,
+},
   header: { padding: 15, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: 1, borderTopLeftRadius: 26, borderTopRightRadius: 26 },
   section: { padding: 12, gap: 9, borderWidth: 1, borderRadius: 17 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 6 },

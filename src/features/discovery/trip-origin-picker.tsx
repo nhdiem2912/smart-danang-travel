@@ -1,37 +1,38 @@
 import {
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
-
+  usePlacesCatalog,
+} from '@/data/use-places-catalog';
 import {
-    Alert,
-    Pressable,
-    Text,
-    TextInput,
-    View,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Alert,
+  Pressable,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
 import {
-    normalizeSearch,
-    places,
+  normalizeSearch,
 } from '@/data/places.local';
 
 import { getTripLocation } from './trip-location';
 import type { TripSettings } from './trip-model';
 
 import {
-    requestedHouseNumber,
-    searchAddresses,
-    type AddressResult,
+  requestedHouseNumber,
+  searchAddresses,
+  type AddressResult,
 } from './trip-address-search';
 
 import TripOriginPin from './trip-origin-pin';
 
 import {
-    validRoutePoint,
-    type RoutePoint,
+  validRoutePoint,
+  type RoutePoint,
 } from './trip-routing';
 
 import { Action, C, s } from './ui';
@@ -53,6 +54,7 @@ export function TripOriginPicker({
   onChange,
   onBusyChange,
 }: Props) {
+    const { places } = usePlacesCatalog();
   const [query, setQuery] = useState('');
 
   const [results, setResults] =
@@ -100,7 +102,7 @@ export function TripOriginPicker({
           ).includes(keyword),
       )
       .slice(0, 4);
-  }, [query]);
+}, [query, places]);
 
   function apply(
     point: RoutePoint,

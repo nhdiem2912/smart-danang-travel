@@ -20,7 +20,7 @@ export type NavigationRoute = {
 };
 
 export type TurnGuidance = {
-   status: 'ok' | 'near' | 'starting' | 'weak' | 'uncertain' | 'off-route';
+  status: 'ok' | 'near' | 'starting' | 'weak' | 'uncertain' | 'off-route';
   icon: string;
   text: string;
   turnMeters: number | null;
@@ -430,11 +430,11 @@ export class TurnNavigator {
         moved < required ||
         forward < required
       ) {
-        this.last = warning(
-          'uncertain',
+                this.last = warning(
+          forward < -required ? 'uncertain' : 'starting',
           forward < -required
             ? 'Chuyển động chưa khớp chiều tuyến dự kiến. Hãy kiểm tra tuyến hoặc tính lại.'
-            : 'Đang xác định hướng di chuyển. Bắt đầu đi khi bạn đã kiểm tra tuyến và thấy an toàn.',
+            : 'Đang xác định hướng di chuyển',
         );
         return this.last;
       }

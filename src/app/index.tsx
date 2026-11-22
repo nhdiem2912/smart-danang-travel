@@ -1,3 +1,17 @@
+import {
+  HOME_BANNERS,
+} from '@/features/home/home-banners';
+
+import {
+  useAccount,
+} from '@/features/account/account-store';
+
+import {
+  usePlacesCatalog,
+} from '@/data/use-places-catalog';
+import {
+  useHomeAvatar,
+} from '@/features/account/use-account-avatar';
 import EventDirections from '@/features/home/event-directions';
 import { getEventPlace } from '@/features/home/home-events';
 import { router } from 'expo-router';
@@ -5,13 +19,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
-
 import oldHomeHtml from '../../data/sdt-html';
 
 import {
   findPlaceById,
-  normalizeSearch,
-  places,
 } from '@/data/places.local';
 
 import type { Place } from '@/data/place.types';
@@ -39,19 +50,6 @@ function oldPhoto(key: string): string | null {
   );
 }
 
-function catalogPlace(
-  names: string[],
-): Place | undefined {
-  return places.find(
-    place =>
-      (
-        place.category === 'tham_quan' ||
-        place.category === 'bai_bien' ||
-        place.category === 'giai_tri'
-      ) &&
-      names.includes(normalizeSearch(place.name)),
-  );
-}
 
 const EVENT_ITEMS = [
   {
@@ -89,41 +87,6 @@ const EVENT_ITEMS = [
   },
 ];
 
-const BANNERS = [
-  {
-    title: 'Bán đảo Sơn Trà – Hòn ngọc xanh',
-    tag: 'THIÊN NHIÊN HOANG SƠ',
-    subtitle:
-      'Khám phá rừng xanh và những góc nhìn ra biển',
-    image: oldPhoto('sontra'),
-    names: [
-      'ban dao son tra',
-      'son tra peninsula',
-    ],
-  },
-  {
-    title: 'Cầu Rồng – Biểu tượng Đà Nẵng',
-    tag: 'THÀNH PHỐ BÊN SÔNG HÀN',
-    subtitle:
-      'Khám phá cảnh sắc thành phố về đêm',
-    image: oldPhoto('caurong'),
-    names: [
-      'cau rong',
-      'dragon bridge',
-    ],
-  },
-  {
-    title: 'Chợ đêm Sơn Trà',
-    tag: 'TRẢI NGHIỆM VỀ ĐÊM',
-    subtitle:
-      'Ẩm thực và những trải nghiệm địa phương',
-    image: oldPhoto('chodem'),
-    names: [
-      'cho dem son tra',
-      'son tra night market',
-    ],
-  },
-];
 
 const routes = {
   explore: '/explore',
@@ -133,6 +96,13 @@ const routes = {
 } as const;
 
 export default function HomeScreen() {
+  const { user } = useAccount();
+
+const avatar = useHomeAvatar(
+  user?.uid ?? null,
+  user?.photoURL ?? null,
+);
+  usePlacesCatalog();
 
   const c = useSettingsColors();
   const insets = useSafeAreaInsets();
@@ -193,24 +163,28 @@ const [eventDetail, setEventDetail] = useState(false);
     };
   }, [attempt]);
 
-  const featured = BANNERS.map(banner => {
-    const place = catalogPlace(banner.names);
+ const featured = HOME_BANNERS.map(banner => {
+  const place = findPlaceById(banner.placeId);
 
-    return {
-      ...banner,
-      image:
-        banner.image ||
-        place?.image_url ||
-        null,
-      placeId: place?.id || null,
-      rating: place?.rating ?? null,
-    };
-  });
+  return {
+    ...banner,
+    image:
+      banner.image ||
+      place?.image_url ||
+      null,
+    placeId: place?.id || null,
+    rating: place?.rating ?? null,
+  };
+});
 
   const active = draft && hasActiveTrip(draft);
 
   const payload = {
-    name: profile?.displayName || 'Du khách',
+    name:
+  profile?.displayName ||
+  user?.name ||
+  'Du khách',
+avatar,
     colors: c,
     featured,
     events: EVENT_ITEMS,
@@ -282,17 +256,24 @@ const [eventDetail, setEventDetail] = useState(false);
     }
 
     if (
-      message.action === 'place' &&
-      typeof message.value === 'string'
-    ) {
-      const place = findPlaceById(message.value);
+  message.action === 'place' &&
+  typeof message.value === 'string'
+) {
+  const place = findPlaceById(message.value);
 
-      if (place) {
-        setEventDetail(false);
-        setDetail(place);
-      }
-    }
-
+  if (place) {
+    router.navigate({
+      pathname: '/explore',
+      params: {
+        placeId: place.id,
+        openToken:
+          `${Date.now()}-${Math.random()
+            .toString(36)
+            .slice(2)}`,
+      },
+    });
+  }
+}
     if (
       message.action === 'directions' ||
       message.action === 'event-detail'
@@ -341,7 +322,10 @@ const [eventDetail, setEventDetail] = useState(false);
 
       {!!detail && (
   <PlaceDetailsSheet
-    place={detail}
+   place={
+  findPlaceById(detail.id) ??
+  detail
+}
     close={() => setDetail(null)}
     onNavigate={
       eventDetail
@@ -365,7 +349,10 @@ const [eventDetail, setEventDetail] = useState(false);
 )}
       {!!adding && (
         <AddStopSheet
-          place={adding}
+      place={
+  findPlaceById(adding.id) ??
+  adding
+}
           close={() => setAdding(null)}
           onSaved={() => {
             setAdding(null);

@@ -1,41 +1,45 @@
 import {
-    useEffect,
-    useState,
+  useEffect,
+  useState,
 } from 'react';
-
 import {
-    Alert,
-    Text,
-    View,
+  Alert,
+  Text,
+  View
 } from 'react-native';
 
 import {
-    useAccount,
+  useAccount,
 } from '@/features/account/account-store';
 
 import {
-    dateForDay,
-    displayDate,
-    sortedStops,
+  dateForDay,
+  displayDate,
+  sortedStops,
 } from './trip-model';
 
 import {
-    hasLegacyTrip,
-    importLegacyTrip,
+  hasLegacyTrip,
+  importLegacyTrip,
 } from './trip-lifecycle';
 
 import {
-    listTripHistory,
-    type TripArchive,
+  listTripHistory,
+  type TripArchive,
 } from './trip-history-api';
 
 import {
-    Action,
-    s,
-    Sheet,
+  Action,
+  s,
+  Sheet,
 } from './ui';
 
-export function TripHistoryCard() {
+export function TripHistoryCard({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
+
   const { user } = useAccount();
 
   const [open, setOpen] =

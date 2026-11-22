@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import {
   router,
 } from 'expo-router';
@@ -24,11 +25,12 @@ import {
   PERIODS,
   type DraftStop,
   type Period,
+  type TripDraft,
 } from './trip-model';
 
 import {
   hasActiveTrip,
-  slotError,
+  placeSlotError,
 } from './trip-time-policy';
 
 import {
@@ -60,7 +62,19 @@ export function AddStopSheet({
     draft,
     saving,
   } = useTripDraft();
-
+const slotError = (
+  trip: TripDraft,
+  dayIndex: number,
+  selected: Period,
+  at: number,
+) =>
+  placeSlotError(
+    trip,
+    dayIndex,
+    selected,
+    place.opening_hours_raw,
+    at,
+  );
   const [now, setNow] = useState(
     () => Date.now(),
   );
@@ -387,32 +401,68 @@ export function AddStopSheet({
         THÊM VÀO NGÀY
       </Text>
 
-      <Pressable
+           <Pressable
         accessibilityRole="button"
         accessibilityLabel="Chọn ngày đi"
+        accessibilityState={{
+          expanded: showDays,
+          disabled: saving,
+        }}
+        disabled={saving}
         onPress={() =>
-          setShowDays(
-            previous => !previous,
-          )
+          setShowDays(value => !value)
         }
-        style={s.input}
+        style={[
+          s.input,
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 10,
+            minHeight: 50,
+            paddingVertical: 8,
+          },
+        ]}
       >
+        <Ionicons
+          name="calendar-outline"
+          size={20}
+          color={C.green}
+        />
+
         <Text
           style={{
-            fontSize: 12,
-            fontWeight: '700',
+            flex: 1,
+            fontSize: 14,
+            fontWeight: '600',
             color: C.ink,
           }}
         >
-          Ngày {day + 1}:{' '}
+          Ngày {day + 1} ·{' '}
           {displayDate(
-            dateForDay(
-              draft.startDate,
-              day,
-            ),
+            dateForDay(draft.startDate, day),
           )}
-          {' ⌄'}
         </Text>
+
+        <View
+          style={{
+            width: 30,
+            height: 30,
+            borderRadius: 10,
+            backgroundColor: '#E8F5EF',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Ionicons
+            name={
+              showDays
+                ? 'chevron-up'
+                : 'chevron-down'
+            }
+            size={18}
+            color={C.green}
+          />
+        </View>
       </Pressable>
 
       {showDays && (
@@ -525,13 +575,24 @@ export function AddStopSheet({
                 item.label
               }
               accessibilityState={{
-                selected,
-                disabled,
-              }}
-              disabled={disabled}
-              onPress={() =>
-                setPeriod(item.id)
-              }
+  selected,
+  disabled: saving,
+}}
+disabled={saving}
+onPress={() => {
+  const reason = slotError(
+    draft,
+    day,
+    item.id,
+    Date.now(),
+  );
+
+  setError(reason ?? '');
+
+  if (!reason) {
+    setPeriod(item.id);
+  }
+}}
               style={[
                 s.pill,
                 {

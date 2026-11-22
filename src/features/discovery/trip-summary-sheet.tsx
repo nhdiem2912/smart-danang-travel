@@ -1,151 +1,157 @@
-import { findPlaceById } from '@/data/places.local';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
-import { PlaceThumb } from './place-thumb';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+
+import { findPlaceById } from '@/data/places.local';
+import { useSettingsColors } from '@/features/settings/settings-colors';
+
 import {
   dateForDay,
   displayDate,
+  emptyDraft,
+  minuteToTime,
   PERIODS,
   sortedStops,
   type DraftStop,
-  type TravelMode,
   type TripSettings,
 } from './trip-model';
+
+import { PlaceThumb } from './place-thumb';
 import { TripOriginPicker } from './trip-origin-picker';
 import { currentPlan } from './trip-plan';
-import { Action, C, s, Sheet } from './ui';
-import { tripActions, useTripDraft } from './use-trip-draft';
+import { pendingDayView } from './trip-summary-view';
+import { vietnamClock } from './trip-time-policy';
+import { Action, s, Sheet } from './ui';
+import {
+  tripActions,
+  useTripDraft,
+} from './use-trip-draft';
+
+type Props = {
+  close: () => void;
+  onEdit?: (stop: DraftStop) => void;
+};
 
 export function TripSummarySheet({
   close,
   onEdit,
-}: {
-  close: () => void;
-  onEdit?: (stop: DraftStop) => void;
-}) {
+}: Props) {
   const { draft, saving } = useTripDraft();
+  const c = useSettingsColors();
+
+  const [chosenDay, setChosenDay] =
+    useState<number | null>(null);
+
+  const [daysOpen, setDaysOpen] = useState(false);
+  const [configuration, setConfiguration] =
+    useState(false);
+
+  const [settings, setSettings] =
+    useState<TripSettings>(() => ({
+      ...(draft?.settings ?? emptyDraft().settings),
+    }));
+
+  const [minutes, setMinutes] = useState(
+    String(draft?.settings.defaultVisitMinutes ?? 60),
+  );
+
   const [optimizing, setOptimizing] = useState(false);
-  const busy = saving || optimizing;
-
-  const [startDate] = useState(
-    draft?.startDate ?? '',
-  );
-
-  const [dayCount] = useState(
-    String(draft?.dayCount ?? 3),
-  );
-  const [settings, setSettings] = useState<TripSettings>(
-    draft!.settings,
-  );
-  const [defaultMinutes, setDefaultMinutes] = useState(
-    String(draft!.settings.defaultVisitMinutes),
-  );
-
+  const [locating, setLocating] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [locating, setLocating] = useState(false);
-  const [confirmClear, setConfirmClear] = useState(false);
-  const [advanced, setAdvanced] = useState(false);
 
   if (!draft) return null;
 
-  const ordered = sortedStops(draft.stops);
-  const activeLeg =
-    draft.stops.some(stop => stop.progress);
-
-  const configurationChanged =
-    startDate !== draft.startDate ||
-    Number(dayCount) !== draft.dayCount ||
-    Number(defaultMinutes) !==
-      draft.settings.defaultVisitMinutes ||
-    JSON.stringify(settings) !==
-      JSON.stringify(draft.settings);
-
-  const needsPlan =
-    !currentPlan(draft) || configurationChanged;
-  const visitTotal = ordered.reduce(
-    (sum, stop) =>
-      sum +
-      (
-        stop.visitMinutes ??
-        findPlaceById(stop.placeId)?.visit_duration_minutes ??
-        settings.defaultVisitMinutes
-      ),
-    0,
+  const view = pendingDayView(
+    draft,
+    chosenDay,
+    vietnamClock().date,
   );
 
-  function editSetting<K extends keyof TripSettings>(
-    key: K,
-    value: TripSettings[K],
-  ) {
-    setSettings(previous => ({
-      ...previous,
-      [key]: value,
-    }));
-  }
+  const activeLeg = draft.stops.some(
+    stop => stop.progress,
+  );
 
-  function parsedSettings() {
-    if (
-      !/^\d+$/.test(dayCount) ||
-      !/^\d+$/.test(defaultMinutes)
-    ) {
-      throw new Error(
-        'Số ngày và thời gian tham quan phải là số nguyên.',
-      );
+  const busy = saving || optimizing || locating;
+  const locked = busy || activeLeg;
+
+  const changed =
+    JSON.stringify(settings) !==
+      JSON.stringify(draft.settings) ||
+    Number(minutes) !==
+      draft.settings.defaultVisitMinutes;
+
+  async function save(
+    optimize: boolean,
+    navigate = false,
+  ) {
+    if (busy || !draft) return;
+
+    if (activeLeg) {
+      if (navigate) {
+        close();
+        router.navigate('/itinerary');
+      }
+      return;
     }
 
-    return {
-      count: Number(dayCount),
-      value: {
-        ...settings,
-        defaultVisitMinutes: Number(defaultMinutes),
-      },
-    };
-  }
-
-    async function configure(reorder = false, begin = false) {
-     if (busy || locating) return;
-
     setOptimizing(true);
+    setError('');
+    setNotice('');
 
     try {
-      setError('');
-      setNotice('');
-
-      const parsed = parsedSettings();
-
-      await tripActions.configure(
-        startDate,
-        parsed.count,
-        parsed.value,
-        reorder,
-      );
-
-      if (begin) {
-        close();
-        router.push('/itinerary');
-      } else {
-        setSettings(parsed.value);
-
-        setNotice(
-          reorder
-            ? 'Đã xếp lịch theo tuyến đường và khung giờ từng buổi. Thời gian tham quan có thể được rút ngắn. Chưa xét giao thông trực tiếp hoặc xác minh giờ mở cửa.'
-            : 'Đã lưu cấu hình chuyến đi.',
+      if (!/^\d+$/.test(minutes)) {
+        throw new Error(
+          'Nhập thời gian dừng bằng số phút nguyên.',
         );
       }
-        } catch (e) {
+
+      const next = {
+        ...settings,
+        defaultVisitMinutes: Number(minutes),
+      };
+
+      await tripActions.configure(
+        draft.startDate,
+        draft.dayCount,
+        next,
+        optimize,
+      );
+
+      setSettings(next);
+
+      if (navigate) {
+        close();
+        router.navigate('/itinerary');
+      } else {
+        setConfiguration(false);
+        setNotice('Đã lưu cấu hình.');
+      }
+    } catch (e) {
       setError(
         e instanceof Error
           ? e.message
-          : 'Không lưu được cấu hình.',
+          : 'Không lưu được thay đổi.',
       );
     } finally {
       setOptimizing(false);
     }
   }
 
-  async function act(operation: () => Promise<unknown>) {
+  async function act(
+    operation: () => Promise<unknown>,
+  ) {
+    if (locked) return;
+
     try {
       setError('');
       await operation();
@@ -158,434 +164,655 @@ export function TripSummarySheet({
     }
   }
 
+  function removeDay() {
+    if (
+      !draft ||
+      locked ||
+      !view.stops.length
+    ) {
+      return;
+    }
+
+    const day = view.dayIndex;
+    const tripId = draft.id;
+
+    Alert.alert(
+      `Bỏ điểm chưa đi của Ngày ${day + 1}?`,
+      `${view.stops.length} điểm sẽ được bỏ khỏi ngày này. Các điểm đã hoàn thành được giữ lại.`,
+      [
+        {
+          text: 'Giữ lại',
+          style: 'cancel',
+        },
+        {
+          text: 'Bỏ các điểm',
+          style: 'destructive',
+          onPress: () =>
+            void act(() =>
+              tripActions.removePendingDay(
+                day,
+                tripId,
+              ),
+            ),
+        },
+      ],
+    );
+  }
 
   return (
     <Sheet
-      title="Danh sách địa điểm trong lộ trình"
-      subtitle={`${ordered.length} điểm được chọn trong lộ trình`}
+      title="Điểm chưa đi"
       visible
-            close={() => {
-        if (!busy && !locating) close();
+      close={() => {
+        if (!busy) close();
       }}
       footer={
-        <>
-          <View style={s.between}>
-            <Action
-              danger
-              label="Xóa tất cả"
-              disabled={busy || !ordered.length}
-              onPress={() => setConfirmClear(true)}
-            />
-
-            <View style={s.row}>
-              <Action
-                label="Đóng"
-                onPress={close}
-                disabled={busy || locating}
-              />
-              <Action
-                solid
-                                label={
-                  optimizing
-                    ? 'Đang xếp giờ…'
-                    : '✓ Xếp giờ & xem lộ trình'
-                }
-                disabled={
-                  busy || locating || !ordered.length
-                }
-                               onPress={() =>
-                  void configure(
-                    needsPlan && !activeLeg,
-                    true,
-                  )
-                }
-              />
-            </View>
-          </View>
-
-          {confirmClear && (
-            <View style={{ gap: 8 }}>
-              <Text style={s.error}>
-                Xóa toàn bộ {ordered.length} điểm đã chọn?
-              </Text>
-
-              <View style={s.row}>
-                <Action
-                  label="Giữ lại"
-                  onPress={() => setConfirmClear(false)}
-                />
-                <Action
-                  danger
-                  label="Xác nhận xóa"
-                  disabled={busy}
-                  onPress={() =>
-                    void act(async () => {
-                      await tripActions.clear();
-                      setConfirmClear(false);
-                    })
-                  }
-                />
-              </View>
-            </View>
-          )}
-        </>
-      }
-    >
-      <View style={[s.card, { borderColor: '#A7F3D0' }]}>
-        <View style={s.between}>
-          <Text
-            style={[
-              s.label,
-              { color: C.deep, flex: 1 },
-            ]}
-          >
-            ☷ CẤU HÌNH TIMELINE & PHƯƠNG TIỆN
-          </Text>
+        <View style={st.footer}>
+          <Action
+            danger
+            label="Bỏ điểm ngày này"
+            disabled={
+              locked || !view.stops.length
+            }
+            onPress={removeDay}
+            style={{ flex: 1 }}
+          />
 
           <Action
-      label={optimizing ? 'Đang tính lịch…' : 'Tối ưu & xem giờ'}
-            disabled={
-                           busy ||
-              activeLeg ||
-              !ordered.length ||
-              locating
+            solid
+            label={
+              optimizing
+                ? 'Đang xếp…'
+                : activeLeg
+                  ? 'Tiếp tục lộ trình'
+                  : view.total
+                    ? 'Xếp giờ & xem'
+                    : 'Xem lộ trình'
             }
-                      onPress={() => void configure(true, true)}
+            disabled={busy}
+            style={{ flex: 1 }}
+            onPress={() => {
+              if (activeLeg || !view.total) {
+                close();
+                router.navigate('/itinerary');
+              } else {
+                void save(
+                  !currentPlan(draft) || changed,
+                  true,
+                );
+              }
+            }}
           />
         </View>
-
-                <TripOriginPicker
-          value={settings}
-          disabled={busy}
-          onChange={setSettings}
-          onBusyChange={setLocating}
+      }
+    >
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Chọn ngày xem địa điểm"
+        accessibilityState={{
+          expanded: daysOpen,
+        }}
+        onPress={() =>
+          setDaysOpen(value => !value)
+        }
+        style={[
+          st.daySelect,
+          {
+            borderColor: c.line,
+            backgroundColor: c.input,
+          },
+        ]}
+      >
+        <Ionicons
+          name="calendar-outline"
+          size={20}
+          color={c.green}
         />
 
-        <View style={s.row}>
-          <View style={{ flex: 1, gap: 5 }}>
-            <Text style={s.label}>GIỜ BẮT ĐẦU</Text>
-            <TextInput
-              accessibilityLabel="Giờ bắt đầu"
-              style={s.input}
-              value={settings.startTime}
-              onChangeText={value =>
-                editSetting('startTime', value)
-              }
-              placeholder="09:00"
-            />
-          </View>
-
-          <View style={{ flex: 1, gap: 5 }}>
-            <Text style={s.label}>GIỜ KẾT THÚC</Text>
-            <TextInput
-              accessibilityLabel="Giờ kết thúc"
-              style={s.input}
-              value={settings.endTime}
-              onChangeText={value =>
-                editSetting('endTime', value)
-              }
-              placeholder="18:30"
-            />
-          </View>
-        </View>
-        {activeLeg && (
-          <Text style={s.error}>
-            Có chặng đang dở. Hoàn tất hoặc hủy
-            chặng để xếp lại giờ; kết quả check-in
-            cũ được giữ nguyên.
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              color: c.text,
+              fontSize: 14,
+              fontWeight: '700',
+            }}
+          >
+            Ngày {view.dayIndex + 1} ·{' '}
+            {displayDate(
+              dateForDay(
+                draft.startDate,
+                view.dayIndex,
+              ),
+            )}
           </Text>
-        )}
-        <Text style={s.label}>PHƯƠNG TIỆN DI CHUYỂN</Text>
 
-        <View style={s.row}>
-          {(
-            [
-              { id: 'two_wheeler', label: '🛵 Xe máy' },
-              { id: 'driving', label: '🚗 Ô tô' },
-              { id: 'walking', label: '🚶 Đi bộ' },
-            ] as { id: TravelMode; label: string }[]
-          ).map(mode => (
+          <Text
+            style={{
+              color: c.muted,
+              fontSize: 12,
+              marginTop: 3,
+            }}
+          >
+            {view.stops.length} điểm chưa đi
+          </Text>
+        </View>
+
+        <Ionicons
+          name={
+            daysOpen
+              ? 'chevron-up'
+              : 'chevron-down'
+          }
+          size={18}
+          color={c.green}
+        />
+      </Pressable>
+
+      {daysOpen && (
+        <ScrollView
+          nestedScrollEnabled
+          style={{ maxHeight: 190 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          {view.days.map(day => (
             <Pressable
-              key={mode.id}
+              key={day.index}
               accessibilityRole="button"
-              accessibilityLabel={mode.label}
               accessibilityState={{
-                selected: settings.travelMode === mode.id,
+                selected:
+                  day.index === view.dayIndex,
               }}
-              onPress={() =>
-                editSetting('travelMode', mode.id)
-              }
+              onPress={() => {
+                setChosenDay(day.index);
+                setDaysOpen(false);
+                setError('');
+              }}
               style={[
-                s.pill,
-                { flex: 1, paddingHorizontal: 4 },
-                settings.travelMode === mode.id &&
-                  s.pillActive,
+                st.dayOption,
+                {
+                  backgroundColor:
+                    day.index === view.dayIndex
+                      ? c.pale
+                      : c.card,
+                },
               ]}
             >
               <Text
                 style={{
-                  fontSize: 10,
-                  color: C.deep,
-                  textAlign: 'center',
-                  fontWeight: '700',
+                  flex: 1,
+                  color: c.text,
+                  fontSize: 13,
                 }}
               >
-                                {mode.label}
+                Ngày {day.index + 1} ·{' '}
+                {displayDate(day.date)}
+              </Text>
+
+              <Text
+                style={{
+                  color: c.muted,
+                  fontSize: 12,
+                }}
+              >
+                {day.count
+                  ? `${day.count} điểm`
+                  : 'Không còn điểm chưa đi'}
               </Text>
             </Pressable>
           ))}
-        </View>
+        </ScrollView>
+      )}
 
-        <Text style={s.muted}>
-          Tối ưu hiện hỗ trợ đi bộ và ô tô, chưa có giao thông trực tiếp.
-          Xe máy chưa có nguồn tuyến phù hợp. Mỗi điểm có 5 phút đệm;
-          thời gian tham quan có thể giảm xuống tối thiểu 10 phút,
-          hoặc giữ mức thấp hơn nếu bạn đã nhập.
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{
+          expanded: configuration,
+        }}
+        onPress={() =>
+          setConfiguration(value => !value)
+        }
+        style={st.configToggle}
+      >
+        <Ionicons
+          name="options-outline"
+          size={18}
+          color={c.green}
+        />
+
+        <Text
+          style={{
+            flex: 1,
+            color: c.text,
+            fontSize: 13,
+            fontWeight: '600',
+          }}
+        >
+          Cấu hình chuyến
         </Text>
 
-        <Text style={s.muted}>
-          Buổi sáng 06:30–11:30 · Trưa 11:30–14:00 ·
-          Chiều 14:00–18:00 · Tối 18:00–22:30.
-          Nhấn Tối ưu lịch trình sau khi chọn đủ điểm và cấu hình.
-        </Text>
+        <Ionicons
+          name={
+            configuration
+              ? 'chevron-up'
+              : 'chevron-down'
+          }
+          size={16}
+          color={c.muted}
+        />
+      </Pressable>
 
-        <View style={s.between}>
-          <Action
-            label={
-              advanced
-                ? 'Thu gọn ngày & thời gian'
-                : 'Ngày đi & thời gian dừng ›'
-            }
-            onPress={() => setAdvanced(value => !value)}
+      {configuration && (
+        <View
+          style={[
+            st.configuration,
+            {
+              backgroundColor: c.input,
+              borderColor: c.line,
+            },
+          ]}
+        >
+          <TripOriginPicker
+            value={settings}
+            disabled={locked}
+            onChange={setSettings}
+            onBusyChange={setLocating}
           />
-          <Action
-            label="Lưu cấu hình"
-            disabled={busy || locating}
-            onPress={() => void configure()}
-          />
-        </View>
 
-        {advanced && (
-          <View style={{ gap: 9 }}>
-            <View style={s.row}>
-              <View style={{ flex: 2, gap: 5 }}>
-                <Text style={s.label}>
-                  NGÀY BẮT ĐẦU (YYYY-MM-DD)
-                </Text>
-                <TextInput
-                  accessibilityLabel="Ngày bắt đầu chuyến đi"
-                  style={s.input}
-                  value={startDate}
-                  editable={false}
-                  placeholder="2026-11-13"
-                />
-              </View>
+          <View style={st.footer}>
+            <View style={{ flex: 1, gap: 5 }}>
+              <Text style={st.label}>
+                Bắt đầu
+              </Text>
 
-              <View style={{ flex: 1, gap: 5 }}>
-                <Text style={s.label}>SỐ NGÀY</Text>
-                <TextInput
-                  accessibilityLabel="Số ngày đi"
-                  keyboardType="number-pad"
-                  style={s.input}
-                  value={dayCount}
-                 editable={false}
-                />
-              </View>
+              <TextInput
+                accessibilityLabel="Giờ bắt đầu"
+                editable={!locked}
+                style={s.input}
+                value={settings.startTime}
+                onChangeText={value =>
+                  setSettings(old => ({
+                    ...old,
+                    startTime: value,
+                  }))
+                }
+              />
             </View>
 
-                        <Text style={s.muted}>
-              Đổi ngày tại màn Lộ trình → Đổi ngày.
-              Xác nhận đổi ngày sẽ xóa toàn bộ
-              địa điểm và tiến trình để chọn lại
-              từ đầu.
-            </Text>
+            <View style={{ flex: 1, gap: 5 }}>
+              <Text style={st.label}>
+                Kết thúc
+              </Text>
 
-            <Text style={s.label}>
-              THỜI GIAN DỪNG MẶC ĐỊNH (PHÚT, ƯỚC TÍNH)
-            </Text>
-            <TextInput
-              accessibilityLabel="Thời gian dừng mặc định"
-              keyboardType="number-pad"
-              style={s.input}
-              value={defaultMinutes}
-              onChangeText={setDefaultMinutes}
-            />
+              <TextInput
+                accessibilityLabel="Giờ kết thúc"
+                editable={!locked}
+                style={s.input}
+                value={settings.endTime}
+                onChangeText={value =>
+                  setSettings(old => ({
+                    ...old,
+                    endTime: value,
+                  }))
+                }
+              />
+            </View>
           </View>
-        )}
 
-        <Text style={[s.muted, { color: C.deep }]}>
-          {ordered.length} điểm dừng · khoảng {visitTotal} phút
-          tham quan. Chưa tính thời gian di chuyển.
+          <View style={st.footer}>
+            {(
+              [
+                ['driving', 'Ô tô'],
+                ['walking', 'Đi bộ'],
+              ] as const
+            ).map(([id, label]) => (
+              <Action
+                key={id}
+                label={label}
+                solid={
+                  settings.travelMode === id
+                }
+                disabled={locked}
+                onPress={() =>
+                  setSettings(old => ({
+                    ...old,
+                    travelMode: id,
+                  }))
+                }
+              />
+            ))}
+          </View>
+
+          <Text style={st.label}>
+            Thời gian dừng mặc định · phút
+          </Text>
+
+          <TextInput
+            accessibilityLabel="Thời gian dừng mặc định"
+            keyboardType="number-pad"
+            editable={!locked}
+            value={minutes}
+            onChangeText={setMinutes}
+            style={s.input}
+          />
+
+          <Action
+            label="Lưu cấu hình"
+            disabled={locked}
+            onPress={() => void save(false)}
+          />
+        </View>
+      )}
+
+      {activeLeg && (
+        <Text
+          style={{
+            color: c.muted,
+            fontSize: 12,
+          }}
+        >
+          Đang di chuyển. Bạn có thể chỉnh danh
+          sách sau khi kết thúc chặng.
         </Text>
-      </View>
+      )}
+
+      {!!error && (
+        <Text
+          accessibilityRole="alert"
+          style={s.error}
+        >
+          {error}
+        </Text>
+      )}
 
       {!!notice && (
         <Text
-          accessibilityRole="alert"
-          style={[s.muted, { color: C.deep }]}
+          style={{
+            color: c.green,
+            fontSize: 12,
+          }}
         >
           {notice}
         </Text>
       )}
 
-      {!!error && (
-        <Text accessibilityRole="alert" style={s.error}>
-          {error}
-        </Text>
-      )}
-
-      <View style={s.between}>
-        <Text style={s.label}>THỨ TỰ THAM QUAN</Text>
-        <Text style={s.muted}>
-          ▲ ▼ trong cùng ngày và buổi
-        </Text>
-      </View>
-
-      {ordered.map((stop, index) => {
-        const place = findPlaceById(stop.placeId);
-
-        const group = ordered.filter(
-          item =>
-            item.dayIndex === stop.dayIndex &&
-            item.period === stop.period,
+      {view.stops.map((stop, index) => {
+        const place = findPlaceById(
+          stop.placeId,
         );
 
-        const groupIndex = group.findIndex(
+        const group = sortedStops(
+          draft.stops.filter(
+            item =>
+              item.dayIndex === stop.dayIndex &&
+              item.period === stop.period,
+          ),
+        );
+
+        const at = group.findIndex(
           item => item.id === stop.id,
         );
+
+        const previous = group[at - 1];
+        const next = group[at + 1];
+
+        const visitMinutes =
+          stop.visitMinutes ??
+          place?.visit_duration_minutes ??
+          draft.settings.defaultVisitMinutes;
+
+        const upDisabled =
+          locked ||
+          !previous ||
+          previous.completed ||
+          !!previous.progress;
+
+        const downDisabled =
+          locked ||
+          !next ||
+          next.completed ||
+          !!next.progress;
 
         return (
           <View
             key={stop.id}
             style={[
-              s.card,
+              st.stop,
               {
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: 9,
-                gap: 7,
+                backgroundColor: c.card,
+                borderColor: c.line,
               },
             ]}
           >
-            <View
+            <Text
               style={{
-                width: 23,
-                height: 23,
-                borderRadius: 12,
-                backgroundColor: '#D1FAE5',
-                alignItems: 'center',
-                justifyContent: 'center',
+                color: c.green,
+                fontWeight: '800',
+                fontSize: 12,
+                width: 18,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 10,
-                  color: C.deep,
-                  fontWeight: '800',
-                }}
-              >
-                {index + 1}
-              </Text>
-            </View>
+              {index + 1}
+            </Text>
 
             {place && (
-              <PlaceThumb place={place} size={42} />
+              <PlaceThumb
+                place={place}
+                size={46}
+              />
             )}
 
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={
-                `Sửa ${place?.name ?? stop.placeId}`
-              }
+              accessibilityLabel={`Sửa ${place?.name ?? 'địa điểm'}`}
+              disabled={locked || !onEdit}
               onPress={() => onEdit?.(stop)}
-              style={{ flex: 1 }}
+              style={{ flex: 1, gap: 4 }}
             >
               <Text
-                style={[s.title, { fontSize: 11 }]}
                 numberOfLines={2}
+                style={{
+                  color: c.text,
+                  fontSize: 14,
+                  lineHeight: 19,
+                  fontWeight: '700',
+                }}
               >
                 {place?.name ??
-                  'Địa điểm không còn trong danh mục'}
+                  'Địa điểm chưa có dữ liệu'}
               </Text>
 
-              <Text style={s.muted} numberOfLines={1}>
-                {place?.address ?? 'Chưa cập nhật địa chỉ'}
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: c.muted,
+                  fontSize: 12,
+                }}
+              >
+                {
+                  PERIODS.find(
+                    period =>
+                      period.id === stop.period,
+                  )?.label
+                }
+                {' · '}
+                {stop.schedule
+                  ? `Dự kiến ${minuteToTime(stop.schedule.visitStartMinute)}`
+                  : `~${visitMinutes} phút`}
               </Text>
-
-              <Text style={[s.muted, { color: C.deep }]}>
-                Ngày {stop.dayIndex + 1} ·{' '}
-                {displayDate(
-                  dateForDay(draft.startDate, stop.dayIndex),
-                )}{' '}
-                ·{' '}
-                {PERIODS.find(
-                  item => item.id === stop.period,
-                )?.label}
-              </Text>
-
-              {!!stop.note && (
-                <Text style={s.muted} numberOfLines={2}>
-                  Ghi chú: {stop.note}
-                </Text>
-              )}
             </Pressable>
 
-            <View style={{ gap: 4 }}>
-              <Action
-                label={`▲ ${index + 1}`}
-                disabled={busy || groupIndex === 0}
+            <View style={{ gap: 2 }}>
+              <Pressable
+                hitSlop={3}
+                accessibilityRole="button"
+                accessibilityLabel="Đưa địa điểm lên"
+                disabled={upDisabled}
                 onPress={() =>
                   void act(() =>
-                    tripActions.move(stop.id, -1),
+                    tripActions.move(
+                      stop.id,
+                      -1,
+                    ),
                   )
                 }
-                style={{
-                  paddingHorizontal: 6,
-                  paddingVertical: 4,
-                }}
-              />
-              <Action
-                label={`▼ ${index + 1}`}
-                disabled={
-                  busy ||
-                  groupIndex === group.length - 1
-                }
+                style={[
+                  st.iconButton,
+                  {
+                    opacity: upDisabled
+                      ? 0.25
+                      : 1,
+                  },
+                ]}
+              >
+                <Ionicons
+                  name="chevron-up"
+                  size={19}
+                  color={c.green}
+                />
+              </Pressable>
+
+              <Pressable
+                hitSlop={3}
+                accessibilityRole="button"
+                accessibilityLabel="Đưa địa điểm xuống"
+                disabled={downDisabled}
                 onPress={() =>
                   void act(() =>
-                    tripActions.move(stop.id, 1),
+                    tripActions.move(
+                      stop.id,
+                      1,
+                    ),
                   )
                 }
-                style={{
-                  paddingHorizontal: 6,
-                  paddingVertical: 4,
-                }}
-              />
+                style={[
+                  st.iconButton,
+                  {
+                    opacity: downDisabled
+                      ? 0.25
+                      : 1,
+                  },
+                ]}
+              >
+                <Ionicons
+                  name="chevron-down"
+                  size={19}
+                  color={c.green}
+                />
+              </Pressable>
             </View>
 
-            <Action
-              danger
-              label={`× ${index + 1}`}
-              disabled={busy}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`Bỏ ${place?.name ?? 'địa điểm'}`}
+              disabled={locked}
               onPress={() =>
                 void act(() =>
                   tripActions.remove(stop.id),
                 )
               }
-              style={{
-                paddingHorizontal: 7,
-                paddingVertical: 6,
-              }}
-            />
+              style={[
+                st.iconButton,
+                { opacity: locked ? 0.3 : 1 },
+              ]}
+            >
+              <Ionicons
+                name="close"
+                size={18}
+                color={c.danger}
+              />
+            </Pressable>
           </View>
         );
       })}
 
-      {!ordered.length && (
-        <Text style={s.muted}>
-          Chưa có địa điểm. Đóng bảng và chọn địa điểm
-          trong Khám phá.
-        </Text>
+      {!view.stops.length && (
+        <View
+          style={{
+            paddingVertical: 24,
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <Ionicons
+            name="checkmark-circle-outline"
+            size={34}
+            color={c.green}
+          />
+
+          <Text
+            style={{
+              color: c.text,
+              fontSize: 14,
+              fontWeight: '600',
+            }}
+          >
+            Ngày này không còn điểm chưa đi.
+          </Text>
+
+          <Text
+            style={{
+              color: c.muted,
+              fontSize: 12,
+            }}
+          >
+            Chọn ngày khác để xem tiếp.
+          </Text>
+        </View>
       )}
     </Sheet>
   );
 }
+
+const st = StyleSheet.create({
+  footer: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  daySelect: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderRadius: 14,
+  },
+  dayOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+  },
+  configToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 9,
+    paddingVertical: 8,
+  },
+  configuration: {
+    gap: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderRadius: 14,
+  },
+  label: {
+    fontSize: 12,
+    color: '#64748B',
+  },
+  stop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    padding: 10,
+    borderRadius: 15,
+    borderWidth: 1,
+  },
+  iconButton: {
+    minWidth: 28,
+    minHeight: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

@@ -1,17 +1,20 @@
 import {
-    findPlaceById,
+  findPlaceById,
 } from '@/data/places.local';
-
 import {
-    dateForDay,
-    emptyDraft,
-    isValidDate,
-    PERIOD_WINDOWS,
-    timeToMinute,
-    type DraftStop,
-    type Period,
-    type TripDraft,
+  dateForDay,
+  emptyDraft,
+  isValidDate,
+  PERIOD_WINDOWS,
+  sortedStops,
+  type DraftStop,
+  type Period,
+  type TripDraft
 } from './trip-model';
+import {
+  venueNotice,
+  venueWindows,
+} from './venue-hours';
 
 export function vietnamClock(
   ms = Date.now(),
@@ -41,19 +44,7 @@ export function hasActiveTrip(
   );
 }
 
-function closedDay(
-  draft: TripDraft,
-  dayIndex: number,
-) {
-  const stops = draft.stops.filter(
-    stop => stop.dayIndex === dayIndex,
-  );
 
-  return (
-    stops.length > 0 &&
-    stops.every(stop => stop.completed)
-  );
-}
 
 export function slotError(
   draft: TripDraft,
@@ -85,72 +76,77 @@ export function slotError(
     return 'Ngày này đã qua theo giờ Việt Nam.';
   }
 
-  if (closedDay(draft, dayIndex)) {
-    return (
-      'Ngày này đã hoàn tất, không thêm hoặc ' +
-      'chuyển địa điểm vào được nữa.'
-    );
-  }
-
-  const window = PERIOD_WINDOWS[period];
-
-  const end = Math.min(
-    window.end,
-    timeToMinute(draft.settings.endTime),
-  );
-
-  const start = Math.max(
-    window.start,
-    timeToMinute(draft.settings.startTime),
-  );
-
-  if (end <= start) {
-    return (
-      'Buổi này nằm ngoài giờ hoạt động ' +
-      'của chuyến đi.'
-    );
-  }
-
   if (
     date === now.date &&
-    now.minute >= end
+    now.minute >= PERIOD_WINDOWS[period].end
   ) {
-    return (
-      'Buổi này đã kết thúc theo giờ Việt Nam.'
-    );
-  }
-
-  const group = draft.stops.filter(
-    stop =>
-      stop.dayIndex === dayIndex &&
-      stop.period === period,
-  );
-
-  if (
-    group.length > 0 &&
-    group.every(stop => stop.completed)
-  ) {
-    return 'Buổi này đã hoàn tất.';
+    return 'Buổi này đã kết thúc theo giờ Việt Nam.';
   }
 
   return null;
 }
+export function placeSlotError(
+  d: TripDraft,
+  dayIndex: number,
+  period: Period,
+  raw: string | null | undefined,
+  ms = Date.now(),
+): string | null {
+  const error = slotError(
+    d,
+    dayIndex,
+    period,
+    ms,
+  );
 
+  if (error) return error;
+
+  const date = dateForDay(
+    d.startDate,
+    dayIndex,
+  );
+
+  const now = vietnamClock(ms);
+  const window = PERIOD_WINDOWS[period];
+
+  const start = Math.max(
+    window.start,
+    date === now.date ? now.minute : 0,
+  );
+
+  try {
+    const available = venueWindows(raw, date).some(
+      ([open, close]) =>
+        Math.max(open, start) <
+        Math.min(close, window.end),
+    );
+
+    if (available) return null;
+
+    return (
+      'Không chọn được buổi này: ngoài giờ mở cửa ' +
+      'hoặc đã hết thời gian mở cửa còn lại. ' +
+      'Hãy chọn buổi/ngày khác.'
+    );
+  } catch (e) {
+    return e instanceof Error
+      ? e.message
+      : 'Chưa đọc được giờ mở cửa.';
+  }
+}
 export function assertCanAdd(
-  draft: TripDraft,
-
+  d: TripDraft,
   input: Pick<
     DraftStop,
     'dayIndex' | 'period' | 'visitMinutes'
   > & {
     id?: string;
+    placeId?: string;
   },
-
   ms = Date.now(),
-
   placeMinutes?: number | null,
 ) {
-  const existing = draft.stops.find(
+  const existing = d.stops.find(
     stop => stop.id === input.id,
   );
 
@@ -161,83 +157,50 @@ export function assertCanAdd(
   }
 
   if (existing) {
-    const oldError = slotError(
-      draft,
+    const source = slotError(
+      d,
       existing.dayIndex,
       existing.period,
       ms,
     );
 
-    if (oldError) {
-      throw new Error(oldError);
-    }
+    if (source) throw new Error(source);
   }
 
-  const error = slotError(
-    draft,
+  const place = input.placeId
+    ? findPlaceById(input.placeId)
+    : existing
+      ? findPlaceById(existing.placeId)
+      : undefined;
+
+  if (input.placeId && !place) {
+    throw new Error(
+      'Địa điểm không còn trong danh mục.',
+    );
+  }
+
+  const error = placeSlotError(
+    d,
     input.dayIndex,
     input.period,
+    place?.opening_hours_raw,
     ms,
   );
 
-  if (error) {
-    throw new Error(error);
-  }
+  if (error) throw new Error(error);
 
-  const now = vietnamClock(ms);
-  const window = PERIOD_WINDOWS[input.period];
-
-  const date = dateForDay(
-    draft.startDate,
-    input.dayIndex,
-  );
-
-  const begin = Math.max(
-    window.start,
-    timeToMinute(draft.settings.startTime),
-    date === now.date
-      ? now.minute
-      : 0,
-  );
-
-  const end = Math.min(
-    window.end,
-    timeToMinute(draft.settings.endTime),
-  );
-
-  const pending = draft.stops.filter(
-    stop =>
-      stop.id !== input.id &&
-      !stop.completed &&
-      stop.dayIndex === input.dayIndex &&
-      stop.period === input.period,
-  );
-
-  const newVisitMinutes =
+  const wanted =
     input.visitMinutes ??
     placeMinutes ??
-    draft.settings.defaultVisitMinutes;
+    d.settings.defaultVisitMinutes;
 
-  const pendingVisitMinutes = pending.reduce(
-    (total, stop) =>
-      total +
-      (
-        stop.visitMinutes ??
-        findPlaceById(
-          stop.placeId,
-        )?.visit_duration_minutes ??
-        draft.settings.defaultVisitMinutes
-      ),
-    0,
-  );
-
-  const required =
-    newVisitMinutes + pendingVisitMinutes;
-
-  if (begin + required > end) {
+  if (
+    !Number.isInteger(wanted) ||
+    wanted < 1 ||
+    wanted > 720
+  ) {
     throw new Error(
-      'Buổi này không còn đủ thời gian tham quan. ' +
-      'Hãy chọn buổi/ngày khác hoặc giảm thời gian dừng.',
+      'Thời gian tham quan dự kiến phải từ 1 đến 720 phút.',
     );
   }
 }
@@ -246,87 +209,106 @@ export function assertCanStart(
   draft: TripDraft,
   stop: DraftStop,
   ms = Date.now(),
+  travelSeconds?: number,
 ) {
-  const now = vietnamClock(ms);
-
-  const date = dateForDay(
-    draft.startDate,
-    stop.dayIndex,
+  const target = draft.stops.find(
+    item => item.id === stop.id,
   );
 
-  if (date > now.date) {
+  if (!hasActiveTrip(draft) || !target) {
     throw new Error(
-      'Chưa đến ngày này. Bạn chỉ được xem ' +
-      'kế hoạch, chưa thể bắt đầu.',
+      'Không tìm thấy địa điểm trong chuyến đang hoạt động.',
     );
   }
 
-  if (date < now.date) {
-    throw new Error(
-      'Không bắt đầu chặng của ngày đã qua.',
-    );
-  }
-
-  if (stop.completed) {
+  if (target.completed) {
     throw new Error(
       'Địa điểm này đã hoàn tất.',
     );
   }
 
-  const window = PERIOD_WINDOWS[stop.period];
-
-  const earliest = Math.max(
-    timeToMinute(
-      draft.settings.startTime,
-    ),
-    stop.schedule?.departureMinute ??
-      window.start,
+  const active = draft.stops.find(
+    item => item.progress,
   );
 
-  const latest = Math.min(
-    window.end,
-    timeToMinute(
-      draft.settings.endTime,
-    ),
-  );
-
-  if (now.minute < earliest) {
+  if (active && active.id !== target.id) {
     throw new Error(
-      'Chưa đến giờ khởi hành của chặng này.',
+      'Hãy hoàn tất hoặc hủy chặng đang dở trước.',
     );
   }
 
-  if (now.minute >= latest) {
+  const next = sortedStops(draft.stops).find(
+    item => !item.completed,
+  );
+
+  if (next?.id !== target.id) {
+    const name = next
+      ? findPlaceById(next.placeId)?.name
+      : undefined;
+
     throw new Error(
-      'Buổi này đã kết thúc.',
+      `Phải đi theo thứ tự lộ trình. Hãy hoàn thành ${name || 'địa điểm trước'} trước.`,
     );
   }
 
-  if (!stop.progress) {
-    const visitMinutes =
-      stop.visitMinutes ??
-      findPlaceById(
-        stop.placeId,
-      )?.visit_duration_minutes ??
-      draft.settings.defaultVisitMinutes;
+  const now = vietnamClock(ms);
 
-    const travelMinutes =
-      (stop.schedule?.travelSeconds ?? 0) / 60;
+  const date = dateForDay(
+    draft.startDate,
+    target.dayIndex,
+  );
 
-    const bufferMinutes =
-      stop.schedule?.bufferMinutes ?? 0;
+  if (date > now.date) {
+    throw new Error(
+      'Chưa đến ngày này. Bạn chỉ được xem kế hoạch, chưa thể bắt đầu.',
+    );
+  }
 
-    const required =
-      visitMinutes +
-      travelMinutes +
-      bufferMinutes;
+  if (date < now.date) {
+    throw new Error(
+      'Không bắt đầu chặng của ngày đã qua. Có thể check-in thủ công nếu bạn đã ghé.',
+    );
+  }
 
-    if (now.minute + required > latest) {
-      throw new Error(
-        'Không còn đủ thời gian cho chặng này ' +
-        'trong buổi đã chọn.',
-      );
-    }
+  if (travelSeconds === undefined) return;
+
+  if (
+    !Number.isFinite(travelSeconds) ||
+    travelSeconds < 0
+  ) {
+    throw new Error(
+      'Chưa có thời gian di chuyển hợp lệ.',
+    );
+  }
+
+  const place = findPlaceById(target.placeId);
+
+  if (!place) {
+    throw new Error(
+      'Địa điểm không còn trong danh mục.',
+    );
+  }
+
+  const visit =
+    target.visitMinutes ??
+    place.visit_duration_minutes ??
+    draft.settings.defaultVisitMinutes;
+
+  if (!Number.isFinite(visit) || visit <= 0) {
+    throw new Error(
+      'Thời gian tham quan chưa hợp lệ.',
+    );
+  }
+
+  const notice = venueNotice(
+    place.opening_hours_raw,
+    ms,
+    travelSeconds,
+    visit,
+  );
+
+  if (notice?.kind === 'blocked') {
+    throw new Error(notice.message);
   }
 }
 
@@ -369,5 +351,43 @@ export function startError(
     return error instanceof Error
       ? error.message
       : 'Chưa thể bắt đầu chặng này.';
+  }
+}
+export function assertCanManualCheckIn(
+  draft: TripDraft,
+  stop: DraftStop,
+  ms = Date.now(),
+) {
+  if (!hasActiveTrip(draft)) {
+    throw new Error(
+      'Chưa có chuyến đi đang hoạt động.',
+    );
+  }
+
+  if (stop.completed) {
+    throw new Error(
+      'Địa điểm này đã được check-in.',
+    );
+  }
+
+  if (
+    !Number.isInteger(stop.dayIndex) ||
+    stop.dayIndex < 0 ||
+    stop.dayIndex >= draft.dayCount
+  ) {
+    throw new Error(
+      'Ngày của địa điểm không hợp lệ.',
+    );
+  }
+
+  const date = dateForDay(
+    draft.startDate,
+    stop.dayIndex,
+  );
+
+  if (date > vietnamClock(ms).date) {
+    throw new Error(
+      'Chưa đến ngày tham quan này. Không check-in trước cho ngày tương lai.',
+    );
   }
 }

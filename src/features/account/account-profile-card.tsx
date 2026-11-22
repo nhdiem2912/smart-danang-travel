@@ -1,21 +1,23 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useRef, useState } from 'react';
 import {
-    Alert,
-    Image,
-    Platform,
-    Pressable,
-    Text,
-    View,
+  Alert,
+  Image,
+  Platform,
+  Pressable,
+  Text,
+  View,
 } from 'react-native';
 
 import { TravelerProfileSettings } from '@/features/profile/onboarding';
 import { useTravelerProfile } from '@/features/profile/profile-context';
 import { useSettingsColors } from '@/features/settings/settings-colors';
-import { accountActions, useAccount } from './account-store';
+
+import { saveAccountAvatar } from './account-avatar-store';
+import { useAccount } from './account-store';
+import { useAccountAvatar } from './use-account-avatar';
 
 export function AccountProfileCard() {
   const { user } = useAccount();
@@ -29,18 +31,18 @@ function ProfileCard({ uid }: { uid: string }) {
   const c = useSettingsColors();
   const account = useAccount();
   const { profile } = useTravelerProfile();
+  const avatar = useAccountAvatar(uid);
 
-  const [photo, setPhoto] = useState<string | null>(null);
-  const [broken, setBroken] = useState<string | null>(null);
-  const [ready, setReady] = useState(false);
+  const [broken, setBroken] =
+    useState<string | null>(null);
+
   const [busy, setBusy] = useState(false);
 
   const alive = useRef(false);
   const lock = useRef(false);
 
-  const storageKey = `@smart-danang-travel/avatar:v1:${uid}`;
-
-  const uri = photo || account.user?.photoURL;
+  const uri =
+    avatar.uri || account.user?.photoURL;
 
   const name =
     profile?.displayName ||
@@ -49,44 +51,33 @@ function ProfileCard({ uid }: { uid: string }) {
 
   useEffect(() => {
     alive.current = true;
-    let cancelled = false;
-
-    void AsyncStorage.getItem(storageKey)
-      .then(value => {
-        if (!cancelled) {
-          setPhoto(value);
-          setReady(true);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          Alert.alert(
-            'Chưa tải được ảnh',
-            'Hãy mở lại Cài đặt để thử lại.',
-          );
-        }
-      });
 
     return () => {
-      cancelled = true;
       alive.current = false;
     };
-  }, [storageKey]);
+  }, []);
 
   async function changePhoto() {
-    if (!ready || lock.current || account.busy) return;
+    if (
+      !avatar.ready ||
+      lock.current ||
+      account.busy
+    ) {
+      return;
+    }
 
     lock.current = true;
     setBusy(true);
 
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
-        allowsEditing: Platform.OS !== 'web',
-        aspect: [1, 1],
-        quality: 0.65,
-        base64: Platform.OS === 'web',
-      });
+      const result =
+        await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ['images'],
+          allowsEditing: Platform.OS !== 'web',
+          aspect: [1, 1],
+          quality: 0.65,
+          base64: Platform.OS === 'web',
+        });
 
       if (
         result.canceled ||
@@ -105,8 +96,7 @@ function ProfileCard({ uid }: { uid: string }) {
         }
 
         next =
-          `data:${asset.mimeType || 'image/jpeg'};base64,` +
-          asset.base64;
+          `data:${asset.mimeType || 'image/jpeg'};base64,${asset.base64}`;
 
         if (next.length > 1000000) {
           throw new Error(
@@ -115,15 +105,18 @@ function ProfileCard({ uid }: { uid: string }) {
         }
       } else {
         if (!FileSystem.documentDirectory) {
-          throw new Error('Không mở được thư mục ảnh.');
+          throw new Error(
+            'Không mở được thư mục ảnh.',
+          );
         }
 
         const folder =
           `${FileSystem.documentDirectory}account-avatars/`;
 
-        await FileSystem.makeDirectoryAsync(folder, {
-          intermediates: true,
-        });
+        await FileSystem.makeDirectoryAsync(
+          folder,
+          { intermediates: true },
+        );
 
         const extension =
           asset.mimeType === 'image/png'
@@ -133,8 +126,7 @@ function ProfileCard({ uid }: { uid: string }) {
               : 'jpg';
 
         next =
-          `${folder}avatar-${Date.now()}-` +
-          `${Math.random().toString(36).slice(2)}.${extension}`;
+          `${folder}avatar-${Date.now()}-${Math.random().toString(36).slice(2)}.${extension}`;
 
         await FileSystem.copyAsync({
           from: asset.uri,
@@ -144,10 +136,9 @@ function ProfileCard({ uid }: { uid: string }) {
 
       if (!alive.current) return;
 
-      await AsyncStorage.setItem(storageKey, next);
+      await saveAccountAvatar(uid, next);
 
       if (alive.current) {
-        setPhoto(next);
         setBroken(null);
       }
     } catch (error) {
@@ -171,8 +162,8 @@ function ProfileCard({ uid }: { uid: string }) {
   return (
     <View
       style={{
-        padding: 16,
-        gap: 14,
+        padding: 8,
+        gap: 4,
         borderRadius: 20,
         backgroundColor: c.card,
         borderWidth: 1,
@@ -189,16 +180,20 @@ function ProfileCard({ uid }: { uid: string }) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Đổi ảnh đại diện"
-          disabled={!ready || busy || account.busy}
+          disabled={
+            !avatar.ready ||
+            busy ||
+            account.busy
+          }
           onPress={() => {
             void changePhoto();
           }}
         >
           <View
             style={{
-              width: 64,
-              height: 64,
-              borderRadius: 32,
+              width: 48,
+              height: 48,
+              borderRadius: 24,
               backgroundColor: c.pale,
               alignItems: 'center',
               justifyContent: 'center',
@@ -210,8 +205,8 @@ function ProfileCard({ uid }: { uid: string }) {
                 source={{ uri }}
                 onError={() => setBroken(uri)}
                 style={{
-                  width: 64,
-                  height: 64,
+                  width: 48,
+                  height: 48,
                 }}
               />
             ) : (
@@ -249,9 +244,10 @@ function ProfileCard({ uid }: { uid: string }) {
 
         <View style={{ flex: 1, gap: 4 }}>
           <Text
+            numberOfLines={1}
             style={{
               color: c.text,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: '800',
             }}
           >
@@ -259,6 +255,7 @@ function ProfileCard({ uid }: { uid: string }) {
           </Text>
 
           <Text
+            numberOfLines={1}
             selectable
             style={{
               color: c.muted,
@@ -274,67 +271,14 @@ function ProfileCard({ uid }: { uid: string }) {
               fontSize: 11,
             }}
           >
-            {busy ? 'Đang lưu ảnh…' : 'Đã kết nối Google'}
+            {busy
+              ? 'Đang lưu ảnh…'
+              : 'Đã kết nối Google'}
           </Text>
         </View>
       </View>
 
       <TravelerProfileSettings />
-
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 12,
-        }}
-      >
-        <Text
-          style={{
-            flex: 1,
-            color: c.muted,
-            fontSize: 10,
-            lineHeight: 15,
-          }}
-        >
-          Ảnh tự chọn lưu trên thiết bị này.
-        </Text>
-
-        <Pressable
-          accessibilityRole="button"
-          disabled={busy || account.busy}
-          style={{ padding: 8 }}
-          onPress={() => {
-            Alert.alert(
-              'Đăng xuất?',
-              'Bạn có thể đăng nhập lại bằng Google.',
-              [
-                {
-                  text: 'Hủy',
-                  style: 'cancel',
-                },
-                {
-                  text: 'Đăng xuất',
-                  style: 'destructive',
-                  onPress: () => {
-                    void accountActions.signOut();
-                  },
-                },
-              ],
-            );
-          }}
-        >
-          <Text
-            style={{
-              color: c.danger,
-              fontSize: 12,
-              fontWeight: '600',
-            }}
-          >
-            Đăng xuất
-          </Text>
-        </Pressable>
-      </View>
 
       {!!account.error && (
         <Text style={{ color: c.danger }}>

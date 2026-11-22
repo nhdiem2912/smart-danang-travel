@@ -1,9 +1,18 @@
-import { openingHours } from '@/features/discovery/opening-hours';
-import { sortForProfile } from '@/features/profile/personalization';
-import { useTravelerProfile } from '@/features/profile/profile-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useDeferredValue, useMemo, useRef, useState } from 'react';
 import {
+  router,
+  useFocusEffect,
+  useLocalSearchParams,
+} from 'expo-router';
+import {
+  useCallback,
+  useDeferredValue,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Alert,
   FlatList,
   Pressable,
   ScrollView,
@@ -22,19 +31,25 @@ import {
 import {
   findPlaceById,
   normalizeSearch,
-  places,
 } from '@/data/places.local';
+import { usePlacesCatalog } from '@/data/use-places-catalog';
 
 import { AddStopSheet } from '@/features/discovery/add-stop-sheet';
 import { AdvancedPlaceFiltersSheet } from '@/features/discovery/advanced-place-filters-sheet';
+import { openingHours } from '@/features/discovery/opening-hours';
 import { PlaceDetailsSheet } from '@/features/discovery/place-details-sheet';
 import {
-  applyDiscoveryFilters, defaultDiscoveryFilters, discoveryAreas, discoveryFilterCount,
-  distanceFromPlace, hasDiscoveryPriceData, type DiscoveryFilters,
+  applyDiscoveryFilters,
+  defaultDiscoveryFilters,
+  discoveryAreas,
+  discoveryFilterCount,
+  distanceFromPlace,
+  type DiscoveryFilters,
 } from '@/features/discovery/place-filters';
 import { PlaceThumb } from '@/features/discovery/place-thumb';
 import type { DraftStop } from '@/features/discovery/trip-model';
 import { TripSummarySheet } from '@/features/discovery/trip-summary-sheet';
+import { isUpcomingStop } from '@/features/discovery/trip-summary-view';
 import {
   Action,
   C,
@@ -46,78 +61,198 @@ import {
   useTripDraft,
 } from '@/features/discovery/use-trip-draft';
 
+import { sortForProfile } from '@/features/profile/personalization';
+import { useTravelerProfile } from '@/features/profile/profile-context';
+
 const categories: [PlaceCategory | 'all', string][] = [
   ['all', '🌐 Tất cả'],
   ['tham_quan', '♜ Tham quan'],
   ['khach_san', '▥ Khách sạn'],
-  ['nha_hang', '♨ Ăn uống'],
+  ['an_uong', '♨ Ăn uống'],
   ['mua_sam', '♧ Mua sắm'],
   ['giai_tri', '✧ Giải trí'],
   ['bai_bien', '☀ Bãi biển'],
 ];
 
 export default function ExploreScreen() {
-    const { profile } = useTravelerProfile();
-  const [recommended, setRecommended] = useState(true);
+  const params = useLocalSearchParams<{
+    placeId?: string;
+    openToken?: string;
+  }>();
+
+  const { places } = usePlacesCatalog();
+  const { profile } = useTravelerProfile();
   const insets = useSafeAreaInsets();
-  const { draft, ready, saving, error } = useTripDraft();
+
+  const {
+    draft,
+    ready,
+    saving,
+    error,
+  } = useTripDraft();
 
   const [query, setQuery] = useState('');
+
   const [category, setCategory] =
     useState<PlaceCategory | 'all'>('all');
-  const [limit, setLimit] = useState(20);
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<DiscoveryFilters>(defaultDiscoveryFilters);
-  const listRef = useRef<FlatList<Place>>(null);
-  const onlySelected = activeFilters.onlySelected;
-  const activeFilterCount = discoveryFilterCount(activeFilters);
-  const areaOptions = useMemo(() => discoveryAreas(places), []);
-  const priceAvailable = useMemo(() => hasDiscoveryPriceData(places), []);
 
-  const [addPlace, setAddPlace] = useState<Place | null>(null);
-  const [editing, setEditing] = useState<DraftStop | undefined>();
-  const [details, setDetails] = useState<Place | null>(null);
+  const [limit, setLimit] = useState(20);
+  const [filtersOpen, setFiltersOpen] =
+    useState(false);
+
+  const [activeFilters, setActiveFilters] =
+    useState<DiscoveryFilters>(
+      defaultDiscoveryFilters,
+    );
+
+  const listRef = useRef<FlatList<Place>>(null);
+
+  const [addPlace, setAddPlace] =
+    useState<Place | null>(null);
+
+  const [editing, setEditing] =
+    useState<DraftStop | undefined>();
+
+  const [details, setDetails] =
+    useState<Place | null>(null);
+
   const [summary, setSummary] = useState(false);
 
-  const deferredQuery = useDeferredValue(query);
+  const onlySelected =
+    activeFilters.onlySelected;
 
-  const selected = useMemo(
-    () => new Set(draft?.stops.map(stop => stop.placeId) ?? []),
+  const activeFilterCount =
+    discoveryFilterCount(activeFilters);
+
+  const areaOptions = useMemo(
+    () => discoveryAreas(places),
+    [places],
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      const id =
+        typeof params.placeId === 'string'
+          ? params.placeId
+          : undefined;
+
+      if (
+        !id ||
+        (
+          params.openToken !== undefined &&
+          typeof params.openToken !== 'string'
+        )
+      ) {
+        return;
+      }
+
+      const place = findPlaceById(id);
+
+      setAddPlace(null);
+      setSummary(false);
+
+      if (place) {
+        setCategory('all');
+
+        setActiveFilters(
+          defaultDiscoveryFilters(),
+        );
+
+        setQuery(
+          places.some(row => row.id === id)
+            ? place.name
+            : '',
+        );
+
+        setLimit(20);
+        setDetails(place);
+      } else {
+        Alert.alert(
+          'Chưa có địa điểm',
+          'Chưa tìm thấy dữ liệu chi tiết cho địa điểm này.',
+        );
+      }
+
+      router.setParams({
+        placeId: undefined,
+        openToken: undefined,
+      });
+    }, [
+      params.placeId,
+      params.openToken,
+      places,
+    ]),
+  );
+
+  const deferredQuery =
+    useDeferredValue(query);
+
+  const upcoming = useMemo(
+    () =>
+      draft?.stops.filter(isUpcomingStop) ??
+      [],
     [draft?.stops],
   );
 
-  const candidates = useMemo(() => {
-    const term = normalizeSearch(deferredQuery);
-    return places.filter(place =>
-      (category === 'all' || place.category === category) &&
-      (!term || normalizeSearch(place.search_text || `${place.name} ${place.address ?? ''}`).includes(term)),
-    );
-  }, [category, deferredQuery]);
+  const selected = useMemo(
+    () =>
+      new Set(
+        upcoming.map(stop => stop.placeId),
+      ),
+    [upcoming],
+  );
 
-    const filtered = useMemo(() => {
+  const candidates = useMemo(() => {
+    const term =
+      normalizeSearch(deferredQuery);
+
+    return places.filter(place => {
+      const matchesCategory =
+        category === 'all' ||
+        place.category === category;
+
+      const searchText =
+        place.search_text ||
+        `${place.name} ${place.address ?? ''}`;
+
+      const matchesQuery =
+        !term ||
+        normalizeSearch(searchText).includes(
+          term,
+        );
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [
+    category,
+    deferredQuery,
+    places,
+  ]);
+
+  const filtered = useMemo(() => {
     const matches = applyDiscoveryFilters(
       candidates,
       activeFilters,
       selected,
     );
 
-    const shouldPersonalize =
-      recommended &&
+    return (
       activeFilters.radiusKm === null &&
-      !activeFilters.popularFirst;
-
-    return shouldPersonalize
+      !activeFilters.popularFirst
+    )
       ? sortForProfile(matches, profile)
       : matches;
   }, [
     candidates,
     activeFilters,
     selected,
-    recommended,
     profile,
   ]);
 
-  function openAdd(place: Place, stop?: DraftStop) {
+  function openAdd(
+    place: Place,
+    stop?: DraftStop,
+  ) {
     setDetails(null);
     setSummary(false);
     setEditing(stop);
@@ -125,9 +260,13 @@ export default function ExploreScreen() {
   }
 
   function editStop(stop: DraftStop) {
-    const place = findPlaceById(stop.placeId);
+    const place = findPlaceById(
+      stop.placeId,
+    );
 
-    if (place) openAdd(place, stop);
+    if (place) {
+      openAdd(place, stop);
+    }
   }
 
   if (!ready || !draft) {
@@ -140,9 +279,19 @@ export default function ExploreScreen() {
   }
 
   const header = (
-    <View style={{ gap: 14, paddingBottom: 10 }}>
+    <View
+      style={{
+        gap: 14,
+        paddingBottom: 10,
+      }}
+    >
       <View style={st.search}>
-        <Text style={{ fontSize: 23, color: '#94A3B8' }}>
+        <Text
+          style={{
+            fontSize: 23,
+            color: '#94A3B8',
+          }}
+        >
           ⌕
         </Text>
 
@@ -161,52 +310,66 @@ export default function ExploreScreen() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Bộ lọc địa điểm"
-          onPress={() => setFiltersOpen(true)}
+          onPress={() =>
+            setFiltersOpen(true)
+          }
           style={st.filterButton}
         >
-          <Ionicons name="options-outline" color={C.green} size={22} />
+          <Ionicons
+            name="options-outline"
+            color={C.green}
+            size={22}
+          />
+
           {activeFilterCount > 0 && (
-            <Text style={st.filterBadge}>{activeFilterCount}</Text>
+            <Text style={st.filterBadge}>
+              {activeFilterCount}
+            </Text>
           )}
         </Pressable>
       </View>
 
       {activeFilterCount > 0 && (
         <View style={s.between}>
-          <Text style={[s.muted, { color: C.deep }]}>Đang áp dụng {activeFilterCount} nhóm lọc</Text>
-          <Pressable accessibilityRole="button" onPress={() => {
-            setActiveFilters(defaultDiscoveryFilters());
-            setLimit(20);
-            listRef.current?.scrollToOffset({ offset: 0, animated: false });
-          }}><Text style={{ color: C.deep, fontSize: 11, fontWeight: '700' }}>Xóa bộ lọc</Text></Pressable>
+          <Text
+            style={[
+              s.muted,
+              { color: C.deep },
+            ]}
+          >
+            Đang áp dụng {activeFilterCount}{' '}
+            nhóm lọc
+          </Text>
+
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => {
+              setActiveFilters(
+                defaultDiscoveryFilters(),
+              );
+
+              setLimit(20);
+
+              listRef.current?.scrollToOffset({
+                offset: 0,
+                animated: false,
+              });
+            }}
+          >
+            <Text
+              style={{
+                color: C.deep,
+                fontSize: 11,
+                fontWeight: '700',
+              }}
+            >
+              Xóa bộ lọc
+            </Text>
+          </Pressable>
         </View>
       )}
-      <Pressable
-        accessibilityRole="checkbox"
-        accessibilityState={{ checked: recommended }}
-        onPress={() => {
-          setRecommended(value => !value);
-          setLimit(20);
-        }}
-        style={{ gap: 4 }}
-      >
-        <Text
-          style={{
-            color: C.deep,
-            fontWeight: '700',
-          }}
-        >
-          {recommended ? '✓' : '○'} Ưu tiên theo sở thích khảo sát
-        </Text>
 
-        <Text style={s.muted}>
-          Ưu tiên theo nhóm địa điểm; lọc bán kính hoặc nhiều đánh giá
-          vẫn có ưu tiên cao hơn.
-        </Text>
-      </Pressable>
       <View style={{ gap: 8 }}>
-        <Text style={s.label}>DANH MỤC DỊCH VỤ</Text>
-
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -227,7 +390,8 @@ export default function ExploreScreen() {
               style={[
                 s.pill,
                 st.category,
-                category === id && s.pillActive,
+                category === id &&
+                  s.pillActive,
               ]}
             >
               <Text
@@ -235,7 +399,9 @@ export default function ExploreScreen() {
                   fontSize: 11,
                   fontWeight: '700',
                   color:
-                    category === id ? C.deep : '#596579',
+                    category === id
+                      ? C.deep
+                      : '#596579',
                 }}
               >
                 {label}
@@ -246,8 +412,16 @@ export default function ExploreScreen() {
       </View>
 
       <View style={s.between}>
-        <Text style={[s.label, { color: C.ink }]}>
-          ĐỊA ĐIỂM {onlySelected ? 'ĐÃ CHỌN' : 'KHÁM PHÁ'}
+        <Text
+          style={[
+            s.label,
+            { color: C.ink },
+          ]}
+        >
+          ĐỊA ĐIỂM{' '}
+          {onlySelected
+            ? 'ĐÃ CHỌN'
+            : 'KHÁM PHÁ'}
         </Text>
 
         <Text style={s.muted}>
@@ -257,7 +431,9 @@ export default function ExploreScreen() {
       </View>
 
       {!!error && (
-        <Text style={s.error}>{error}</Text>
+        <Text style={s.error}>
+          {error}
+        </Text>
       )}
     </View>
   );
@@ -286,7 +462,10 @@ export default function ExploreScreen() {
         onEndReached={() => {
           if (limit < filtered.length) {
             setLimit(current =>
-              Math.min(current + 20, filtered.length),
+              Math.min(
+                current + 20,
+                filtered.length,
+              ),
             );
           }
         }}
@@ -298,134 +477,185 @@ export default function ExploreScreen() {
             <Text style={s.title}>
               Không tìm thấy địa điểm
             </Text>
+
             <Text style={s.muted}>
-              Thử từ khóa, danh mục khác hoặc tắt bộ lọc đã chọn.
+              Thử từ khóa, danh mục khác hoặc
+              tắt bộ lọc đã chọn.
             </Text>
           </View>
         }
         ListFooterComponent={
-          <View style={{ paddingVertical: 16, gap: 5 }}>
+          <View
+            style={{ paddingVertical: 16 }}
+          >
             <Text style={s.muted}>
-              Đã hiển thị {Math.min(limit, filtered.length)}
-              /{filtered.length} địa điểm · Cuộn để xem thêm
-            </Text>
-
-            <Text style={s.muted}>
-              Ảnh và đánh giá theo dữ liệu thu thập, có thể thay đổi.
-              Khoảng cách hiển thị là đường chim bay.
+              {Math.min(
+                limit,
+                filtered.length,
+              )}
+              /{filtered.length} địa điểm
             </Text>
           </View>
         }
         renderItem={({ item }) => {
-          const distance = distanceFromPlace(item, activeFilters.origin);
+          const distance =
+            distanceFromPlace(
+              item,
+              activeFilters.origin,
+            );
+
           return (
-          <View style={st.placeCard}>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={`Chi tiết ${item.name}`}
-              onPress={() => setDetails(item)}
-            >
-              <PlaceThumb place={item} size={78} />
-            </Pressable>
-
-            <View style={{ flex: 1, gap: 4 }}>
-              {item.rating !== null && (
-                <Text style={st.rating}>
-                  ★ {item.rating}
-                  {item.rating_count === null
-                    ? ''
-                    : ` (${item.rating_count})`}
-                </Text>
-              )}
-
+            <View style={st.placeCard}>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={`Xem ${item.name}`}
-                onPress={() => setDetails(item)}
+                accessibilityLabel={`Chi tiết ${item.name}`}
+                onPress={() =>
+                  setDetails(item)
+                }
               >
-                <Text
-                  style={[s.title, { fontSize: 12 }]}
-                  numberOfLines={2}
-                >
-                  {item.name}
-                </Text>
+                <PlaceThumb
+                  place={item}
+                  size={78}
+                />
               </Pressable>
-
-              <Text style={s.muted} numberOfLines={2}>
-                📍 {item.address ?? 'Chưa cập nhật địa chỉ'}
-              </Text>
-
-              {distance !== null && (
-                <Text style={[s.muted, { color: C.deep }]}>
-                  ↔ {distance < 1 ? `${Math.round(distance * 1000)} m` : `${distance.toFixed(1)} km`} · đường chim bay
-                </Text>
-              )}
-
-              <Text
-  style={[
-    s.muted,
-    {
-      fontSize: 12,
-      lineHeight: 18,
-    },
-  ]}
-  numberOfLines={2}
->
-  {PLACE_CATEGORIES[item.category]}
-  {' · '}
-  {openingHours(item.opening_hours_raw).summary}
-</Text>
 
               <View
                 style={{
-                  alignItems: 'flex-end',
-                  marginTop: 3,
+                  flex: 1,
+                  gap: 4,
                 }}
               >
-                <Action
-                  label={
-                    selected.has(item.id)
-                      ? '✓ Đã thêm'
-                      : '＋ Thêm'
+                {item.rating !== null && (
+                  <Text style={st.rating}>
+                    ★ {item.rating}
+                    {item.rating_count === null
+                      ? ''
+                      : ` (${item.rating_count})`}
+                  </Text>
+                )}
+
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`Xem ${item.name}`}
+                  onPress={() =>
+                    setDetails(item)
                   }
-                  disabled={saving}
-                  solid
+                >
+                  <Text
+                    style={[
+                      s.title,
+                      {
+                        fontSize: 14,
+                        lineHeight: 19,
+                      },
+                    ]}
+                    numberOfLines={2}
+                  >
+                    {item.name}
+                  </Text>
+                </Pressable>
+
+                <Text
                   style={[
-                    { paddingVertical: 5 },
-                    selected.has(item.id) && {
-                      backgroundColor: '#334155',
-                      borderColor: '#334155',
+                    s.muted,
+                    { fontSize: 12 },
+                  ]}
+                  numberOfLines={1}
+                >
+                  📍{' '}
+                  {item.address ??
+                    'Chưa cập nhật địa chỉ'}
+                </Text>
+
+                {distance !== null && (
+                  <Text
+                    style={[
+                      s.muted,
+                      { color: C.deep },
+                    ]}
+                  >
+                    ↔{' '}
+                    {distance < 1
+                      ? `${Math.round(distance * 1000)} m`
+                      : `${distance.toFixed(1)} km`}
+                    {' · đường chim bay'}
+                  </Text>
+                )}
+
+                <Text
+                  style={[
+                    s.muted,
+                    {
+                      fontSize: 12,
+                      lineHeight: 18,
                     },
                   ]}
-                  onPress={() =>
-                    openAdd(
-                      item,
-                      draft.stops.find(
-                        stop => stop.placeId === item.id,
-                      ),
-                    )
+                  numberOfLines={1}
+                >
+                  {
+                    PLACE_CATEGORIES[
+                      item.category
+                    ]
                   }
-                />
+                  {' · '}
+                  {
+                    openingHours(
+                      item.opening_hours_raw,
+                    ).summary
+                  }
+                </Text>
+
+                <View
+                  style={{
+                    alignItems: 'flex-end',
+                    marginTop: 3,
+                  }}
+                >
+                  <Action
+                    label={
+                      selected.has(item.id)
+                        ? '✓ Đã thêm'
+                        : '＋ Thêm'
+                    }
+                    disabled={saving}
+                    solid
+                    style={[
+                      {
+                        paddingVertical: 5,
+                      },
+                      selected.has(item.id) && {
+                        backgroundColor:
+                          '#334155',
+                        borderColor:
+                          '#334155',
+                      },
+                    ]}
+                    onPress={() =>
+                      openAdd(
+                        item,
+                        upcoming.find(
+                          stop =>
+                            stop.placeId ===
+                            item.id,
+                        ),
+                      )
+                    }
+                  />
+                </View>
               </View>
             </View>
-          </View>
           );
         }}
       />
 
-      {draft.stops.length > 0 && (
-        <View
-          style={[
-            st.footer,
-            { paddingBottom: Math.max(8, insets.bottom) },
-          ]}
-        >
+      {upcoming.length > 0 && (
+        <View style={st.footer}>
           <Action
-            label={
-              `☷ Danh sách đã chọn (${draft.stops.length})`
-            }
+            label={`Điểm chưa đi (${upcoming.length})`}
             solid
-            onPress={() => setSummary(true)}
+            onPress={() =>
+              setSummary(true)
+            }
             style={{ flex: 1 }}
           />
         </View>
@@ -434,27 +664,40 @@ export default function ExploreScreen() {
       {addPlace && (
         <AddStopSheet
           key={`${addPlace.id}-${editing?.id ?? 'new'}`}
-          place={addPlace}
+          place={
+            findPlaceById(addPlace.id) ??
+            addPlace
+          }
           editing={editing}
-          onDuplicate={() => setEditing(undefined)}
-          close={() => setAddPlace(null)}
+          onDuplicate={() =>
+            setEditing(undefined)
+          }
+          close={() =>
+            setAddPlace(null)
+          }
           onSaved={() => {
-          setAddPlace(null);
-          setEditing(undefined);
-          setSummary(false);
-        }}
+            setAddPlace(null);
+            setEditing(undefined);
+            setSummary(false);
+          }}
         />
       )}
 
       {details && (
         <PlaceDetailsSheet
-          place={details}
-          close={() => setDetails(null)}
+          place={
+            findPlaceById(details.id) ??
+            details
+          }
+          close={() =>
+            setDetails(null)
+          }
           onAdd={() =>
             openAdd(
               details,
-              draft.stops.find(
-                stop => stop.placeId === details.id,
+              upcoming.find(
+                stop =>
+                  stop.placeId === details.id,
               ),
             )
           }
@@ -463,7 +706,9 @@ export default function ExploreScreen() {
 
       {summary && (
         <TripSummarySheet
-          close={() => setSummary(false)}
+          close={() =>
+            setSummary(false)
+          }
           onEdit={editStop}
         />
       )}
@@ -472,15 +717,20 @@ export default function ExploreScreen() {
         <AdvancedPlaceFiltersSheet
           initialFilters={activeFilters}
           areas={areaOptions}
-          priceAvailable={priceAvailable}
           candidates={candidates}
           selected={selected}
-          close={() => setFiltersOpen(false)}
+          close={() =>
+            setFiltersOpen(false)
+          }
           onApply={value => {
             setActiveFilters(value);
             setLimit(20);
             setFiltersOpen(false);
-            listRef.current?.scrollToOffset({ offset: 0, animated: false });
+
+            listRef.current?.scrollToOffset({
+              offset: 0,
+              animated: false,
+            });
           }}
         />
       )}
@@ -496,6 +746,7 @@ const st = StyleSheet.create({
     maxWidth: 680,
     alignSelf: 'center',
   },
+
   search: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -507,6 +758,7 @@ const st = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 4,
   },
+
   searchInput: {
     flex: 1,
     minWidth: 0,
@@ -514,21 +766,35 @@ const st = StyleSheet.create({
     color: C.ink,
     paddingVertical: 10,
   },
+
   filterBadge: {
-    position: 'absolute', top: 0, right: -2, minWidth: 16, height: 16,
-    paddingHorizontal: 3, borderRadius: 8, backgroundColor: '#087F61',
-    color: '#FFF', fontSize: 9, fontWeight: '800', textAlign: 'center', lineHeight: 16,
+    position: 'absolute',
+    top: 0,
+    right: -2,
+    minWidth: 16,
+    height: 16,
+    paddingHorizontal: 3,
+    borderRadius: 8,
+    backgroundColor: '#087F61',
+    color: '#FFF',
+    fontSize: 9,
+    fontWeight: '800',
+    textAlign: 'center',
+    lineHeight: 16,
   },
+
   filterButton: {
     padding: 8,
     borderLeftWidth: 1,
     borderLeftColor: C.line,
   },
+
   category: {
     paddingVertical: 7,
     paddingHorizontal: 10,
     borderRadius: 18,
   },
+
   placeCard: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -539,14 +805,17 @@ const st = StyleSheet.create({
     borderWidth: 1,
     borderColor: C.line,
   },
+
   rating: {
     fontSize: 10,
     fontWeight: '700',
     color: '#D99A20',
   },
+
   footer: {
     flexDirection: 'row',
     paddingTop: 8,
+    paddingBottom: 16,
     paddingHorizontal: 14,
     backgroundColor: '#FFFFFFF2',
     borderTopWidth: 1,

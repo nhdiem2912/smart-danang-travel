@@ -43,7 +43,7 @@
 // };
 export const PLACE_CATEGORIES = {
   tham_quan: 'Tham quan',
-  nha_hang: 'Nhà hàng',
+  an_uong: 'Ăn uống',
   mua_sam: 'Mua sắm',
   khach_san: 'Khách sạn',
   giai_tri: 'Giải trí',

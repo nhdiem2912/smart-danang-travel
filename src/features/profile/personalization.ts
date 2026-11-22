@@ -16,11 +16,11 @@ export function sortForProfile<T extends Place>(
       points += 3;
     }
 
-    if (interests.has('food') && place.category === 'nha_hang') {
+    if (interests.has('food') && place.category === 'an_uong') {
       points += 3;
     }
 
-    if (interests.has('cafe') && place.category === 'nha_hang') {
+    if (interests.has('cafe') && place.category === 'an_uong') {
       points += 1;
     }
 

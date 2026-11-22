@@ -2,7 +2,7 @@
   {
     "id": "google:ChIJ8QPkSI8XQjERpb_q7VVX14k",
     "name": "NGON DA NANG - VIETNAMESE CUISINE RESTAURANT",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "88B Lê Quang Đạo, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0494988,
     "longitude": 108.2456527,
@@ -126,7 +126,7 @@
   {
     "id": "google:ChIJ1xhMtcMZQjER9bUa3xuUKFA",
     "name": "Thìa Gỗ Restaurant Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "53 Phan Thúc Duyện, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0529867,
     "longitude": 108.2415777,
@@ -264,7 +264,7 @@
   {
     "id": "google:ChIJ-UgnY_QXQjERJTTHpNvcFNw",
     "name": "Bếp Cuốn Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "31-33 Trần Bạch Đằng, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0579628,
     "longitude": 108.2451505,
@@ -401,7 +401,7 @@
   {
     "id": "google:ChIJ27SqrvEXQjERrln9TFRnBO8",
     "name": "Nhà Bếp Xưa Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64 Hà Bổng, Sơn Trà, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0660246,
     "longitude": 108.244216,
@@ -530,7 +530,7 @@
   {
     "id": "google:ChIJ2ZdrF8oXQjER4J4jlXINS70",
     "name": "Ngon Phố Đà - Homey Authentic Vietnamese Cuisine",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "300 Võ Nguyên Giáp, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.04943,
     "longitude": 108.2485706,
@@ -659,7 +659,7 @@
   {
     "id": "google:ChIJx6-KGnIXQjER7x-T0zeOlBw",
     "name": "Mộc quán Seafood Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "26 Tô Hiến Thành, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0640292,
     "longitude": 108.2415578,
@@ -796,7 +796,7 @@
   {
     "id": "google:ChIJH72bVncZQjERoTgax0OjZKY",
     "name": "LoCo Restaurant - Danang Seafood Restaurant - 다낭 레스토랑",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1C Lê Duẩn, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0715002,
     "longitude": 108.2241655,
@@ -941,7 +941,7 @@
   {
     "id": "google:ChIJ76XtSwwZQjERJapWgs-OVhQ",
     "name": "Gypsy Rooftop Restaurant & Bar",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "20 Đống Đa, Street, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0825896,
     "longitude": 108.22085,
@@ -1056,7 +1056,7 @@
   {
     "id": "google:ChIJy3H3lqwXQjER_ZurvNoSwV0",
     "name": "Si Dining Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "01 Giang Châu 2, Ngũ Hành Sơn, Đà Nẵng 50500, Vietnam",
     "latitude": 16.0301883,
     "longitude": 108.2380423,
@@ -1181,7 +1181,7 @@
   {
     "id": "google:ChIJqaQoXYMZQjERX_QzVEAZr_Q",
     "name": "MAAZI Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "264 Trần Phú, Hải Châu, Đà Nẵng 700000, Vietnam",
     "latitude": 16.0622399,
     "longitude": 108.2231519,
@@ -1318,7 +1318,7 @@
   {
     "id": "google:ChIJw-jjo3IXQjERjDCm-Yd0EAA",
     "name": "Le Comptoir",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "16 Chế Lan Viên, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0426746,
     "longitude": 108.2454296,
@@ -1419,7 +1419,7 @@
   {
     "id": "google:ChIJw-zBdzMYQjERNlbwU3SwOdc",
     "name": "Phi Lu 1 Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "225 Nguyễn Chí Thanh, Hải Châu, Đà Nẵng 55000, Vietnam",
     "latitude": 16.0670752,
     "longitude": 108.2210243,
@@ -1556,7 +1556,7 @@
   {
     "id": "google:ChIJN-vJNV8XQjERNccI4vX2rHY",
     "name": "Nén Danang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "16 đường Mỹ Đa Tây 2, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0346026,
     "longitude": 108.2395581,
@@ -1663,7 +1663,7 @@
   {
     "id": "google:ChIJjaiK7LgZQjERSQvPDP9gnVQ",
     "name": "Xóm Mới Garden Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "222 Trần Phú, Hải Châu, Đà Nẵng 552760, Vietnam",
     "latitude": 16.0635108,
     "longitude": 108.2232206,
@@ -1793,7 +1793,7 @@
   {
     "id": "google:ChIJT5ZgfdYbQjERQNe8o9aoF-E",
     "name": "Pink Salt Steak & Seafood Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "79 Hà Bổng, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0669054,
     "longitude": 108.2445125,
@@ -1903,7 +1903,7 @@
   {
     "id": "google:ChIJbdKVQI0ZQjERbdN3Q0moUlA",
     "name": "Bếp Vừng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "58 Lê Đình Thám, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0492788,
     "longitude": 108.2161923,
@@ -2002,7 +2002,7 @@
   {
     "id": "google:ChIJW_ilwg0XQjERQbqRXGggIFE",
     "name": "Cucina Luca",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "05 An Thượng 7, Ngũ Hành Sơn, Đà Nẵng 55000, Vietnam",
     "latitude": 16.0486008,
     "longitude": 108.2442288,
@@ -2136,7 +2136,7 @@
   {
     "id": "google:ChIJiTQv4ZwXQjERbqeN4rEe0uk",
     "name": "Sky View Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "216 Võ Nguyên Giáp, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0676095,
     "longitude": 108.2447798,
@@ -2267,7 +2267,7 @@
   {
     "id": "google:ChIJw1z2gkdTNDERULJnMFS92vg",
     "name": "Nhà hàng Thiên Kim",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "166 Bạch Đằng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0666255,
     "longitude": 108.2246894,
@@ -2391,7 +2391,7 @@
   {
     "id": "google:ChIJ5RFqPQAXQjERkY_wyh0qZ3E",
     "name": "MiRi Hôm Vietnamese Cuisine",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "199 Nguyễn Văn Thoại, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.05561,
     "longitude": 108.2433816,
@@ -19804,7 +19804,7 @@
   {
     "id": "google:ChIJs4YU9IIXQjERt21AKrnYj68",
     "name": "Zi Coffee & Roastery - Specialty coffee & Brunch",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "109 Hoàng Kế Viêm, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0495969,
     "longitude": 108.2459433,
@@ -19941,7 +19941,7 @@
   {
     "id": "google:ChIJrcgyp-wZQjERNqpo6xe5Ogw",
     "name": "KITE COFFEE & SOUVENIRS | CAFE DA NANG",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35 Thái Phiên Phường Phước Ninh Quận Hải Châu (mặt 77, Yên Bái, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0649446,
     "longitude": 108.2223577,
@@ -20083,7 +20083,7 @@
   {
     "id": "google:ChIJiQrzuSQXQjERhibXAe4ou4w",
     "name": "Roost Coffee Roasters | Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "57 Bà Huyện Thanh Quan, Ngũ Hành Sơn, Đà Nẵng 50700, Vietnam",
     "latitude": 16.0433923,
     "longitude": 108.2440618,
@@ -20215,7 +20215,7 @@
   {
     "id": "google:ChIJD1lJegAZQjERIye70XzxAXk",
     "name": "Outta da Blue Đà Nẵng - Danang Specialty Coffee Shop - 다낭 스페셜티 커피 전문점 - ダナン・スペシャルティコーヒーショップ - 岘港精品咖啡店",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "66 Pasteur, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0699137,
     "longitude": 108.2177666,
@@ -20339,7 +20339,7 @@
   {
     "id": "google:ChIJZ-P8KgAZQjERSzFxeVWi-7Y",
     "name": "The Local Beans | Coffee - Roastery & co-Working Space – Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "186 Phan Châu Trinh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0614708,
     "longitude": 108.2195006,
@@ -20602,7 +20602,7 @@
   {
     "id": "google:ChIJhRHxyd4XQjERPVL2Kw_eqdw",
     "name": "The Cups Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "192 Nguyễn Văn Thoại, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0560206,
     "longitude": 108.2460604,
@@ -20749,7 +20749,7 @@
   {
     "id": "google:ChIJ7xtm7rMXQjER7ye2fxPfbFE",
     "name": "XLIII Specialty Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "422 Ngô Thì Sĩ, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0480872,
     "longitude": 108.2460233,
@@ -20885,7 +20885,7 @@
   {
     "id": "google:ChIJ6w7JJAAZQjERZHuoiNrqwWk",
     "name": "Coffee Đồng (Vietnam Retro Coffee Houser)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "317 Phan Châu Trinh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0586067,
     "longitude": 108.2192476,
@@ -21009,7 +21009,7 @@
   {
     "id": "google:ChIJ6YzGFvEZQjERtj5MGs3Pj2Q",
     "name": "Àla Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "113/27 Nguyễn Chí Thanh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0736498,
     "longitude": 108.221785,
@@ -21268,7 +21268,7 @@
   {
     "id": "google:ChIJXeXlix8ZQjERx9QsmNqx6_U",
     "name": "[91cc] 91 Concept Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "91 Trần Quốc Toản, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0662557,
     "longitude": 108.2204201,
@@ -21392,7 +21392,7 @@
   {
     "id": "google:ChIJ2eFWbrcXQjERkMR0z_5VhM0",
     "name": "Trình cà phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "25 Phạm Hồng Thái, Hải Châu, Đà Nẵng 55000, Vietnam",
     "latitude": 16.0673825,
     "longitude": 108.2217327,
@@ -21525,7 +21525,7 @@
   {
     "id": "google:ChIJxzo3j9EZQjER785qACnbIW0",
     "name": "P Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "53-55 Nguyễn Văn Linh, Hải Châu, Đà Nẵng 50211, Vietnam",
     "latitude": 16.0607465,
     "longitude": 108.2206633,
@@ -21661,7 +21661,7 @@
   {
     "id": "google:ChIJQRIRJDIYQjER4JvYKu_Qnak",
     "name": "WONDERLUST - Coffee & Souvenir",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "96 Trần Phú, Hải Châu, Đà Nẵng 840236, Vietnam",
     "latitude": 16.0691557,
     "longitude": 108.223843,
@@ -21797,7 +21797,7 @@
   {
     "id": "google:ChIJlaQFd8IZQjERCnuZnirYstQ",
     "name": "S'Story Coffee & Kitchen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Huỳnh Thúc Kháng/119 Bình Hiên, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0582269,
     "longitude": 108.2183139,
@@ -21931,7 +21931,7 @@
   {
     "id": "google:ChIJUd6PamAZQjERvVgfVdQ1avI",
     "name": "The Matcha Team - Matcha & Bakes Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "95 Nguyễn Thị Minh Khai, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0703999,
     "longitude": 108.2189055,
@@ -22055,7 +22055,7 @@
   {
     "id": "google:ChIJGXnZXBoZQjERwy5rml5TES8",
     "name": "PASSPORT Coffee Roastery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "03 Trường Thi 6, Hòa Cường, Đà Nẵng 55000, Vietnam",
     "latitude": 16.0597407,
     "longitude": 108.2045725,
@@ -22181,7 +22181,7 @@
   {
     "id": "google:ChIJTahQxcwZQjERrNKa5emQFC4",
     "name": "NAM house Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "15/1 Lê Hồng Phong, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0633271,
     "longitude": 108.2222391,
@@ -22314,7 +22314,7 @@
   {
     "id": "google:ChIJn2ZMDlcZQjERStPSV_YBvIE",
     "name": "Lam Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "138 Duy Tân, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0511074,
     "longitude": 108.2076501,
@@ -22438,7 +22438,7 @@
   {
     "id": "google:ChIJiaXn52YXQjERbd2jnJ1Xmg0",
     "name": "SIX ON SIX CAFE - BRUNCH & RESTAURANT",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64 Bà Huyện Thanh Quan, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0432336,
     "longitude": 108.2442276,
@@ -22590,7 +22590,7 @@
   {
     "id": "google:ChIJ1-sdCzwXQjERW4IRWPee0ME",
     "name": "Oslow Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "89 Sương Nguyệt Anh, An Hải, Đà Nẵng 553457, Vietnam",
     "latitude": 16.0683968,
     "longitude": 108.2425161,
@@ -22720,7 +22720,7 @@
   {
     "id": "google:ChIJbdw0bPoZQjERz0BEiJv3dkY",
     "name": "Gé Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "24 Lê Hồng Phong, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0639729,
     "longitude": 108.2226686,
@@ -22851,7 +22851,7 @@
   {
     "id": "google:ChIJ9wE3S7MXQjER4MsHGo-UrJo",
     "name": "Banh mi & Coffee NHÀ VIỆT (반미&커피)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "04 Hà Chương, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.065419,
     "longitude": 108.244652,
@@ -22988,7 +22988,7 @@
   {
     "id": "google:ChIJ_5NQ-bkZQjERIMvo3zh7Ipw",
     "name": "Cà Phê Muối Huế 3 - NCF Trần Phú",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "254 Trần Phú, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0627037,
     "longitude": 108.223172,
@@ -23117,7 +23117,7 @@
   {
     "id": "google:ChIJz2VlXIAZQjER9VRmwBZiBLI",
     "name": "Cửa Ngõ Café – Cửa Hàng Số 2",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "102 Nguyễn Thị Minh Khai, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0719706,
     "longitude": 108.2181749,
@@ -23260,7 +23260,7 @@
   {
     "id": "google:ChIJxX--D-oZQjERQ4LzQRoeVXk",
     "name": "Reply 1988 Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "45 Lê Hồng Phong, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0637675,
     "longitude": 108.221094,
@@ -23389,7 +23389,7 @@
   {
     "id": "google:ChIJ4Q8EjocZQjERqDGIhcIPNQQ",
     "name": "Đốm Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "22 Lê Quý Đôn, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0555999,
     "longitude": 108.2216885,
@@ -23503,7 +23503,7 @@
   {
     "id": "google:ChIJKbpWc6IXQjERMZMSscftz9I",
     "name": "The Hideout Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "72/24 Nguyễn Văn Thoại, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0534047,
     "longitude": 108.2404308,
@@ -23637,7 +23637,7 @@
   {
     "id": "google:ChIJy_XznZ8ZQjERnYfOZi-qaPo",
     "name": "Ngọt Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "57/24 Lê Hồng Phong, Hải Châu, Đà Nẵng 59000, Vietnam",
     "latitude": 16.063608,
     "longitude": 108.2206146,
@@ -23761,7 +23761,7 @@
   {
     "id": "google:ChIJ9Rl22y4YQjEREpu-fzqA_6c",
     "name": "Highlands Coffee Vincom Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "910A Ng. Quyền, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0713131,
     "longitude": 108.2306776,
@@ -23892,7 +23892,7 @@
   {
     "id": "google:ChIJZdLv8rkZQjERIhU2VsEsCl4",
     "name": "Hem Xeo",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "2 Đặng Thùy Trâm, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0523825,
     "longitude": 108.2062471,
@@ -24016,7 +24016,7 @@
   {
     "id": "google:ChIJ8eVkBAAZQjER4cjP0O1iiz0",
     "name": "Vietnam Coffee Making Class",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "25 Phạm Hồng Thái, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.067348,
     "longitude": 108.2217426,
@@ -24140,7 +24140,7 @@
   {
     "id": "google:ChIJUdH0Q88ZQjER0AoQ8Pbil28",
     "name": "Nia Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "14 Phan Thành Tài, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0530744,
     "longitude": 108.2215045,
@@ -24270,7 +24270,7 @@
   {
     "id": "google:ChIJR-frtrUZQjER9eVCCn40gAk",
     "name": "90s Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "10 Đặng Thai Mai, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0606614,
     "longitude": 108.2107768,
@@ -24520,7 +24520,7 @@
   {
     "id": "google:ChIJX6bkd8YZQjERNY8EboUDO-A",
     "name": "Da Nang Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Da Nang International Airport, FB03, international departure area, Ward, Hòa Cường, Đà Nẵng, Vietnam",
     "latitude": 16.0555688,
     "longitude": 108.2026079,
@@ -24644,7 +24644,7 @@
   {
     "id": "google:ChIJzYcT2rQZQjERNRat9fKeN90",
     "name": "Gé Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "66 Đỗ Quang, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0605706,
     "longitude": 108.2118763,
@@ -24783,7 +24783,7 @@
   {
     "id": "google:ChIJAxbw82gZQjER1ytDk84kXw8",
     "name": "Loxo Coffee & Beer",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "41 Ng. Gia Tự, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0699337,
     "longitude": 108.2172713,
@@ -24907,7 +24907,7 @@
   {
     "id": "google:ChIJAaqoEG0ZQjERAEEJozfiU-g",
     "name": "7am Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "9 Nguyễn Thiện Thuật, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0562743,
     "longitude": 108.2215975,
@@ -25031,7 +25031,7 @@
   {
     "id": "google:ChIJFXVHZwAZQjERzsxt9kkXsIg",
     "name": "34 Tropical",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "155 Lê Đình Lý, Hòa Cường, Đà Nẵng 552200, Vietnam",
     "latitude": 16.0535347,
     "longitude": 108.2113574,
@@ -25159,7 +25159,7 @@
   {
     "id": "google:ChIJb_bFrPAZQjERuy88gz1Hnrc",
     "name": "Cổ Động Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "30 Đặng Thùy Trâm, Hòa Cường, Đà Nẵng 50000, Vietnam",
     "latitude": 16.0522882,
     "longitude": 108.2051718,
@@ -25283,7 +25283,7 @@
   {
     "id": "google:ChIJvfR1OgAZQjERkNEfts8tSZ0",
     "name": "dapen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11 Trần Bình Trọng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0659533,
     "longitude": 108.2193537,
@@ -25409,7 +25409,7 @@
   {
     "id": "google:ChIJN0ZcSpUZQjERbuIJKi2hVfE",
     "name": "Càphê Một Đời | Hidden Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "162a Nguyễn Chí Thanh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0660274,
     "longitude": 108.2206893,
@@ -25542,7 +25542,7 @@
   {
     "id": "google:ChIJfcMPUTUbQjERc1SxzOthIak",
     "name": "MỘC MIÊN COFFEE - XƯỞNG RANG XAY CÀ PHÊ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "142/3 Lê Độ, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0668587,
     "longitude": 108.2014536,
@@ -25681,7 +25681,7 @@
   {
     "id": "google:ChIJuUgu5VEZQjERxfkLwDV0cug",
     "name": "Ơi Cafe: cà phê sân vườn, giá hấp dẫn, chill, bình yên, cà phê muối",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27 Bình Minh 3, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0545033,
     "longitude": 108.2209628,
@@ -25805,7 +25805,7 @@
   {
     "id": "google:ChIJUwTFFe0ZQjERaq9L_28y9ic",
     "name": "phinn coffee - 커피 - vintage",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K 27/12 Thái Phiên, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0645646,
     "longitude": 108.2227654,
@@ -25904,7 +25904,7 @@
   {
     "id": "google:ChIJP4AMky4ZQjER-0vhKAe45Q0",
     "name": "Cha cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "01 Nguyễn Văn Linh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.060757,
     "longitude": 108.2228503,
@@ -26032,7 +26032,7 @@
   {
     "id": "google:ChIJna6hEgAZQjERzq_f5y77Qug",
     "name": "V7 Tab Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K46/8b Đ. 2 Tháng 9, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.058131,
     "longitude": 108.2222039,
@@ -26156,7 +26156,7 @@
   {
     "id": "google:ChIJy-9NOzIZQjERIOmGgKV3WpE",
     "name": "Đá Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "26 Cô Giang, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0618846,
     "longitude": 108.2215458,
@@ -26280,7 +26280,7 @@
   {
     "id": "google:ChIJ-wZaJ2QZQjERhmDzz7BMz5g",
     "name": "Khâu.cà phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "75/18 Lê Hồng Phong, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0634429,
     "longitude": 108.2187969,
@@ -26409,7 +26409,7 @@
   {
     "id": "google:ChIJPwdZFNsZQjERvlVXqS9zHNI",
     "name": "Cà Phê Trứng 3T - Cầu Rồng - Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "186 Bạch Đằng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0658831,
     "longitude": 108.2243421,
@@ -26537,7 +26537,7 @@
   {
     "id": "google:ChIJq8DocTMYQjERrIcBZUiEnSM",
     "name": "Boulevard Gelato, Pastry & Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "77 Trần Quốc Toản, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0662558,
     "longitude": 108.2210321,
@@ -26665,7 +26665,7 @@
   {
     "id": "google:ChIJpWEYGwAZQjERtGK9p8xkD6U",
     "name": "Hiên Thức Cafe.Garden",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "30/1 Đặng Thai Mai, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0608527,
     "longitude": 108.2100871,
@@ -26801,7 +26801,7 @@
   {
     "id": "google:ChIJ_Q2XSW8ZQjERTtER8tjjAA4",
     "name": "Tiệm trà Lối Nhỏ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "76 Thi Sách, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0536279,
     "longitude": 108.2054099,
@@ -26925,7 +26925,7 @@
   {
     "id": "google:ChIJB41tKWIZQjER4gOPFI7kpIw",
     "name": "Cà Phê Thế Giới Trung Nguyên Legend",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35 Thái Phiên, Hải Châu, Đà Nẵng 55000, Vietnam",
     "latitude": 16.0647473,
     "longitude": 108.2225513,
@@ -27049,7 +27049,7 @@
   {
     "id": "google:ChIJL9SelbYZQjERH5qtFt_yQe0",
     "name": "đi càphe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "81 Trần Quốc Toản, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0662917,
     "longitude": 108.2206509,
@@ -27173,7 +27173,7 @@
   {
     "id": "google:ChIJ52NnIWIZQjER4B4JekS5NJo",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "203 Ông Ích Khiêm, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0704017,
     "longitude": 108.213551,
@@ -27303,7 +27303,7 @@
   {
     "id": "google:ChIJz8PkB9EZQjERG8zODQs8dac",
     "name": "Thềm 29",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "18 Kiệt 133 Nguyễn Văn Linh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0595888,
     "longitude": 108.2156357,
@@ -27427,7 +27427,7 @@
   {
     "id": "google:ChIJ4ZJeS8oZQjERzAlK2SZaZaA",
     "name": "Highlands Coffee Hoang Anh Gia Lai",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "115 Nguyễn Văn Linh, St, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0603912,
     "longitude": 108.2167734,
@@ -27559,7 +27559,7 @@
   {
     "id": "google:ChIJY7-9hkgZQjERmt81sqnEVII",
     "name": "Good CAFE",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "111 Đ. Phạm Văn Nghị, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0564302,
     "longitude": 108.2089932,
@@ -27688,7 +27688,7 @@
   {
     "id": "google:ChIJyUX1ecsZQjERkDxGn5ZvM24",
     "name": "Mr.Ro Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "87A Lê Đình Dương, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0616075,
     "longitude": 108.2193397,
@@ -27826,7 +27826,7 @@
   {
     "id": "google:ChIJKUJyaLkZQjERqedH42cOJj8",
     "name": "Like Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "36 Nguyễn Hữu Thọ, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.049709,
     "longitude": 108.2087834,
@@ -27954,7 +27954,7 @@
   {
     "id": "google:ChIJA0Rl6_gZQjER3xovNU-jfF8",
     "name": "Mo Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "256 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0598673,
     "longitude": 108.2092897,
@@ -28084,7 +28084,7 @@
   {
     "id": "google:ChIJ58pn30YZQjERWhg4GChumqs",
     "name": "Râm Corner",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "175 Nguyễn Hoàng, Hải Châu, Đà Nẵng 50000, Vietnam",
     "latitude": 16.0596794,
     "longitude": 108.2135112,
@@ -28208,7 +28208,7 @@
   {
     "id": "google:ChIJ76NFRB4ZQjERnvAfdmsk6c0",
     "name": "HICHI Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "56 Trần Quốc Toản, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.066487,
     "longitude": 108.2212033,
@@ -28332,7 +28332,7 @@
   {
     "id": "google:ChIJif8-njcZQjERYWJKR6yj3sg",
     "name": "Nấm Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "578 Ông Ích Khiêm, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0624663,
     "longitude": 108.2160883,
@@ -28392,7 +28392,7 @@
   {
     "id": "google:ChIJh2XP8C4ZQjER8bNhIwAw42Q",
     "name": "TIỆM CƠM CHÚ TÈO CS2 - Cơm niêu singapore",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "52 Lê Đình Dương, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0614335,
     "longitude": 108.2207558,
@@ -28523,7 +28523,7 @@
   {
     "id": "google:ChIJ6YescYwZQjERETk26eNAkjs",
     "name": "La Gare Cafe & Tea",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11 Hoàng Hoa Thám, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0705448,
     "longitude": 108.2096523,
@@ -28658,7 +28658,7 @@
   {
     "id": "google:ChIJeXDogtMZQjERA4PDQixYxlQ",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "09 Đặng Thùy Trâm, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0524302,
     "longitude": 108.2087222,
@@ -28790,7 +28790,7 @@
   {
     "id": "google:ChIJ0eA9dwAZQjERlx4lQ0gBVVQ",
     "name": "Mây coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "98 Nguyễn Thị Minh Khai, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0722916,
     "longitude": 108.2183438,
@@ -28850,7 +28850,7 @@
   {
     "id": "google:ChIJjYBJ9fYZQjERLQN4nNdvh2g",
     "name": "IKIGAI garden cafe - 02 Phan Thành Tài, Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "02 Phan Thành Tài, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0541355,
     "longitude": 108.2206874,
@@ -28981,7 +28981,7 @@
   {
     "id": "google:ChIJQarInrcZQjERDE7zeamKJAM",
     "name": "Ballad Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "114/30 Lê Đình Lý, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0549681,
     "longitude": 108.2111575,
@@ -29080,7 +29080,7 @@
   {
     "id": "google:ChIJU25zBZsZQjERw6uhD10SQgo",
     "name": "Phuc Long Coffee & Tea",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "59-61 Nguyễn Văn Linh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0607239,
     "longitude": 108.2201789,
@@ -29211,7 +29211,7 @@
   {
     "id": "google:ChIJB1IxSU0YQjERJb8Y-peEnZY",
     "name": "Highlands Coffee Aeon Mall Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "TTTM Aeon Mall, 16.066427652694372, 108.20424579307014, 46 Điện Biên Phủ, Thanh Khê, Đà Nẵng 50000, Vietnam",
     "latitude": 16.0665994,
     "longitude": 108.2038689,
@@ -29342,7 +29342,7 @@
   {
     "id": "google:ChIJMcvjeyoZQjER4IJQH0Qz5Po",
     "name": "Happy Cafe - Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "438 Hùng Vương, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.066698,
     "longitude": 108.2103896,
@@ -29466,7 +29466,7 @@
   {
     "id": "google:ChIJAWgMydkZQjER-MpvKFLjoqs",
     "name": "Tiệm cà phê Cậu Út",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "34 Lê Hồng Phong, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0639814,
     "longitude": 108.2224072,
@@ -29590,7 +29590,7 @@
   {
     "id": "google:ChIJq5dIKbAZQjERHo_5l3rV0eQ",
     "name": "Highlands Coffee Da Nang Airport International Departures",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Nhà ga quốc tế, 62 Trần Quốc Toản, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0567896,
     "longitude": 108.2024924,
@@ -29719,7 +29719,7 @@
   {
     "id": "google:ChIJ0_sDXgIZQjER59zHt5W_C4c",
     "name": "Mr. Ro Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "78 Đỗ Quang, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0587835,
     "longitude": 108.2121683,
@@ -29980,7 +29980,7 @@
   {
     "id": "google:ChIJf-GHukcYQjERyQoRvi6SumQ",
     "name": "EZI - Đậm Đà Nẵng - 388 Đống Đa",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "388 Đống Đa, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0737909,
     "longitude": 108.2139006,
@@ -30113,7 +30113,7 @@
   {
     "id": "google:ChIJr7zJYAkZQjERA0lYwQ-BpOk",
     "name": "Highlands Coffee VTV8",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "258 Bạch Đằng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0616894,
     "longitude": 108.2235655,
@@ -30365,7 +30365,7 @@
   {
     "id": "google:ChIJyR8RaUUZQjERTJ1OqTnq8pk",
     "name": "Villa Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "19 Chu Văn An, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0568506,
     "longitude": 108.2178037,
@@ -30489,7 +30489,7 @@
   {
     "id": "google:ChIJH2x4e38ZQjERw0ofdmRMTA8",
     "name": "Trung Nguyên Legend Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "80 Pasteur, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0697476,
     "longitude": 108.2173409,
@@ -30617,7 +30617,7 @@
   {
     "id": "google:ChIJl2dhQAAZQjER3iACJGnLxWI",
     "name": "The Coffee Bean",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "First floor International Terminal Da Nang Airport, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.053826,
     "longitude": 108.20247,
@@ -30677,7 +30677,7 @@
   {
     "id": "google:ChIJUemG9loZQjERl04UAyxLPyc",
     "name": "Loxo Coffee & Beer - Hoàng Văn Thụ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "95 Hoàng Văn Thụ, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0629075,
     "longitude": 108.2193368,
@@ -30801,7 +30801,7 @@
   {
     "id": "google:ChIJ7yJD5EUZQjERiv216xOLb2c",
     "name": "GIÁC Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "21 Núi Thành, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.053308,
     "longitude": 108.2204506,
@@ -30925,7 +30925,7 @@
   {
     "id": "google:ChIJKeGtYQAZQjERPHXicAi25c0",
     "name": "Monaco Coffee Nguyễn Văn Linh - Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "186 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0603891,
     "longitude": 108.2127847,
@@ -30985,7 +30985,7 @@
   {
     "id": "google:ChIJD84OGdEZQjERKRFp7-tfckU",
     "name": "Highlands Coffee Da Nang Airport Domestic Check-in",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "check-in ga Quốc Nội, Sân bay, 16.053778444635192, 108.2031100887935, 62 Trần Quốc Toản, Khu vực, Quận Hải, Đà Nẵng 50000, Vietnam",
     "latitude": 16.0537933,
     "longitude": 108.2030445,
@@ -31109,7 +31109,7 @@
   {
     "id": "google:ChIJ53xO2kMZQjERU0sqKrND38Q",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "338 Nguyễn Văn Linh, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0593105,
     "longitude": 108.2072916,
@@ -31305,7 +31305,7 @@
   {
     "id": "google:ChIJRffU2tgZQjERw5aH0S5Lfg0",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "76 Duy Tân, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0489118,
     "longitude": 108.2162245,
@@ -31440,7 +31440,7 @@
   {
     "id": "google:ChIJuzyc7vQZQjERku5Ln9KHQ5c",
     "name": "Highlands Coffee Da Nang Airport Domestic Arrivals",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "sảnh chờ ga đến Quốc Nội, Sân bay, Khu vực, 62 Trần Quốc Toản, Quận, Hải Châu, Đà Nẵng 58000, Vietnam",
     "latitude": 16.0543526,
     "longitude": 108.203026,
@@ -31564,7 +31564,7 @@
   {
     "id": "google:ChIJ_0yMdDYYQjERGRqmr6ZkjLw",
     "name": "Bin Cap Store",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "119 Lê Duẩn, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0704995,
     "longitude": 108.2157139,
@@ -31688,7 +31688,7 @@
   {
     "id": "google:ChIJzxZ4QgAZQjERv40HdDNqu_s",
     "name": "MÔ PHIN CAFE",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "99 Phan Thanh, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0634232,
     "longitude": 108.2087245,
@@ -31748,7 +31748,7 @@
   {
     "id": "google:ChIJPQw247sZQjERXlCopH3mlEc",
     "name": "Cafe VIP Vườn",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "34 Nguyễn Hữu Thọ, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0553013,
     "longitude": 108.2086607,
@@ -31879,7 +31879,7 @@
   {
     "id": "google:ChIJqW3ykf8ZQjERjbekLkOOOjY",
     "name": "Huyền Thoại Núi Cafe (Lê Đình Lý)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "79 Lê Đình Lý, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0572733,
     "longitude": 108.2116766,
@@ -32003,7 +32003,7 @@
   {
     "id": "google:ChIJVdcEJfsXQjER77l7IpOUHo0",
     "name": "Sơn Trà Marina",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Hồ Xanh, Sơn Trà, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0968369,
     "longitude": 108.2669597,
@@ -32289,7 +32289,7 @@
   {
     "id": "google:ChIJt81vq_8ZQjERqmTjvKMnV6k",
     "name": "Kem ký Trần Quốc Toản",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "10 Trần Quốc Toản, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0661621,
     "longitude": 108.2235812,
@@ -32413,7 +32413,7 @@
   {
     "id": "google:ChIJRVkCl5wZQjERkQffRdeLYV0",
     "name": "Café Muối Nhà Cá",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "38 Tôn Thất Tùng, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0579003,
     "longitude": 108.2105646,
@@ -32473,7 +32473,7 @@
   {
     "id": "google:ChIJcSMhS_UZQjERKZDBrBsIvSw",
     "name": "Trà Sữa Ông Nội Quán BigC- Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "271 Ông Ích Khiêm, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.069751,
     "longitude": 108.2136402,
@@ -32533,7 +32533,7 @@
   {
     "id": "google:ChIJT2gjRjoYQjERgixzCvxU7PE",
     "name": "Happy Heart Cafe - American Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "57 Ngô Thì Sĩ, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0475999,
     "longitude": 108.2446133,
@@ -32798,7 +32798,7 @@
   {
     "id": "google:ChIJa333v4gPQjERdo78iUdIOS0",
     "name": "BREWHAHA Central - Local Craft Beer House",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "16 Thái Phiên, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0650229,
     "longitude": 108.2234169,
@@ -33256,7 +33256,7 @@
   {
     "id": "google:ChIJdQouO8IZQjERmCXNzYRRHbc",
     "name": "Kem Bơ Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "32b Đ. Phạm Văn Nghị, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0583821,
     "longitude": 108.2096787,
@@ -33507,7 +33507,7 @@
   {
     "id": "google:ChIJxxumO4QZQjERqrQlIwbE8cA",
     "name": "Buffalo beer & coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "159 Phan Châu Trinh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0639042,
     "longitude": 108.2200413,
@@ -33659,7 +33659,7 @@
   {
     "id": "google:ChIJs4D2VRsZQjERWU-okFEBjSM",
     "name": "Cafeholic Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "52 Lê Lợi, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0785986,
     "longitude": 108.2192285,
@@ -33792,7 +33792,7 @@
   {
     "id": "google:ChIJkc7G1zIYQjERr0D55dn6IEc",
     "name": "Brewman Coffee Concept",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K27a/21 Thái Phiên, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0642768,
     "longitude": 108.2229356,
@@ -33916,7 +33916,7 @@
   {
     "id": "google:ChIJxfxOaL4ZQjERv98qHbnwlbE",
     "name": "Slow Breeze Coffee/Kobumcha Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "106 Lý Tự Trọng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0770064,
     "longitude": 108.2166603,
@@ -34040,7 +34040,7 @@
   {
     "id": "google:ChIJR4XhE3sXQjERBfL8sHnu-JQ",
     "name": "H Coffee - Pancake",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "89 Hoàng Kế Viêm, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0492429,
     "longitude": 108.2446288,
@@ -34180,7 +34180,7 @@
   {
     "id": "google:ChIJMeqIQ04XQjERN8amYfKExj0",
     "name": "Lighthouse",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12 D. Đình Nghệ, An Hải, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0689571,
     "longitude": 108.2423516,
@@ -34310,7 +34310,7 @@
   {
     "id": "google:ChIJHSvEFQAZQjERBq3GRFDieU0",
     "name": "Chihiro Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "5 Cầm Bá Thước, Hòa Cường, Đà Nẵng 50000, Vietnam",
     "latitude": 16.042991,
     "longitude": 108.2129758,
@@ -34434,7 +34434,7 @@
   {
     "id": "google:ChIJO7l-RdwZQjERNj5fr2VyZ9Y",
     "name": "Dng.coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "05 An Thượng 2, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0496115,
     "longitude": 108.2472289,
@@ -34564,7 +34564,7 @@
   {
     "id": "google:ChIJNUWqtqUZQjERm2UPoamYJ08",
     "name": "Bòng cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "50 Yên Bái, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0690004,
     "longitude": 108.2226552,
@@ -34696,7 +34696,7 @@
   {
     "id": "google:ChIJi0bpGjIYQjERRodYRF89PH8",
     "name": "Cộng Cà Phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "98-96 Bạch Đằng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0690486,
     "longitude": 108.2248767,
@@ -34826,7 +34826,7 @@
   {
     "id": "google:ChIJ-1bCV8sZQjERKmuYP-IvtvU",
     "name": "Cozy Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "167 Phan Châu Trinh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0637595,
     "longitude": 108.2199473,
@@ -34954,7 +34954,7 @@
   {
     "id": "google:ChIJ19xlo2YZQjERS9S48ItSGMM",
     "name": "Tân Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Nguyễn Thiện Thuật/10 Bình Hiên, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0565099,
     "longitude": 108.22162,
@@ -35084,7 +35084,7 @@
   {
     "id": "google:ChIJH3YL68QZQjERjzUgAsNvTFk",
     "name": "Moss coffee Shop 1",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "140 Hải Phòng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0720541,
     "longitude": 108.2141891,
@@ -35221,7 +35221,7 @@
   {
     "id": "google:ChIJd7ZsJvMZQjER2n-dH5nqiRc",
     "name": "Thens.coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "17 Phan Thành Tài, Hòa Cường, Đà Nẵng 50000, Vietnam",
     "latitude": 16.0538477,
     "longitude": 108.2210593,
@@ -35345,7 +35345,7 @@
   {
     "id": "google:ChIJh-AQEj8ZQjERYUAmgIbo8Hs",
     "name": "TMORE 24/7",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "76 Lê Đình Dương, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0616405,
     "longitude": 108.21995,
@@ -35474,7 +35474,7 @@
   {
     "id": "google:ChIJgxcYKLsZQjERlmvsGGeXidw",
     "name": "The 59 cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "59 Hải Phòng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0717586,
     "longitude": 108.2175209,
@@ -35598,7 +35598,7 @@
   {
     "id": "google:ChIJ4ZjO-DEZQjERg_AEK62tmms",
     "name": "dapen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "136/15A, Hải Phòng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.072704,
     "longitude": 108.2145538,
@@ -35735,7 +35735,7 @@
   {
     "id": "google:ChIJIcLWMlAZQjER1VvH4kJ2aZA",
     "name": "La’s Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "36 Đ. Nguyễn Văn Thông, Hòa Xuân, Đà Nẵng 840236, Vietnam",
     "latitude": 16.0198284,
     "longitude": 108.2222373,
@@ -35870,7 +35870,7 @@
   {
     "id": "google:ChIJNaz3uDAYQjER5MvGTkxkP7M",
     "name": "Nối Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "113/25 Nguyễn Chí Thanh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0738303,
     "longitude": 108.2217984,
@@ -35999,7 +35999,7 @@
   {
     "id": "google:ChIJCxzN70sZQjER4AN7BgcPTYY",
     "name": "Nee Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "08 Lê Duẩn, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0716853,
     "longitude": 108.2222622,
@@ -36132,7 +36132,7 @@
   {
     "id": "google:ChIJkUHIstIZQjERCnYcEdDMNqo",
     "name": "Highlands Coffee Hoan My Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "161 Nguyễn Văn Linh, Phường, Thanh Khê, Đà Nẵng 50000, Vietnam",
     "latitude": 16.0594666,
     "longitude": 108.2098199,
@@ -36256,7 +36256,7 @@
   {
     "id": "google:ChIJMxK9hF8ZQjERrjyBWcf7_LE",
     "name": "Cà Phê Cô Hà",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "28 Hưng Hóa 4, Hòa Cường, Đà Nẵng 560000, Vietnam",
     "latitude": 16.0331886,
     "longitude": 108.2154538,
@@ -36389,7 +36389,7 @@
   {
     "id": "google:ChIJYxt6yskZQjERF8fywH8ONEY",
     "name": "Vối cà phê- tiệm cà phê nhà Vối",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "68/23 Nguyễn Hữu Thọ, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0474011,
     "longitude": 108.2087224,
@@ -36513,7 +36513,7 @@
   {
     "id": "google:ChIJCW7K9AcZQjERcUtqEU0vs4M",
     "name": "Coffee 38",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "38 Nguyễn Hữu Thọ, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0497199,
     "longitude": 108.2089836,
@@ -36577,7 +36577,7 @@
   {
     "id": "google:ChIJYWCWDZcZQjERxDI9d28qnBQ",
     "name": "NGOI CHILL cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "37 Trần Quý Cáp, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0811223,
     "longitude": 108.2201319,
@@ -36705,7 +36705,7 @@
   {
     "id": "google:ChIJB_dQGwUZQjERpUqSjqWxMTc",
     "name": "NOV Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "20 Phan Thành Tài, Hòa Cường, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0528568,
     "longitude": 108.2214884,
@@ -36829,7 +36829,7 @@
   {
     "id": "google:ChIJvXy8sC0ZQjER54ArCv6-HzU",
     "name": "The Joy Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "29 Yên Bái, Quận, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.069096,
     "longitude": 108.22291,
@@ -36957,7 +36957,7 @@
   {
     "id": "google:ChIJbwI0IAAbQjER3ioLvTHMwA4",
     "name": "Lasol Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "79 Tôn Thất Đ. Kỵ, Hòa Xuân, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0171404,
     "longitude": 108.2192985,
@@ -37086,7 +37086,7 @@
   {
     "id": "google:ChIJwTU11dAZQjERsydZriN8k5M",
     "name": "Cà Phê muối Huế 2 - n salt Cafe Tản Đà",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "31 Tản Đà, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0629984,
     "longitude": 108.2092355,
@@ -37210,7 +37210,7 @@
   {
     "id": "google:ChIJo56oLQYZQjERuBSn5BRgS-U",
     "name": "May Kafee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "74 Hồ Phi Tích, Hòa Xuân, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0162317,
     "longitude": 108.2322544,
@@ -37336,7 +37336,7 @@
   {
     "id": "google:ChIJ_cnaDgUZQjERhb92UsHxubk",
     "name": "1981 Coffee&Tea Danang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "192 Nguyễn Tri Phương, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0592458,
     "longitude": 108.2056797,
@@ -37460,7 +37460,7 @@
   {
     "id": "google:ChIJIypBnTAZQjERLPJvLObGXPc",
     "name": "La Bonne Café Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "192 Phan Châu Trinh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.061367,
     "longitude": 108.2194442,
@@ -37584,7 +37584,7 @@
   {
     "id": "google:ChIJvfz0bq4ZQjER_r6o-OzJZeM",
     "name": "ZONE SIX 10 nguyễn tri phương",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "10 Nguyễn Tri Phương, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0648789,
     "longitude": 108.2026879,
@@ -37713,7 +37713,7 @@
   {
     "id": "google:ChIJ14-XlRYZQjER3Wu2bhi9jHg",
     "name": "Ti cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "259 Nguyễn Chí Thanh, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0658759,
     "longitude": 108.2209029,
@@ -37837,7 +37837,7 @@
   {
     "id": "google:ChIJM1OVpdoZQjERct4DjcPXTLg",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "145 Quang Trung, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0734647,
     "longitude": 108.2139832,
@@ -37970,7 +37970,7 @@
   {
     "id": "google:ChIJWeYX5wAZQjERY-GoMR2H74Q",
     "name": "Hoai Niem",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "121 Huỳnh Thúc Kháng, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0581384,
     "longitude": 108.2182556,
@@ -38094,7 +38094,7 @@
   {
     "id": "google:ChIJlYz29DkYQjERIB0lIG36QfY",
     "name": "Saigon Cafe Coffee Shop",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "71 Lê Lợi, Hải Châu, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0767565,
     "longitude": 108.2198171,
@@ -38222,7 +38222,7 @@
   {
     "id": "google:ChIJDYKbFrMZQjER4TtVWtg9YVg",
     "name": "Nhà Xưởng Decor & Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "23 Cô Giang, Hải Châu, Đà Nẵng 55000, Vietnam",
     "latitude": 16.0619864,
     "longitude": 108.2221481,
@@ -46945,7 +46945,7 @@
   {
     "id": "google:ChIJVde_IrUZQjERJghlJMKJ6v0",
     "name": "Anchor Beer Club",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "29 Quang Dũng, Thanh Khê, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0634057,
     "longitude": 108.2117934,
@@ -47079,7 +47079,7 @@
   {
     "id": "google:ChIJXTm7kzgYQjERhowSgMS8DYI",
     "name": "The Workshop - Restaurant, events and boardgame meetup",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35 Chế Lan Viên, Ngũ Hành Sơn, Đà Nẵng 550000, Vietnam",
     "latitude": 16.0424783,
     "longitude": 108.2462724,
@@ -47768,7 +47768,7 @@
   {
     "id": "osm_node_13597246831",
     "name": "04 Nguyễn Huy Tự",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "04, Đường Nguyễn Huy Tự",
     "latitude": 16.0809408,
     "longitude": 108.161748,
@@ -47797,7 +47797,7 @@
   {
     "id": "osm_node_8616537417",
     "name": "1981 Coffee & Tea",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "192, Đường Nguyễn Tri Phương",
     "latitude": 16.0591471,
     "longitude": 108.2057089,
@@ -47826,7 +47826,7 @@
   {
     "id": "osm_node_12615300356",
     "name": "2AM Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "194, Nguyễn Tri Phương",
     "latitude": 16.0590816,
     "longitude": 108.2057361,
@@ -47855,7 +47855,7 @@
   {
     "id": "osm_node_13914106801",
     "name": "369 Family Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "71-73, Đường Phan Tôn",
     "latitude": 16.0520497,
     "longitude": 108.244237,
@@ -47884,7 +47884,7 @@
   {
     "id": "osm_node_13600463820",
     "name": "43 Hòa Phú 9",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "43, Đường Hoà Phú 9",
     "latitude": 16.067052,
     "longitude": 108.1659434,
@@ -47913,7 +47913,7 @@
   {
     "id": "osm_node_5911447385",
     "name": "A tri",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "145, Nguyễn Đăng Giai",
     "latitude": 16.1033816,
     "longitude": 108.2578211,
@@ -47942,7 +47942,7 @@
   {
     "id": "osm_node_13860986975",
     "name": "ABC Bakery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "109, Đường 30 Tháng 4",
     "latitude": 16.0400476,
     "longitude": 108.2180563,
@@ -47971,7 +47971,7 @@
   {
     "id": "osm_node_13294206501",
     "name": "ACE Coworking Space",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12, Đường Trần Văn Dư",
     "latitude": 16.0404339,
     "longitude": 108.2429068,
@@ -48000,7 +48000,7 @@
   {
     "id": "osm_node_6772235387",
     "name": "Al Fresco's Café & Grill",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "210, Đường Trần Phú",
     "latitude": 16.0640289,
     "longitude": 108.2233802,
@@ -48029,7 +48029,7 @@
   {
     "id": "osm_node_12609115911",
     "name": "Àla Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27, Kiệt 113 Nguyễn Chí Thanh, Hải Châu, Đà Nẵng",
     "latitude": 16.0736742,
     "longitude": 108.2217151,
@@ -48058,7 +48058,7 @@
   {
     "id": "osm_node_14172705701",
     "name": "Alt: Plant Based Vegan Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "90, Đường Bà Huyện Thanh Quan",
     "latitude": 16.0441645,
     "longitude": 108.245858,
@@ -48087,7 +48087,7 @@
   {
     "id": "osm_node_13644299364",
     "name": "Altitude",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "118-120, Đường Võ Nguyên Giáp",
     "latitude": 16.0778184,
     "longitude": 108.2451824,
@@ -48116,7 +48116,7 @@
   {
     "id": "osm_node_12815906301",
     "name": "Am coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường An Thượng 24",
     "latitude": 16.0520559,
     "longitude": 108.2400569,
@@ -48145,7 +48145,7 @@
   {
     "id": "osm_node_10711527705",
     "name": "An Thoi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "114, Đường Bạch Đằng",
     "latitude": 16.0683105,
     "longitude": 108.2249176,
@@ -48174,7 +48174,7 @@
   {
     "id": "osm_node_13624265424",
     "name": "An's Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "78, Đường Loseby",
     "latitude": 16.073485,
     "longitude": 108.2422327,
@@ -48203,7 +48203,7 @@
   {
     "id": "osm_node_5038348824",
     "name": "Andy coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "6-7-8, Hoài Thanh",
     "latitude": 16.0469921,
     "longitude": 108.2374074,
@@ -48232,7 +48232,7 @@
   {
     "id": "osm_node_6561782799",
     "name": "ANs - Vegeterian Cuisine",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "169F, Đường Trưng Nữ Vương",
     "latitude": 16.0549271,
     "longitude": 108.2203088,
@@ -48261,7 +48261,7 @@
   {
     "id": "osm_node_13074118001",
     "name": "Anywhere",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "381, Đường Núi Thành",
     "latitude": 16.0392874,
     "longitude": 108.2220415,
@@ -48290,7 +48290,7 @@
   {
     "id": "osm_node_4326819390",
     "name": "Aquarium cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "69, Nguyễn Chí Thanh",
     "latitude": 16.0761324,
     "longitude": 108.2205151,
@@ -48319,7 +48319,7 @@
   {
     "id": "osm_node_14098489701",
     "name": "ARMY Coffee & Tea",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "5, Đường Hoàng Sa",
     "latitude": 16.095708,
     "longitude": 108.2521742,
@@ -48348,7 +48348,7 @@
   {
     "id": "osm_node_10783641305",
     "name": "AROWANA 88",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "88, Đường Lê Hữu Trác",
     "latitude": 16.0582419,
     "longitude": 108.2399082,
@@ -48377,7 +48377,7 @@
   {
     "id": "osm_node_10773540605",
     "name": "Art Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "77, Đường Thạch Lam, Ngũ Hành Sơn, ĐÀ NẴNG",
     "latitude": 16.0565444,
     "longitude": 108.2446766,
@@ -48406,7 +48406,7 @@
   {
     "id": "osm_node_6804757885",
     "name": "Art for Life coffe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "468, Đường 2 Tháng 9",
     "latitude": 16.0358122,
     "longitude": 108.223819,
@@ -48435,7 +48435,7 @@
   {
     "id": "osm_node_8474743517",
     "name": "Ăn sáng 15k chị Út Cúc",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "24, K69 Lý Thái tổ",
     "latitude": 16.0654168,
     "longitude": 108.2085681,
@@ -48464,7 +48464,7 @@
   {
     "id": "osm_node_4541527689",
     "name": "Bà Dưỡng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "23, Kiệt 280 Hoàng Diệu",
     "latitude": 16.0588034,
     "longitude": 108.2160349,
@@ -48493,7 +48493,7 @@
   {
     "id": "osm_node_11906566069",
     "name": "BaBaBa Japanese Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "333, Đường Hồ Nghinh",
     "latitude": 16.0622398,
     "longitude": 108.2436944,
@@ -48522,7 +48522,7 @@
   {
     "id": "osm_node_12603307807",
     "name": "Bacama",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "6, Kiệt 154 Lý Tự Trọng",
     "latitude": 16.0779364,
     "longitude": 108.2150767,
@@ -48551,7 +48551,7 @@
   {
     "id": "osm_node_7262851085",
     "name": "BACAMA",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 322 Đường Hải Phòng",
     "latitude": 16.0680586,
     "longitude": 108.2044481,
@@ -48580,7 +48580,7 @@
   {
     "id": "osm_node_13546015635",
     "name": "Bahn Mi & cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "410, Đường Võ Nguyên Giáp, Da Nang",
     "latitude": 16.0421084,
     "longitude": 108.2483574,
@@ -48609,7 +48609,7 @@
   {
     "id": "osm_node_5474212423",
     "name": "Bancaphe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "114, Nguyễn Văn Thoại;Đường Nguyễn Văn Thoại",
     "latitude": 16.0547381,
     "longitude": 108.2414037,
@@ -48638,7 +48638,7 @@
   {
     "id": "osm_node_2988814633",
     "name": "Bánh bèo 291 Nguyễn Chí Thanh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "291, Nguyễn Chí Thanh",
     "latitude": 16.066938,
     "longitude": 108.220909,
@@ -48667,7 +48667,7 @@
   {
     "id": "osm_node_12603314868",
     "name": "Bánh Bèo Nóng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "90, Đinh Tiên Hoàng",
     "latitude": 16.0740857,
     "longitude": 108.2095703,
@@ -48696,7 +48696,7 @@
   {
     "id": "osm_node_14182850490",
     "name": "Bánh bèo sũa dâu nành",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Trần Đại Nghĩa, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 15.977167,
     "longitude": 108.2545317,
@@ -48725,7 +48725,7 @@
   {
     "id": "osm_node_13022818102",
     "name": "Banh Canh Ca Loc Be Hue",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "128, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0496155,
     "longitude": 108.2406612,
@@ -48754,7 +48754,7 @@
   {
     "id": "osm_node_13852133401",
     "name": "Banh canh ca loc hue be",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "459, Đường Núi Thành",
     "latitude": 16.0366688,
     "longitude": 108.222335,
@@ -48783,7 +48783,7 @@
   {
     "id": "osm_node_12174005655",
     "name": "Bánh canh cá nục Nhi-cơ sở 4",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "83, Đường Đặng Vũ Hỷ",
     "latitude": 16.0588589,
     "longitude": 108.2401821,
@@ -48812,7 +48812,7 @@
   {
     "id": "osm_node_4656790491",
     "name": "Bánh mì",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lê Minh Trung",
     "latitude": 16.0717111,
     "longitude": 108.2398005,
@@ -48841,7 +48841,7 @@
   {
     "id": "osm_node_14203033401",
     "name": "Bánh Mì BÀ RY I Madam Ry",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "36, Đường Đào Tấn",
     "latitude": 16.0571096,
     "longitude": 108.2215483,
@@ -48870,7 +48870,7 @@
   {
     "id": "osm_node_12609103130",
     "name": "Bánh mì Chang Chang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "56b, Ông Ích Khiêm",
     "latitude": 16.0774255,
     "longitude": 108.2119935,
@@ -48899,7 +48899,7 @@
   {
     "id": "osm_node_6152597685",
     "name": "Bánh mì chấm Pate",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "26, Chu Văn An",
     "latitude": 16.0568993,
     "longitude": 108.2180885,
@@ -48928,7 +48928,7 @@
   {
     "id": "osm_node_12615288667",
     "name": "Bánh Tráng Cô Tý",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 172 Lê Đình Dương",
     "latitude": 16.0626939,
     "longitude": 108.2163553,
@@ -48957,7 +48957,7 @@
   {
     "id": "osm_node_12618428066",
     "name": "Bánh Tráng Dì Em",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "252, Nguyễn Hoàng",
     "latitude": 16.0585655,
     "longitude": 108.2132371,
@@ -48986,7 +48986,7 @@
   {
     "id": "osm_node_14335746602",
     "name": "Banh Xeo CUOI Restaurant ( Branch 6)-Vietnamese Restaurants DaNang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Phạm Văn Đồng",
     "latitude": 16.0718771,
     "longitude": 108.2346989,
@@ -49015,7 +49015,7 @@
   {
     "id": "osm_node_5947469393",
     "name": "Bao An Macrobiotic",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "56, Đường Hoàng Bích Sơn",
     "latitude": 16.0753828,
     "longitude": 108.2409602,
@@ -49044,7 +49044,7 @@
   {
     "id": "osm_node_14336378701",
     "name": "Bao Bao",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Phan Thúc Duyện",
     "latitude": 16.0517931,
     "longitude": 108.2418794,
@@ -49073,7 +49073,7 @@
   {
     "id": "osm_node_5485496021",
     "name": "Bé Bien",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "202, Đường Võ Nguyên Giáp",
     "latitude": 16.0686243,
     "longitude": 108.244962,
@@ -49102,7 +49102,7 @@
   {
     "id": "osm_node_13340074016",
     "name": "Becoming Specialty Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "74, Đường Thi Sách, Quận Hải Châu",
     "latitude": 16.0537961,
     "longitude": 108.2055094,
@@ -49131,7 +49131,7 @@
   {
     "id": "osm_node_6108930789",
     "name": "Bentley",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Châu Thị Vĩnh Tế, Đà Nẵng",
     "latitude": 16.0513235,
     "longitude": 108.2403147,
@@ -49160,7 +49160,7 @@
   {
     "id": "osm_node_4118223691",
     "name": "Bê thui",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Tuệ Tĩnh",
     "latitude": 16.0549844,
     "longitude": 108.2200408,
@@ -49189,7 +49189,7 @@
   {
     "id": "osm_node_4109054391",
     "name": "bê thui 100",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Điện Biên Phủ",
     "latitude": 16.0658884,
     "longitude": 108.2002733,
@@ -49218,7 +49218,7 @@
   {
     "id": "osm_node_11758839350",
     "name": "Bếp Của Mạ - Cơm niêu và món Huế",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "346, Hai Tháng Chín, Hải Châu, Đà Nẵng",
     "latitude": 16.0389193,
     "longitude": 108.2234461,
@@ -49247,7 +49247,7 @@
   {
     "id": "osm_node_10111546117",
     "name": "Bếp Hên",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "47, Lê Hồng Phong",
     "latitude": 16.0639909,
     "longitude": 108.2210351,
@@ -49276,7 +49276,7 @@
   {
     "id": "osm_node_10781116908",
     "name": "Bểp Phượng Món Ngon Hà Nội",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "An Hải Đông 1",
     "latitude": 16.0556423,
     "longitude": 108.2428864,
@@ -49305,7 +49305,7 @@
   {
     "id": "osm_node_12019369169",
     "name": "Bếp Quê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "187, Đường Trần Phú",
     "latitude": 16.065987,
     "longitude": 108.2237186,
@@ -49334,7 +49334,7 @@
   {
     "id": "osm_node_12169743830",
     "name": "Bhojan",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "20-22, Đường Lê Quang Đạo",
     "latitude": 16.052863,
     "longitude": 108.2446023,
@@ -49363,7 +49363,7 @@
   {
     "id": "osm_node_6984061285",
     "name": "Bikini Bottom Express",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "45-47, An Thuong 2, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0486661,
     "longitude": 108.2475717,
@@ -49392,7 +49392,7 @@
   {
     "id": "osm_way_1518794391",
     "name": "BitCoffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1, Nguyễn Đăng Giai, Đà Nẵng",
     "latitude": 16.1052006,
     "longitude": 108.2622374,
@@ -49421,7 +49421,7 @@
   {
     "id": "osm_node_13042655301",
     "name": "Bo Bo 2",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1653, Đường Nguyễn Tất Thành",
     "latitude": 16.0776201,
     "longitude": 108.1734853,
@@ -49450,7 +49450,7 @@
   {
     "id": "osm_node_10768346405",
     "name": "Bo De Tam;Bodhicitta",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "117, Đường Ung Văn Khiêm",
     "latitude": 16.0512699,
     "longitude": 108.2407887,
@@ -49479,7 +49479,7 @@
   {
     "id": "osm_node_13040636501",
     "name": "Bo Ne 3 Ngon",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "15, Đường Trần Văn Thành, Ngũ Hành Sơn, Da Nang",
     "latitude": 16.0398611,
     "longitude": 108.2477994,
@@ -49508,7 +49508,7 @@
   {
     "id": "osm_node_4755650721",
     "name": "Bò Né Quôc Minh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "28, Đường Phan Đình Phùng",
     "latitude": 16.070516,
     "longitude": 108.2220197,
@@ -49537,7 +49537,7 @@
   {
     "id": "osm_node_7271270243",
     "name": "Bodhicitta",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "23b, K18 Nguyen Van Thoai, Đà Nẵng",
     "latitude": 16.0527091,
     "longitude": 108.238828,
@@ -49566,7 +49566,7 @@
   {
     "id": "osm_node_13653946401",
     "name": "BOSS cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "168, Đường Phạm Văn Đồng",
     "latitude": 16.070298,
     "longitude": 108.2365609,
@@ -49595,7 +49595,7 @@
   {
     "id": "osm_node_4166771189",
     "name": "Boulevard",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "77, Trần Quốc Toản",
     "latitude": 16.0662547,
     "longitude": 108.2209344,
@@ -49624,7 +49624,7 @@
   {
     "id": "osm_node_12373107601",
     "name": "Bravo Pizzeria",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "18, Đường An Thượng 24",
     "latitude": 16.0526459,
     "longitude": 108.2417111,
@@ -49653,7 +49653,7 @@
   {
     "id": "osm_node_13392414601",
     "name": "Brewinghood",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường An Thượng 40",
     "latitude": 16.0504293,
     "longitude": 108.2431698,
@@ -49682,7 +49682,7 @@
   {
     "id": "osm_node_5920089202",
     "name": "Brewman",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27/21, Thái Phiên, Hải Châu, Đà Nẵng",
     "latitude": 16.0643013,
     "longitude": 108.2229858,
@@ -49711,7 +49711,7 @@
   {
     "id": "osm_node_11074810731",
     "name": "Bro's Kafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "39, Đường Ngô Thì Sĩ, Ngu Hanh Son, Đà Nẵng",
     "latitude": 16.0472109,
     "longitude": 108.2431257,
@@ -49740,7 +49740,7 @@
   {
     "id": "osm_node_7705143786",
     "name": "BT ca phe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12, Đường Phạm Trọng Tuệ",
     "latitude": 16.0325524,
     "longitude": 108.2173479,
@@ -49769,7 +49769,7 @@
   {
     "id": "osm_node_10768300006",
     "name": "Bua No Nhau",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "58, Đường Hoàng Kế Viêm",
     "latitude": 16.0484694,
     "longitude": 108.2427929,
@@ -49798,7 +49798,7 @@
   {
     "id": "osm_way_1050234335",
     "name": "Buffet Hải Sản Đà Nẵng Mr Mộc",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "78 võ nguyên giáp, Sơn Trà, Phường Sơn Trà",
     "latitude": 16.0823976,
     "longitude": 108.2473825,
@@ -49827,7 +49827,7 @@
   {
     "id": "osm_node_14159493501",
     "name": "Bun",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "412, Đường Núi Thành",
     "latitude": 16.0377679,
     "longitude": 108.2219719,
@@ -49856,7 +49856,7 @@
   {
     "id": "osm_node_6147088185",
     "name": "Bún Bò Bà Diệu",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "17, Trần Tống",
     "latitude": 16.0585612,
     "longitude": 108.210864,
@@ -49885,7 +49885,7 @@
   {
     "id": "osm_node_10837001505",
     "name": "Bún bò Chum",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "78, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.051573,
     "longitude": 108.2401295,
@@ -49914,7 +49914,7 @@
   {
     "id": "osm_node_14128486201",
     "name": "Bún bò hué Na",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "63, Đường Lê Quang Đạo",
     "latitude": 16.0537095,
     "longitude": 108.2445334,
@@ -49943,7 +49943,7 @@
   {
     "id": "osm_node_13118797501",
     "name": "Bun cha ca 17k",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "45, Đường Phan Đăng Lưu",
     "latitude": 16.0373694,
     "longitude": 108.2217902,
@@ -49972,7 +49972,7 @@
   {
     "id": "osm_node_12350543701",
     "name": "Bún chả cá Hờn",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "3, Kiệt 113 Nguyễn Chí Thanh",
     "latitude": 16.0740827,
     "longitude": 108.2212407,
@@ -50001,7 +50001,7 @@
   {
     "id": "osm_node_4080898314",
     "name": "Bún chả cá Thủy",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "236, Hải Phòng, Thanh Khê, Đà Nẵng",
     "latitude": 16.0705797,
     "longitude": 108.2072662,
@@ -50030,7 +50030,7 @@
   {
     "id": "osm_node_5123239421",
     "name": "Bún Chả Huệ Chi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Số 6, Đường Hoàng Quốc Việt",
     "latitude": 16.0848495,
     "longitude": 108.2296619,
@@ -50059,7 +50059,7 @@
   {
     "id": "osm_node_6152685685",
     "name": "Bún Mắm Vân",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K23/14, Trần Kế Xương",
     "latitude": 16.0667015,
     "longitude": 108.2168708,
@@ -50088,7 +50088,7 @@
   {
     "id": "osm_node_13853226001",
     "name": "Bun thit nuong",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "91, Đường Trịnh Công Sơn",
     "latitude": 16.0343974,
     "longitude": 108.2205436,
@@ -50117,7 +50117,7 @@
   {
     "id": "osm_node_12603966960",
     "name": "Bún thịt nướng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 135 Hải Phòng",
     "latitude": 16.0717735,
     "longitude": 108.2142233,
@@ -50146,7 +50146,7 @@
   {
     "id": "osm_node_13420475801",
     "name": "Busan",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "116, Đường Chính Hữu",
     "latitude": 16.0679023,
     "longitude": 108.2399175,
@@ -50175,7 +50175,7 @@
   {
     "id": "osm_node_12836656104",
     "name": "Butcher Steak",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64, Lê Quang Đạo",
     "latitude": 16.0508781,
     "longitude": 108.2451984,
@@ -50204,7 +50204,7 @@
   {
     "id": "osm_node_729406738",
     "name": "Ca Phe San Vuon Da Thien Ly",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "126, Đường Tôn Đản",
     "latitude": 16.0549242,
     "longitude": 108.1785938,
@@ -50233,7 +50233,7 @@
   {
     "id": "osm_node_8616537318",
     "name": "Cà phê 27",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Nguyễn Tri Phương",
     "latitude": 16.0649681,
     "longitude": 108.2027737,
@@ -50262,7 +50262,7 @@
   {
     "id": "osm_node_8616526719",
     "name": "Cà phê chim  K69 chị Yến",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K69/16, Đường Lý Thái Tổ",
     "latitude": 16.0656191,
     "longitude": 108.2085147,
@@ -50291,7 +50291,7 @@
   {
     "id": "osm_node_4652751790",
     "name": "Cà Phê Chim 606",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "606, Đường Ông Ích Khiêm",
     "latitude": 16.0616284,
     "longitude": 108.2164509,
@@ -50320,7 +50320,7 @@
   {
     "id": "osm_node_729406734",
     "name": "Cà Phê Long",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "123, Lê Lợi",
     "latitude": 16.0749597,
     "longitude": 108.219974,
@@ -50349,7 +50349,7 @@
   {
     "id": "osm_node_13597246829",
     "name": "cà phê Thanh Thảo",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "02, Đường Nguyễn Huy Tự",
     "latitude": 16.0809879,
     "longitude": 108.1617775,
@@ -50378,7 +50378,7 @@
   {
     "id": "osm_node_729406601",
     "name": "Cà phê Thật",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Cách Mạng Tháng Tám",
     "latitude": 16.0205967,
     "longitude": 108.2112121,
@@ -50407,7 +50407,7 @@
   {
     "id": "osm_node_4564371397",
     "name": "Cà Phê Trúc Nguyên",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "103, Nguyễn Xuân Khoát",
     "latitude": 16.0700393,
     "longitude": 108.2359373,
@@ -50436,7 +50436,7 @@
   {
     "id": "osm_node_8624261430",
     "name": "cá sấu nướng Đà Thành 2",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "29, Đường Doãn Uẩn, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0346103,
     "longitude": 108.2437554,
@@ -50465,7 +50465,7 @@
   {
     "id": "osm_node_4312279989",
     "name": "Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lê Thanh Nghị",
     "latitude": 16.0384603,
     "longitude": 108.2179887,
@@ -50494,7 +50494,7 @@
   {
     "id": "osm_node_4076177424",
     "name": "Cafe 35",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35, Đường Hoàng Hoa Thám",
     "latitude": 16.0700045,
     "longitude": 108.2097625,
@@ -50523,7 +50523,7 @@
   {
     "id": "osm_node_6517510885",
     "name": "Cafe 36",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Số nhà 16, Đường Tiên Sơn 18",
     "latitude": 16.0283484,
     "longitude": 108.2217163,
@@ -50552,7 +50552,7 @@
   {
     "id": "osm_node_4571159189",
     "name": "Café 68",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "68, Võ Văn Tần",
     "latitude": 16.0669707,
     "longitude": 108.2023984,
@@ -50581,7 +50581,7 @@
   {
     "id": "osm_node_7282442185",
     "name": "Cafe Anh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "138, Đường Lê Quảng Chí",
     "latitude": 16.0197996,
     "longitude": 108.2264724,
@@ -50610,7 +50610,7 @@
   {
     "id": "osm_node_5217312122",
     "name": "Cafe Caracoli",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "2, Ba Tháng Hai",
     "latitude": 16.0830572,
     "longitude": 108.2224703,
@@ -50639,7 +50639,7 @@
   {
     "id": "osm_node_13890168980",
     "name": "Cafe Cô Bốn",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Thôn Đại La",
     "latitude": 16.0323664,
     "longitude": 108.1135372,
@@ -50668,7 +50668,7 @@
   {
     "id": "osm_node_9655304117",
     "name": "Café Cố Quận",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "127, Đường Nguyễn Công Trứ",
     "latitude": 16.0672941,
     "longitude": 108.2342965,
@@ -50697,7 +50697,7 @@
   {
     "id": "osm_node_5485709524",
     "name": "Cafe Đà Phố",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "8, ngã tư cầu Nguyễn Tri Phương",
     "latitude": 16.0201659,
     "longitude": 108.2114815,
@@ -50726,7 +50726,7 @@
   {
     "id": "osm_node_4339694191",
     "name": "Cafe Han Pho",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lê Duẩn",
     "latitude": 16.0717817,
     "longitude": 108.2234199,
@@ -50755,7 +50755,7 @@
   {
     "id": "osm_node_1769334889",
     "name": "Cafe Phong",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "81, Đường Nguyễn Xuân Nhĩ",
     "latitude": 16.0297945,
     "longitude": 108.2267627,
@@ -50784,7 +50784,7 @@
   {
     "id": "osm_node_4076168082",
     "name": "Cafe Phố",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "01, Đường Hoàng Hoa Thám, Thanh Khê, Đà Nẵng",
     "latitude": 16.070817,
     "longitude": 108.2095886,
@@ -50813,7 +50813,7 @@
   {
     "id": "osm_node_4676094289",
     "name": "cafe sạch",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "97, Đường Thái Thị Bôi",
     "latitude": 16.068142,
     "longitude": 108.1986979,
@@ -50842,7 +50842,7 @@
   {
     "id": "osm_node_4339674497",
     "name": "Cafe Việt Anh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "411, Hải Phòng",
     "latitude": 16.0694212,
     "longitude": 108.2054387,
@@ -50871,7 +50871,7 @@
   {
     "id": "osm_node_14283440701",
     "name": "Cafeholic Garden Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "61-63, Đường Trung Lương 9",
     "latitude": 16.0196678,
     "longitude": 108.2356325,
@@ -50900,7 +50900,7 @@
   {
     "id": "osm_node_7253559186",
     "name": "Cape Nao Beach Club",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "19, Đường Trường Sa",
     "latitude": 15.9996189,
     "longitude": 108.2711653,
@@ -50929,7 +50929,7 @@
   {
     "id": "osm_node_729406580",
     "name": "CaPhe Huy",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "80, Đường Ông Ích Khiêm",
     "latitude": 16.0768325,
     "longitude": 108.2120316,
@@ -50958,7 +50958,7 @@
   {
     "id": "osm_node_729406679",
     "name": "CaPhe Nhu Mai",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "24, BÙI CHÁT",
     "latitude": 16.0853516,
     "longitude": 108.1433737,
@@ -50987,7 +50987,7 @@
   {
     "id": "osm_node_10312895500",
     "name": "Cardi Pizzeria",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "124, Bạch Đằng",
     "latitude": 16.0677525,
     "longitude": 108.2248496,
@@ -51016,7 +51016,7 @@
   {
     "id": "osm_node_10537046604",
     "name": "Carol Lounge",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "28d, Đường Đống Đa, Quận Hải Châu, Đà Nẵng",
     "latitude": 16.0823478,
     "longitude": 108.2203289,
@@ -51045,7 +51045,7 @@
   {
     "id": "osm_node_14314444101",
     "name": "Caucasus homefood",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "44, Đường An Thượng 9",
     "latitude": 16.0478295,
     "longitude": 108.2440891,
@@ -51074,7 +51074,7 @@
   {
     "id": "osm_node_729406478",
     "name": "CayTao Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Trưng Nữ Vương",
     "latitude": 16.0560931,
     "longitude": 108.22022,
@@ -51103,7 +51103,7 @@
   {
     "id": "osm_node_8552881467",
     "name": "Cháo ếch Singapore NG",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "137, Đường Huỳnh Thúc Kháng, Quận Hải Châu, Thành phố Đà Nẵng",
     "latitude": 16.057545,
     "longitude": 108.2181515,
@@ -51132,7 +51132,7 @@
   {
     "id": "osm_node_14062977601",
     "name": "Chay Hạnh Phúc Vegan Food",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "04, Đường An Thượng 11",
     "latitude": 16.0481366,
     "longitude": 108.2425426,
@@ -51161,7 +51161,7 @@
   {
     "id": "osm_node_14041035701",
     "name": "Chay Như Ỹ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "61B, Đường Nguyễn Thiện Kế",
     "latitude": 16.0596665,
     "longitude": 108.2387719,
@@ -51190,7 +51190,7 @@
   {
     "id": "osm_node_6151185387",
     "name": "Chè Thái Liên",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "189, Đường Hoàng Diệu",
     "latitude": 16.0606096,
     "longitude": 108.2171498,
@@ -51219,7 +51219,7 @@
   {
     "id": "osm_node_6151202685",
     "name": "Chè Xuân Trang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "31, Lê Duẩn",
     "latitude": 16.071271,
     "longitude": 108.2205088,
@@ -51248,7 +51248,7 @@
   {
     "id": "osm_way_1326470317",
     "name": "Chill Chill Đảo Xanh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lô 1, cầu Đảo Xanh, Hải Châu, Đà Nẵng",
     "latitude": 16.0486862,
     "longitude": 108.2242979,
@@ -51277,7 +51277,7 @@
   {
     "id": "osm_node_12402101301",
     "name": "CinCin Pizzeria - Wood Oven Pizza In DaNang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11B2, Đường Đinh Thị Hòa",
     "latitude": 16.0731069,
     "longitude": 108.2372895,
@@ -51306,7 +51306,7 @@
   {
     "id": "osm_node_6563400562",
     "name": "Coffee 279",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "279, Đường Trưng Nữ Vương",
     "latitude": 16.0524651,
     "longitude": 108.2177782,
@@ -51335,7 +51335,7 @@
   {
     "id": "osm_way_993260889",
     "name": "Coffee Lagare",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11, Đường Hoàng Hoa Thám, Thanh Khê",
     "latitude": 16.0706008,
     "longitude": 108.2097711,
@@ -51364,7 +51364,7 @@
   {
     "id": "osm_node_10292550606",
     "name": "Coffee Nano",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "81, Đường Lê Hữu Trác",
     "latitude": 16.0584955,
     "longitude": 108.2402527,
@@ -51393,7 +51393,7 @@
   {
     "id": "osm_node_10777276806",
     "name": "Coffee Thanh Hà",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "10, Đường Trần Bạch Đằng",
     "latitude": 16.0590473,
     "longitude": 108.2445472,
@@ -51422,7 +51422,7 @@
   {
     "id": "osm_node_4854342521",
     "name": "Coffee TRÚC NGUYÊN",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "103, Nguyễn Xuân Khoát",
     "latitude": 16.0701474,
     "longitude": 108.2358848,
@@ -51451,7 +51451,7 @@
   {
     "id": "osm_node_14165243401",
     "name": "Com ga mam toi Khanh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "43, Đường Tố Hữu",
     "latitude": 16.0345032,
     "longitude": 108.2206651,
@@ -51480,7 +51480,7 @@
   {
     "id": "osm_node_14332757101",
     "name": "Com tam mien tay",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "216, Đường Phan Đăng Lưu",
     "latitude": 16.0364686,
     "longitude": 108.2118146,
@@ -51509,7 +51509,7 @@
   {
     "id": "osm_node_4605114489",
     "name": "Com Tâm Cô Nga",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Nguyễn Duy Hiệu",
     "latitude": 16.0565983,
     "longitude": 108.24217,
@@ -51538,7 +51538,7 @@
   {
     "id": "osm_node_13766193775",
     "name": "Cô Tới Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "31, 31 Lê Quang Đạo, Bắc Mỹ Phú",
     "latitude": 16.0543581,
     "longitude": 108.2443537,
@@ -51567,7 +51567,7 @@
   {
     "id": "osm_node_5920056999",
     "name": "Cộng Cà Phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "259/15, Nguyễn Chí Thanh, Hải Châu, Đà Nẵng",
     "latitude": 16.0657749,
     "longitude": 108.2211071,
@@ -51596,7 +51596,7 @@
   {
     "id": "osm_node_6594176685",
     "name": "Cơm Bà Thôi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "100, Đường Lê Đình Dương",
     "latitude": 16.0613578,
     "longitude": 108.2227325,
@@ -51625,7 +51625,7 @@
   {
     "id": "osm_node_13097955401",
     "name": "Cơm gà Duyên",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0470283,
     "longitude": 108.24159,
@@ -51654,7 +51654,7 @@
   {
     "id": "osm_node_11890753369",
     "name": "Cơm Gà Hội An",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "285, Đường Hải Phòng",
     "latitude": 16.0708596,
     "longitude": 108.2090429,
@@ -51683,7 +51683,7 @@
   {
     "id": "osm_node_11715206469",
     "name": "Cơm gà Trần Tống",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "107, Đường Phạm Văn Nghị",
     "latitude": 16.0564235,
     "longitude": 108.2089137,
@@ -51712,7 +51712,7 @@
   {
     "id": "osm_node_12600764839",
     "name": "Cơm tấm Bà Lang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "120, Đường Yên Bái",
     "latitude": 16.0651665,
     "longitude": 108.2223231,
@@ -51741,7 +51741,7 @@
   {
     "id": "osm_node_7370362779",
     "name": "Cơm trưa, lẫu nướng Rammus",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "73, Đường Lê Đình Lý, Thanh Khê, Đà Nẵng",
     "latitude": 16.0574296,
     "longitude": 108.2115285,
@@ -51770,7 +51770,7 @@
   {
     "id": "osm_node_13563775401",
     "name": "Cross Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "88, Đường Trần Văn Dư",
     "latitude": 16.04189,
     "longitude": 108.2460253,
@@ -51799,7 +51799,7 @@
   {
     "id": "osm_node_10314394510",
     "name": "Cua Bien",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "112, Đường Võ Nguyên Giáp",
     "latitude": 16.0786398,
     "longitude": 108.2456824,
@@ -51828,7 +51828,7 @@
   {
     "id": "osm_node_6152615685",
     "name": "Cút lộn me Bà Lanh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35, Ngô Gia Tự",
     "latitude": 16.0684812,
     "longitude": 108.2174327,
@@ -51857,7 +51857,7 @@
   {
     "id": "osm_node_13392416701",
     "name": "D.coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường An Thượng 29",
     "latitude": 16.0514293,
     "longitude": 108.2436417,
@@ -51886,7 +51886,7 @@
   {
     "id": "osm_node_5804107053",
     "name": "Ða Năng Com Chay 2",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "329, Dương Đình Nghệ",
     "latitude": 16.0707582,
     "longitude": 108.2329541,
@@ -51915,7 +51915,7 @@
   {
     "id": "osm_way_554812145",
     "name": "Danang Souvenirs & Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "34, Bạch Đằng",
     "latitude": 16.0779514,
     "longitude": 108.2237119,
@@ -51944,7 +51944,7 @@
   {
     "id": "osm_node_7027674785",
     "name": "Danang Tower Steakhouse",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Trần Hưng Đạo",
     "latitude": 16.0709643,
     "longitude": 108.2292556,
@@ -51973,7 +51973,7 @@
   {
     "id": "osm_node_12357498701",
     "name": "Danasol - Eatery Cafe Workspace",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "117, Đường Đặng Vũ Hỷ",
     "latitude": 16.0576886,
     "longitude": 108.2404305,
@@ -52002,7 +52002,7 @@
   {
     "id": "osm_node_10779745505",
     "name": "De Nhat Sui Cao Hoàn My - Hoàn My Dumplings King",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "172, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0484989,
     "longitude": 108.2410216,
@@ -52031,7 +52031,7 @@
   {
     "id": "osm_node_7253521885",
     "name": "Den long",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "71, Đường Lý Thường Kiệt",
     "latitude": 16.0798246,
     "longitude": 108.2183286,
@@ -52060,7 +52060,7 @@
   {
     "id": "osm_node_6108958605",
     "name": "Detroit-style pizza",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Hoàng Kế Viêm, Ngu Hanh Son",
     "latitude": 16.0489169,
     "longitude": 108.2434508,
@@ -52089,7 +52089,7 @@
   {
     "id": "osm_node_4118236589",
     "name": "Dê nghia",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 43 Ngũ Hành Sơn",
     "latitude": 16.0495912,
     "longitude": 108.23912,
@@ -52118,7 +52118,7 @@
   {
     "id": "osm_node_5026609321",
     "name": "Diễm Hồng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "9, Đường Nguyễn Tường Phổ",
     "latitude": 16.063471,
     "longitude": 108.174643,
@@ -52147,7 +52147,7 @@
   {
     "id": "osm_node_10775822705",
     "name": "Dimsum Bà Thím",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "71, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0508224,
     "longitude": 108.2404799,
@@ -52176,7 +52176,7 @@
   {
     "id": "osm_node_11934161570",
     "name": "Dimsum ba thim - dumplings",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "280, Đường Phan Châu Trinh",
     "latitude": 16.0584735,
     "longitude": 108.2190641,
@@ -52205,7 +52205,7 @@
   {
     "id": "osm_node_14134320601",
     "name": "Dinh phong",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64, Đường Nguyễn Văn Thoại",
     "latitude": 16.054278,
     "longitude": 108.2397951,
@@ -52234,7 +52234,7 @@
   {
     "id": "osm_node_6975514285",
     "name": "Doll coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "k1/151, Đường Nguyễn Văn Thoại",
     "latitude": 16.0549519,
     "longitude": 108.241287,
@@ -52263,7 +52263,7 @@
   {
     "id": "osm_node_11510069960",
     "name": "DREAMER",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "230, Nguyễn Công Trứ",
     "latitude": 16.065937,
     "longitude": 108.2368088,
@@ -52292,7 +52292,7 @@
   {
     "id": "osm_node_2987526034",
     "name": "Dừa 186",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "186, Đường Trần Quốc Toản",
     "latitude": 16.065935,
     "longitude": 108.224285,
@@ -52321,7 +52321,7 @@
   {
     "id": "osm_node_2987520837",
     "name": "Dừa Bến Tre",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "190, Đường Bạch Đằng",
     "latitude": 16.065641,
     "longitude": 108.224167,
@@ -52350,7 +52350,7 @@
   {
     "id": "osm_node_5582157521",
     "name": "Đà Nẵng cơm chay",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "87/16, Nguyễn Du",
     "latitude": 16.0784606,
     "longitude": 108.219203,
@@ -52379,7 +52379,7 @@
   {
     "id": "osm_node_8616536517",
     "name": "Điểm tâm chị Út",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "k69/24, Đường Lý Thái Tổ",
     "latitude": 16.0653562,
     "longitude": 108.2085727,
@@ -52408,7 +52408,7 @@
   {
     "id": "osm_node_5293335937",
     "name": "Đổi gió",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "258, Nguyễn Văn Linh, Thanh Khê, Đà Nẵng",
     "latitude": 16.0598008,
     "longitude": 108.2093536,
@@ -52437,7 +52437,7 @@
   {
     "id": "osm_node_14190948201",
     "name": "emoi.coffeestand",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "72, Đường Trần Khánh Dư",
     "latitude": 16.051403,
     "longitude": 108.241556,
@@ -52466,7 +52466,7 @@
   {
     "id": "osm_node_5291584123",
     "name": "Eva Beer",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Xô Viết Nghệ Tĩnh",
     "latitude": 16.0315264,
     "longitude": 108.2095739,
@@ -52495,7 +52495,7 @@
   {
     "id": "osm_node_7118928274",
     "name": "Fatfish",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "439",
     "latitude": 16.0647868,
     "longitude": 108.2299995,
@@ -52524,7 +52524,7 @@
   {
     "id": "osm_node_6560957861",
     "name": "Forest Coffee & Milk Tea",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Nguyễn Hoàng",
     "latitude": 16.0593795,
     "longitude": 108.2134806,
@@ -52553,7 +52553,7 @@
   {
     "id": "osm_node_13971665001",
     "name": "FOREST98COFFEE",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "01, Đường Khuê Mỹ Đông 1",
     "latitude": 16.0382176,
     "longitude": 108.2439577,
@@ -52582,7 +52582,7 @@
   {
     "id": "osm_node_13755229301",
     "name": "Gấu kafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "78/3, Đường Nguyễn Thiện Kế, Đà Nẵng",
     "latitude": 16.0596272,
     "longitude": 108.2386161,
@@ -52611,7 +52611,7 @@
   {
     "id": "osm_node_13990316802",
     "name": "GEN SUSHI",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "63, Đường Chính Hữu",
     "latitude": 16.0733185,
     "longitude": 108.2399272,
@@ -52640,7 +52640,7 @@
   {
     "id": "osm_node_14320271301",
     "name": "Giay cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "304, Đường Phạm Cự Lượng",
     "latitude": 16.0546736,
     "longitude": 108.2379493,
@@ -52669,7 +52669,7 @@
   {
     "id": "osm_node_6152690985",
     "name": "Goblin Coffee & Play Fashion",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "18-20, Lê Hồng Phong",
     "latitude": 16.0637608,
     "longitude": 108.2230417,
@@ -52698,7 +52698,7 @@
   {
     "id": "osm_node_14335308401",
     "name": "GoGo Steak Danang(고고스테이크)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Võ Nguyên Giáp",
     "latitude": 16.0402612,
     "longitude": 108.2490567,
@@ -52727,7 +52727,7 @@
   {
     "id": "osm_node_12815918402",
     "name": "Golden coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lo 30, Đường Phan Liêm",
     "latitude": 16.0546132,
     "longitude": 108.2445801,
@@ -52756,7 +52756,7 @@
   {
     "id": "osm_node_7253556386",
     "name": "Golden dragon",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Đảo Xanh 1",
     "latitude": 16.0483659,
     "longitude": 108.2268229,
@@ -52785,7 +52785,7 @@
   {
     "id": "osm_node_5793917955",
     "name": "Goom Vegan",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "144, Nguyễn Chí Thanh",
     "latitude": 16.067251,
     "longitude": 108.2209029,
@@ -52814,7 +52814,7 @@
   {
     "id": "osm_node_12002534969",
     "name": "GỐM Garden Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "8a, Đường Mỹ Khê 5",
     "latitude": 16.061519,
     "longitude": 108.2413131,
@@ -52843,7 +52843,7 @@
   {
     "id": "osm_node_13287334836",
     "name": "Gôn Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "42, Mai Hắc Đế",
     "latitude": 16.0644051,
     "longitude": 108.2314342,
@@ -52872,7 +52872,7 @@
   {
     "id": "osm_node_6553580441",
     "name": "Green Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "283, Đường Trưng Nữ Vương",
     "latitude": 16.0522267,
     "longitude": 108.2175603,
@@ -52901,7 +52901,7 @@
   {
     "id": "osm_node_5913221638",
     "name": "Green Coffee 165",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "165, Đường Hà Huy Tập, Da Nang",
     "latitude": 16.0638679,
     "longitude": 108.1920138,
@@ -52930,7 +52930,7 @@
   {
     "id": "osm_node_13420522101",
     "name": "H.E.M. Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "288, Đường Nguyễn Công Trứ",
     "latitude": 16.0652043,
     "longitude": 108.2407158,
@@ -52959,7 +52959,7 @@
   {
     "id": "osm_node_5865968590",
     "name": "Hachi Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "59, Thái Phiên",
     "latitude": 16.0650395,
     "longitude": 108.2219481,
@@ -52988,7 +52988,7 @@
   {
     "id": "osm_node_6151186386",
     "name": "Hải sản Năm Đảnh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K139/H59/38, Trần Quang Khải",
     "latitude": 16.1044234,
     "longitude": 108.2535985,
@@ -53017,7 +53017,7 @@
   {
     "id": "osm_node_14339986180",
     "name": "Hành Giả Chay Quán",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "19, Đường Hoàng Đức Lương",
     "latitude": 16.0749101,
     "longitude": 108.232861,
@@ -53046,7 +53046,7 @@
   {
     "id": "osm_node_10777962706",
     "name": "Hanh Phuc BookCoffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "126, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0496739,
     "longitude": 108.2406526,
@@ -53075,7 +53075,7 @@
   {
     "id": "osm_node_10796872105",
     "name": "Haomi - Tiệm Mì Trộn",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "17, Kiệt 126 Nguyễn Duy Hiệu",
     "latitude": 16.0553774,
     "longitude": 108.2406379,
@@ -53104,7 +53104,7 @@
   {
     "id": "osm_node_4782419524",
     "name": "Happy Heart Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "57, Ngô Thi Sỹ;Đường Ngô Thì Sĩ",
     "latitude": 16.047694,
     "longitude": 108.2448029,
@@ -53133,7 +53133,7 @@
   {
     "id": "osm_node_4351989390",
     "name": "Hau Sua & Tom Hum",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lo 13, Đường Võ Nguyên Giáp",
     "latitude": 16.0835121,
     "longitude": 108.2476846,
@@ -53162,7 +53162,7 @@
   {
     "id": "osm_node_12169109801",
     "name": "Hẽm",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Đỗ Bá",
     "latitude": 16.0500297,
     "longitude": 108.2407236,
@@ -53191,7 +53191,7 @@
   {
     "id": "osm_node_14293201101",
     "name": "Hi Coffee & Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "92, Đường Bà Huyện Thanh Quan",
     "latitude": 16.0441906,
     "longitude": 108.2460089,
@@ -53220,7 +53220,7 @@
   {
     "id": "osm_node_7284065585",
     "name": "High quality Pho",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Ngô Quyền",
     "latitude": 16.0607278,
     "longitude": 108.2343928,
@@ -53249,7 +53249,7 @@
   {
     "id": "osm_node_12165826954",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "268, Đường Võ Nguyên Giáp, Da Nang",
     "latitude": 16.0540151,
     "longitude": 108.2473481,
@@ -53278,7 +53278,7 @@
   {
     "id": "osm_node_14104855301",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "910A, Đường Ngô Quyền, Đà Nẵng",
     "latitude": 16.0713131,
     "longitude": 108.2306776,
@@ -53307,7 +53307,7 @@
   {
     "id": "osm_node_6520986631",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "46, Đường Điện Biên Phủ",
     "latitude": 16.0661312,
     "longitude": 108.2034083,
@@ -53336,7 +53336,7 @@
   {
     "id": "osm_node_6563961976",
     "name": "Highlands Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Núi Thành",
     "latitude": 16.04628,
     "longitude": 108.2212369,
@@ -53365,7 +53365,7 @@
   {
     "id": "osm_node_5901161285",
     "name": "Hiri",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "41, Lê Hồng Phong",
     "latitude": 16.0639503,
     "longitude": 108.221258,
@@ -53394,7 +53394,7 @@
   {
     "id": "osm_node_4647225192",
     "name": "Hoa giấy",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "247, Ngô Quyền",
     "latitude": 16.0899217,
     "longitude": 108.242683,
@@ -53423,7 +53423,7 @@
   {
     "id": "osm_node_12009157357",
     "name": "Holiday Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Holiday Coffee,, Quận Ngũ Hành Sơn",
     "latitude": 16.0500935,
     "longitude": 108.2489953,
@@ -53452,7 +53452,7 @@
   {
     "id": "osm_node_729406487",
     "name": "Homie Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "279, Hải Phòng, Thanh Khê, Đà Nẵng",
     "latitude": 16.0707542,
     "longitude": 108.2092543,
@@ -53481,7 +53481,7 @@
   {
     "id": "osm_node_12853200247",
     "name": "Hôm nay Cà phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "31, Đường An Thượng 29",
     "latitude": 16.0520145,
     "longitude": 108.2457243,
@@ -53510,7 +53510,7 @@
   {
     "id": "osm_node_3628855206",
     "name": "HQ Thai Food",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "9, Yên Bái, Đà Nẵng",
     "latitude": 16.0697702,
     "longitude": 108.2229678,
@@ -53539,7 +53539,7 @@
   {
     "id": "osm_node_7705143785",
     "name": "HT ca phe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12, Đường Hoàng Xuân Nhị",
     "latitude": 16.0329206,
     "longitude": 108.2173323,
@@ -53568,7 +53568,7 @@
   {
     "id": "osm_node_12680165501",
     "name": "Hu tien Minh Hieu",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "48, Đường Trịnh Công Sơn",
     "latitude": 16.0348067,
     "longitude": 108.2204927,
@@ -53597,7 +53597,7 @@
   {
     "id": "osm_node_4158619590",
     "name": "huế xưa",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "nguyễn phi khanh",
     "latitude": 16.0560044,
     "longitude": 108.2053874,
@@ -53626,7 +53626,7 @@
   {
     "id": "osm_node_5791962853",
     "name": "Huong Khach Vegetarian",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "106, Hoàng Diệu",
     "latitude": 16.0642464,
     "longitude": 108.2185815,
@@ -53655,7 +53655,7 @@
   {
     "id": "osm_node_2988980334",
     "name": "Hương Cau",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Số thửa 3-A5.6, 2 Thang 9",
     "latitude": 16.0482352,
     "longitude": 108.2231394,
@@ -53684,7 +53684,7 @@
   {
     "id": "osm_node_14332736301",
     "name": "Iam:shawarma",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "83, Đường Dương Trí Trạch",
     "latitude": 16.0740915,
     "longitude": 108.2402693,
@@ -53713,7 +53713,7 @@
   {
     "id": "osm_node_13368831101",
     "name": "Ikigai",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Nguyễn Chí Thanh",
     "latitude": 16.073694,
     "longitude": 108.2207415,
@@ -53742,7 +53742,7 @@
   {
     "id": "osm_node_8616536518",
     "name": "Indochine Box cà phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "40, Bạch Đằng",
     "latitude": 16.075972,
     "longitude": 108.2240808,
@@ -53771,7 +53771,7 @@
   {
     "id": "osm_node_6310334885",
     "name": "Indochine Coffee & Food",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11, Hà Chương",
     "latitude": 16.0653876,
     "longitude": 108.2445632,
@@ -53800,7 +53800,7 @@
   {
     "id": "osm_node_7705143488",
     "name": "IT Ca phe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Lỗ Giáng 5",
     "latitude": 16.0013713,
     "longitude": 108.2137212,
@@ -53829,7 +53829,7 @@
   {
     "id": "osm_node_7705144085",
     "name": "JT ca phe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Văn Tiến Dũng",
     "latitude": 16.0007887,
     "longitude": 108.2131392,
@@ -53858,7 +53858,7 @@
   {
     "id": "osm_node_13385701701",
     "name": "Kafe de June",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Lê Hồng Phong",
     "latitude": 16.0641789,
     "longitude": 108.2190171,
@@ -53887,7 +53887,7 @@
   {
     "id": "osm_node_13805547596",
     "name": "KATE Coffee & Tea",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "92/1, Đường Trần Văn Dư, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0422346,
     "longitude": 108.2469269,
@@ -53916,7 +53916,7 @@
   {
     "id": "osm_node_12105866901",
     "name": "Kebab ngon",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "21, Đường An Thượng 26",
     "latitude": 16.0552866,
     "longitude": 108.2447033,
@@ -53945,7 +53945,7 @@
   {
     "id": "osm_node_13026042501",
     "name": "Kebab Nova",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "41, Đường Nguyễn Xuân Nhĩ",
     "latitude": 16.031261,
     "longitude": 108.2266458,
@@ -53974,7 +53974,7 @@
   {
     "id": "osm_node_14064309338",
     "name": "Kem Bo",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "98, Đường Nguyễn Văn Thoại",
     "latitude": 16.0545719,
     "longitude": 108.2408716,
@@ -54003,7 +54003,7 @@
   {
     "id": "osm_node_12811815201",
     "name": "Ken Sushi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "52, Đường Hoàng Văn Thụ",
     "latitude": 16.0629147,
     "longitude": 108.2207803,
@@ -54032,7 +54032,7 @@
   {
     "id": "osm_node_10312611228",
     "name": "KFC",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "21, Đường Lê Duẩn",
     "latitude": 16.0713072,
     "longitude": 108.2213345,
@@ -54061,7 +54061,7 @@
   {
     "id": "osm_node_5699726168",
     "name": "KFC",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Thanh Khê Đông, Thanh Khê, Da Nang, Vietnam",
     "latitude": 16.066512,
     "longitude": 108.1870359,
@@ -54090,7 +54090,7 @@
   {
     "id": "osm_node_10779089305",
     "name": "Khang Gia Quan",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "32, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.05249,
     "longitude": 108.2397668,
@@ -54119,7 +54119,7 @@
   {
     "id": "osm_node_13288544261",
     "name": "Khâu Cà Phê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K75/18, Lê Hồng Phong",
     "latitude": 16.0634843,
     "longitude": 108.2187865,
@@ -54148,7 +54148,7 @@
   {
     "id": "osm_node_4239650889",
     "name": "KIẾN GỖ coffee SHOP",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "155, Lạc Long Quân, Liên Chiểu, Đà Nẵng",
     "latitude": 16.0720444,
     "longitude": 108.1424099,
@@ -54177,7 +54177,7 @@
   {
     "id": "osm_node_13964372302",
     "name": "KIN Cafe & Homebakes",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "282, Đường Nguyễn Công Trứ",
     "latitude": 16.0652193,
     "longitude": 108.2405323,
@@ -54206,7 +54206,7 @@
   {
     "id": "osm_node_13373374201",
     "name": "Kin Kin Thai Food",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Bà Huyện Thanh Quan",
     "latitude": 16.043404,
     "longitude": 108.24418,
@@ -54235,7 +54235,7 @@
   {
     "id": "osm_node_5947905986",
     "name": "koko Green kafe 63",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "234, Đường Phan Châu Trinh",
     "latitude": 16.0600295,
     "longitude": 108.2192703,
@@ -54264,7 +54264,7 @@
   {
     "id": "osm_node_7705143789",
     "name": "KT ca phe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Lỗ Giáng 11",
     "latitude": 15.9997908,
     "longitude": 108.2127556,
@@ -54293,7 +54293,7 @@
   {
     "id": "osm_node_4449942994",
     "name": "Kua Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "8, Kiệt 856 Tôn Đức Thắng",
     "latitude": 16.0702633,
     "longitude": 108.1515847,
@@ -54322,7 +54322,7 @@
   {
     "id": "osm_node_10310109109",
     "name": "KURUMI - Healthy Vegan Food & Desserts",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "17/22, Đường Mỹ Đa Đông 12, Ngũ Hành Sơn, Da Nang",
     "latitude": 16.0457151,
     "longitude": 108.2478678,
@@ -54351,7 +54351,7 @@
   {
     "id": "osm_node_5414316021",
     "name": "L’italiano",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "40, Đường An Thượng 30",
     "latitude": 16.0511561,
     "longitude": 108.2456807,
@@ -54380,7 +54380,7 @@
   {
     "id": "osm_node_11276780187",
     "name": "La Cabana - House of BBQ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "505, Đường Trần Hưng Đạo, Đà Nẵng",
     "latitude": 16.0629394,
     "longitude": 108.2302972,
@@ -54409,7 +54409,7 @@
   {
     "id": "osm_node_4150425790",
     "name": "La Luna",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "187, Đường Huyền Trân Công Chúa",
     "latitude": 16.0031775,
     "longitude": 108.2652843,
@@ -54438,7 +54438,7 @@
   {
     "id": "osm_node_10798682806",
     "name": "Làng Tôi - Bánh Khoái Cá Kình Huế",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "85, Kiệt 227 Đường Nguyễn Văn Thoại",
     "latitude": 16.0583075,
     "longitude": 108.2443933,
@@ -54467,7 +54467,7 @@
   {
     "id": "osm_node_12382429401",
     "name": "Lanzhou Beef Noodles",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Đỗ Bá",
     "latitude": 16.0519094,
     "longitude": 108.2463757,
@@ -54496,7 +54496,7 @@
   {
     "id": "osm_node_10775883305",
     "name": "Lẩu Thái",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0510302,
     "longitude": 108.2403276,
@@ -54525,7 +54525,7 @@
   {
     "id": "osm_node_13009347078",
     "name": "Le Comptoir",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "16, Chế Lan Viên, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0426768,
     "longitude": 108.245455,
@@ -54554,7 +54554,7 @@
   {
     "id": "osm_node_13417231501",
     "name": "Lighthouse",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Dương Đình Nghệ",
     "latitude": 16.0688613,
     "longitude": 108.242553,
@@ -54583,7 +54583,7 @@
   {
     "id": "osm_node_10295139993",
     "name": "Limoncello",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "212, Đường Trần Phú",
     "latitude": 16.0639607,
     "longitude": 108.2233784,
@@ -54612,7 +54612,7 @@
   {
     "id": "osm_node_729406441",
     "name": "LindaCoffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "203, Đường Phan Thanh",
     "latitude": 16.060279,
     "longitude": 108.209356,
@@ -54641,7 +54641,7 @@
   {
     "id": "osm_node_13971928007",
     "name": "Little HaNoi Egg Coffee (Da Nang)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "65, Đường Đỗ Bá",
     "latitude": 16.0512083,
     "longitude": 108.2448221,
@@ -54670,7 +54670,7 @@
   {
     "id": "osm_node_12433230010",
     "name": "Luk Lak",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "28, Bạch Đằng",
     "latitude": 16.0786668,
     "longitude": 108.2236675,
@@ -54699,7 +54699,7 @@
   {
     "id": "osm_node_14080138202",
     "name": "Luon 51",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "51R, Đường Nguyễn Chí Thanh",
     "latitude": 16.077676,
     "longitude": 108.2203272,
@@ -54728,7 +54728,7 @@
   {
     "id": "osm_node_14105254901",
     "name": "M Kitchen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "44, Đường Phan Tôn",
     "latitude": 16.052654,
     "longitude": 108.24533,
@@ -54757,7 +54757,7 @@
   {
     "id": "osm_node_11888486669",
     "name": "M. Oi Bistro & Bar",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "90-92, Đường Dương Tự Minh",
     "latitude": 16.0672036,
     "longitude": 108.242719,
@@ -54786,7 +54786,7 @@
   {
     "id": "osm_node_14057537001",
     "name": "Madam Thao Vegan Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "55-57, Đường An Thượng 29",
     "latitude": 16.0516743,
     "longitude": 108.2447524,
@@ -54815,7 +54815,7 @@
   {
     "id": "osm_node_13623400001",
     "name": "Mai",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "58 nguyen van thoai",
     "latitude": 16.0542902,
     "longitude": 108.2394864,
@@ -54844,7 +54844,7 @@
   {
     "id": "osm_way_694479630",
     "name": "Mai Linh 246",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "246, Đường Điện Biên Phủ",
     "latitude": 16.0659718,
     "longitude": 108.1954228,
@@ -54873,7 +54873,7 @@
   {
     "id": "osm_node_5541654969",
     "name": "Maison du Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "216, Võ Nguyên Giáp, Sơn Trà, Đà Nẵng",
     "latitude": 16.067526,
     "longitude": 108.245011,
@@ -54902,7 +54902,7 @@
   {
     "id": "osm_node_5696687927",
     "name": "Mama Hotpot",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "19A, Đường Võ Văn Kiệt",
     "latitude": 16.063147,
     "longitude": 108.2419488,
@@ -54931,7 +54931,7 @@
   {
     "id": "osm_node_5454198622",
     "name": "Marina Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Trần Hưng Đạo",
     "latitude": 16.0631134,
     "longitude": 108.2300825,
@@ -54960,7 +54960,7 @@
   {
     "id": "osm_node_6378039485",
     "name": "Markets",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "29, Đường Lưu Quang Thuận",
     "latitude": 16.0402369,
     "longitude": 108.2456682,
@@ -54989,7 +54989,7 @@
   {
     "id": "osm_node_14269724203",
     "name": "Mart Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "299, Đường Chính Hữu",
     "latitude": 16.0644597,
     "longitude": 108.2397198,
@@ -55018,7 +55018,7 @@
   {
     "id": "osm_node_13428383201",
     "name": "May Garden",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Chế Lan Viên",
     "latitude": 16.0411892,
     "longitude": 108.2463475,
@@ -55047,7 +55047,7 @@
   {
     "id": "osm_node_5921911585",
     "name": "Me Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "126, Hồ Nghinh",
     "latitude": 16.0733954,
     "longitude": 108.2429536,
@@ -55076,7 +55076,7 @@
   {
     "id": "osm_node_5429221882",
     "name": "Memory Lounge",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "7, Bạch Đằng, Đà Nẵng",
     "latitude": 16.0726661,
     "longitude": 108.2251645,
@@ -55105,7 +55105,7 @@
   {
     "id": "osm_node_11951128766",
     "name": "Mì Cay SEOUL Hải Châu",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lô B6-B7, Đường 2/9, Bình Thuận, Hải Châu, Đường 2 Tháng 9, Hải Châu, Đà Nẵng",
     "latitude": 16.0543706,
     "longitude": 108.2224112,
@@ -55134,7 +55134,7 @@
   {
     "id": "osm_node_4430077491",
     "name": "Mi Quang 1A",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Hải Phòng",
     "latitude": 16.0723814,
     "longitude": 108.2191279,
@@ -55163,7 +55163,7 @@
   {
     "id": "osm_node_6518899995",
     "name": "Mì Quảng Đại Lộc",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27, Đường Trương Chí Cương",
     "latitude": 16.0311438,
     "longitude": 108.225275,
@@ -55192,7 +55192,7 @@
   {
     "id": "osm_node_5116302323",
     "name": "Mì Quảng Ếch",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "441, Đường Ông Ích Khiêm",
     "latitude": 16.0619829,
     "longitude": 108.2163479,
@@ -55221,7 +55221,7 @@
   {
     "id": "osm_node_5678663421",
     "name": "Mì Quảng Giao Thủy",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "16, Đường Ba Đình",
     "latitude": 16.0762132,
     "longitude": 108.2193113,
@@ -55250,7 +55250,7 @@
   {
     "id": "osm_node_12372824402",
     "name": "Mi Quảng Hồng Vân",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "59, Đường Lê Hồng Phong",
     "latitude": 16.0640032,
     "longitude": 108.2205832,
@@ -55279,7 +55279,7 @@
   {
     "id": "osm_node_12603294638",
     "name": "Mia Coffee Roastery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "9, Quang Trung",
     "latitude": 16.0751701,
     "longitude": 108.2222151,
@@ -55308,7 +55308,7 @@
   {
     "id": "osm_node_7076705485",
     "name": "Mia food&drink",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "159-161, Lê Quang Đạo",
     "latitude": 16.0508053,
     "longitude": 108.2454567,
@@ -55337,7 +55337,7 @@
   {
     "id": "osm_node_6109163975",
     "name": "Mini's Cafe & Breakfast",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "An Thượng 6",
     "latitude": 16.0481205,
     "longitude": 108.24525,
@@ -55366,7 +55366,7 @@
   {
     "id": "osm_node_13286322244",
     "name": "Minori",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Trần Hưng Đạo",
     "latitude": 16.0660771,
     "longitude": 108.2296973,
@@ -55395,7 +55395,7 @@
   {
     "id": "osm_node_11510069939",
     "name": "Mint Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K230/14, Nguyễn Công Trứ",
     "latitude": 16.0661869,
     "longitude": 108.2366867,
@@ -55424,7 +55424,7 @@
   {
     "id": "osm_node_13165204025",
     "name": "Missteak",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "99, Mai Thuc Lan, Đà Nẵng",
     "latitude": 16.0478267,
     "longitude": 108.2438843,
@@ -55453,7 +55453,7 @@
   {
     "id": "osm_node_5382673724",
     "name": "Moc Mien - Coffee and more",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "34 Duong 2/9 - Q. Hai Chau",
     "latitude": 16.0583954,
     "longitude": 108.222676,
@@ -55482,7 +55482,7 @@
   {
     "id": "osm_node_6570954851",
     "name": "Molly's",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "267, Đường Điện Biên Phủ",
     "latitude": 16.0655249,
     "longitude": 108.1936967,
@@ -55511,7 +55511,7 @@
   {
     "id": "osm_node_14068157101",
     "name": "Mom's Vegan Kitchen by Chickpea Eatery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "73-12, Đường Trương Định",
     "latitude": 16.089353,
     "longitude": 108.2487433,
@@ -55540,7 +55540,7 @@
   {
     "id": "osm_node_14186979103",
     "name": "Mona coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "33, Đường Nam Trân",
     "latitude": 16.0589837,
     "longitude": 108.1717912,
@@ -55569,7 +55569,7 @@
   {
     "id": "osm_node_10312969476",
     "name": "Mộc Nguyên Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "60, Đường Mẹ Thứ, Quận Cẩm Lệ, Thành Phố Đà Nẵng",
     "latitude": 16.0016692,
     "longitude": 108.2210803,
@@ -55598,7 +55598,7 @@
   {
     "id": "osm_node_7064981285",
     "name": "Mộc Quán",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "26, Đường Tô Hiến Thành",
     "latitude": 16.0639457,
     "longitude": 108.2414873,
@@ -55627,7 +55627,7 @@
   {
     "id": "osm_node_6681015018",
     "name": "Mr. Banh Mi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "37, Trần Quốc Toản",
     "latitude": 16.0661512,
     "longitude": 108.2228161,
@@ -55656,7 +55656,7 @@
   {
     "id": "osm_node_13415710101",
     "name": "Mr. Quế",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "38, Đường Loseby",
     "latitude": 16.0735137,
     "longitude": 108.2412704,
@@ -55685,7 +55685,7 @@
   {
     "id": "osm_node_6133794785",
     "name": "Mumtaz",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "69, Hoài Thanh, Đà Nẵng",
     "latitude": 16.0484899,
     "longitude": 108.2371823,
@@ -55714,7 +55714,7 @@
   {
     "id": "osm_node_7090665544",
     "name": "Mưa Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "28, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.052533,
     "longitude": 108.2397481,
@@ -55743,7 +55743,7 @@
   {
     "id": "osm_node_4778581323",
     "name": "My Casa",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "53, Đường Morrison",
     "latitude": 16.0717885,
     "longitude": 108.2427211,
@@ -55772,7 +55772,7 @@
   {
     "id": "osm_node_7210857787",
     "name": "My Quang Bà Mua",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "195/2, Đường Nguyễn Văn Thoại",
     "latitude": 16.055773,
     "longitude": 108.2436587,
@@ -55801,7 +55801,7 @@
   {
     "id": "osm_node_13074118701",
     "name": "My quang Bun bo",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "384, Đường Núi Thành",
     "latitude": 16.0389708,
     "longitude": 108.2218709,
@@ -55830,7 +55830,7 @@
   {
     "id": "osm_node_12337003901",
     "name": "Mỳ Quảng Cô Sáu",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "389, Đường Trần Hưng Đạo",
     "latitude": 16.0661233,
     "longitude": 108.229693,
@@ -55859,7 +55859,7 @@
   {
     "id": "osm_node_10295259298",
     "name": "Mỳ Quảng Đà Nẵng Bà Mua",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "44, Đường Lê Đình Dương",
     "latitude": 16.0612678,
     "longitude": 108.2212735,
@@ -55888,7 +55888,7 @@
   {
     "id": "osm_node_11906556370",
     "name": "Mỳ quảng Ông Cảnh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "298, Đường Hồ Nghinh",
     "latitude": 16.0614893,
     "longitude": 108.2438292,
@@ -55917,7 +55917,7 @@
   {
     "id": "osm_node_7141021585",
     "name": "Nam Danh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "139/59/38 10 Tran Quang Khai, Tho Quang",
     "latitude": 16.102266,
     "longitude": 108.2534494,
@@ -55946,7 +55946,7 @@
   {
     "id": "osm_way_760598151",
     "name": "Nam Hin Restaurant(Vietnamese Cuisine) - Han Market",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "70, Đường Hùng Vương, Quận Hải Châu, Đà Nẵng",
     "latitude": 16.0687749,
     "longitude": 108.2230898,
@@ -55975,7 +55975,7 @@
   {
     "id": "osm_node_7141021685",
     "name": "Namaste Omar's Indian Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "06, Đường Thái Phiên",
     "latitude": 16.0649353,
     "longitude": 108.2238688,
@@ -56004,7 +56004,7 @@
   {
     "id": "osm_node_14184609501",
     "name": "NBT coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "75-77-79, Đường Tôn Đức Thắng",
     "latitude": 16.0598912,
     "longitude": 108.1762409,
@@ -56033,7 +56033,7 @@
   {
     "id": "osm_node_2989006133",
     "name": "Neko",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "43, Trần Quốc Toản",
     "latitude": 16.0661404,
     "longitude": 108.222572,
@@ -56062,7 +56062,7 @@
   {
     "id": "osm_node_14269716101",
     "name": "Nem Lụi - Bò Lá Lốt Được Chợ Hàn",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "47, Đường Phan Châu Trinh, Hải Châu, Đà Nẵng",
     "latitude": 16.0679333,
     "longitude": 108.2203787,
@@ -56091,7 +56091,7 @@
   {
     "id": "osm_node_6911218676",
     "name": "NEM NƯỚNG THANH HÀ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K96/146, Kiệt 96 Điện Biên Phủ, Thanh Khê, Đà Nẵng",
     "latitude": 16.0675559,
     "longitude": 108.1964679,
@@ -56120,7 +56120,7 @@
   {
     "id": "osm_node_5541654970",
     "name": "NEM Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "216, Võ Nguyên Giáp, Sơn Trà, Đà Nẵng",
     "latitude": 16.0675122,
     "longitude": 108.2449556,
@@ -56149,7 +56149,7 @@
   {
     "id": "osm_node_13937758901",
     "name": "Ngọc Phụng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "199, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0464026,
     "longitude": 108.241728,
@@ -56178,7 +56178,7 @@
   {
     "id": "osm_node_11361153194",
     "name": "Ngoi Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "209/85, 209 Nguyễn Văn Thoạ",
     "latitude": 16.0581168,
     "longitude": 108.2431065,
@@ -56207,7 +56207,7 @@
   {
     "id": "osm_node_14106869301",
     "name": "NGON DA NANG",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "88B, Đường Lê Quang Đạo",
     "latitude": 16.049658,
     "longitude": 108.24569,
@@ -56236,7 +56236,7 @@
   {
     "id": "osm_way_1463170014",
     "name": "Nhà Bếp Xưa",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64B, Đường Hà Bổng, Quận Sơn Trà, Đà Nẵng",
     "latitude": 16.0661748,
     "longitude": 108.2442395,
@@ -56265,7 +56265,7 @@
   {
     "id": "osm_node_5796473953",
     "name": "Nhà hàng Chay",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "87, Đường Hoàng Văn Thụ",
     "latitude": 16.0629555,
     "longitude": 108.2195011,
@@ -56294,7 +56294,7 @@
   {
     "id": "osm_node_5978084714",
     "name": "Nhà Hàng Chay Hoa Sen - Vegetarian Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "30/1, Đặng Thai Mai",
     "latitude": 16.0609388,
     "longitude": 108.2099353,
@@ -56323,7 +56323,7 @@
   {
     "id": "osm_node_13288511161",
     "name": "Nhà Hàng Chay Ngọc Chi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "202, Đường Hoàng Diệu",
     "latitude": 16.0618991,
     "longitude": 108.2175015,
@@ -56352,7 +56352,7 @@
   {
     "id": "osm_node_5485483822",
     "name": "Nhà hàng hải sản Bé Anh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lô 14-15 Hồ Nghinh, Phước Mỹ, Sơn Trà, Đà Nẵng, 베트남",
     "latitude": 16.0692319,
     "longitude": 108.2429913,
@@ -56381,7 +56381,7 @@
   {
     "id": "osm_node_4339674598",
     "name": "Nhà hàng HanCook",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "316 - 318, Hải Phòng",
     "latitude": 16.068911,
     "longitude": 108.2049831,
@@ -56410,7 +56410,7 @@
   {
     "id": "osm_node_4464451390",
     "name": "Nhà hàng HanCook",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Ngô Quyền",
     "latitude": 16.0716557,
     "longitude": 108.2300722,
@@ -56439,7 +56439,7 @@
   {
     "id": "osm_node_4464451389",
     "name": "Nhà Hàng HanCook",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1, Núi Thành",
     "latitude": 16.0539957,
     "longitude": 108.2203024,
@@ -56468,7 +56468,7 @@
   {
     "id": "osm_way_1314179477",
     "name": "Nhà hàng Meat Plus Đà Nẵng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "77, Đường Trần Bạch Đằng, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0509126,
     "longitude": 108.2474421,
@@ -56497,7 +56497,7 @@
   {
     "id": "osm_node_14125298501",
     "name": "Nhà hàng NHÀ BÊP CHÓ HÀN",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "22, Đường Hùng Vương",
     "latitude": 16.0687635,
     "longitude": 108.2243297,
@@ -56526,7 +56526,7 @@
   {
     "id": "osm_node_12402104801",
     "name": "Nhà hàng Nhật Miyoshi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "227, Đường Dương Đình Nghệ",
     "latitude": 16.0693093,
     "longitude": 108.2364723,
@@ -56555,7 +56555,7 @@
   {
     "id": "osm_node_7096082208",
     "name": "Nhà Rốt",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "91, Đường Lê Hồng Phong",
     "latitude": 16.0641091,
     "longitude": 108.2187615,
@@ -56584,7 +56584,7 @@
   {
     "id": "osm_node_729406447",
     "name": "NhatHa Coffee Ice Cream",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "130, Đường Trưng Nữ Vương",
     "latitude": 16.058217,
     "longitude": 108.2207447,
@@ -56613,7 +56613,7 @@
   {
     "id": "osm_node_13736627901",
     "name": "NHIÊN Bistro, and A bit more",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "33, Đường Mỹ Khê 5",
     "latitude": 16.0584375,
     "longitude": 108.2426875,
@@ -56642,7 +56642,7 @@
   {
     "id": "osm_node_7020359049",
     "name": "Nhóp Nhép Lẩu Nướng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "45, Đường Hải Phòng, Hải Châu, Đà Nẵng",
     "latitude": 16.0722538,
     "longitude": 108.2178675,
@@ -56671,7 +56671,7 @@
   {
     "id": "osm_node_13744719202",
     "name": "Nia Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "3/14, Đường Phan Thành Tài",
     "latitude": 16.053079,
     "longitude": 108.2215021,
@@ -56700,7 +56700,7 @@
   {
     "id": "osm_node_13651634201",
     "name": "Nice coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "200, Đường Phạm Văn Đồng",
     "latitude": 16.0700864,
     "longitude": 108.2374396,
@@ -56729,7 +56729,7 @@
   {
     "id": "osm_node_12174018926",
     "name": "NO LIMITS Coffee & Juice",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "233, Đường Nguyễn Công Trứ",
     "latitude": 16.0656333,
     "longitude": 108.2399219,
@@ -56758,7 +56758,7 @@
   {
     "id": "osm_node_10784775351",
     "name": "No Nee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "04, Đường Phan Bội Châu, Quận Hải Châu, Đà Nẵng",
     "latitude": 16.0807217,
     "longitude": 108.2212569,
@@ -56787,7 +56787,7 @@
   {
     "id": "osm_node_13651242101",
     "name": "Normad Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "106, Đường Phạm Văn Đồng",
     "latitude": 16.0711287,
     "longitude": 108.2362342,
@@ -56816,7 +56816,7 @@
   {
     "id": "osm_node_13728731701",
     "name": "Nối - The Cabin",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "118, Đường Chu Huy Mân",
     "latitude": 16.094811,
     "longitude": 108.2345543,
@@ -56845,7 +56845,7 @@
   {
     "id": "osm_node_6146988786",
     "name": "Nối Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "18, Kiệt 113 Nguyễn Chí Thanh",
     "latitude": 16.0737653,
     "longitude": 108.2216024,
@@ -56874,7 +56874,7 @@
   {
     "id": "osm_node_11684513272",
     "name": "Nu Đồ",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11/1, Đường Lưu Quang Thuận",
     "latitude": 16.0409912,
     "longitude": 108.245313,
@@ -56903,7 +56903,7 @@
   {
     "id": "osm_node_13964921201",
     "name": "Nune (smoothie)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "385, Đường Núi Thành",
     "latitude": 16.0390873,
     "longitude": 108.2220396,
@@ -56932,7 +56932,7 @@
   {
     "id": "osm_node_13380454601",
     "name": "O2O First Roast Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Phan Tứ",
     "latitude": 16.0457422,
     "longitude": 108.2446755,
@@ -56961,7 +56961,7 @@
   {
     "id": "osm_node_13578387140",
     "name": "Oh La La!",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64a, Đường Mai Thúc Lân",
     "latitude": 16.0527282,
     "longitude": 108.2420418,
@@ -56990,7 +56990,7 @@
   {
     "id": "osm_node_11906566169",
     "name": "Olivia Pizza",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "309 Hồ nghinh, Đường Hồ Nghinh",
     "latitude": 16.0627602,
     "longitude": 108.2436287,
@@ -57019,7 +57019,7 @@
   {
     "id": "osm_node_11906566170",
     "name": "Olivia Pizza",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "75, Đường Ngô Thì Sĩ",
     "latitude": 16.0477146,
     "longitude": 108.2450807,
@@ -57048,7 +57048,7 @@
   {
     "id": "osm_node_14285427701",
     "name": "OM Tea & Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "116, Đường Thích Thiện Chiếu",
     "latitude": 16.1075296,
     "longitude": 108.2571292,
@@ -57077,7 +57077,7 @@
   {
     "id": "osm_node_13394279401",
     "name": "Oslow",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "89, Đường Sương Nguyệt Ánh",
     "latitude": 16.0683888,
     "longitude": 108.2425594,
@@ -57106,7 +57106,7 @@
   {
     "id": "osm_node_13382556801",
     "name": "Outta Da Blue Specialty Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Pasteur",
     "latitude": 16.0697234,
     "longitude": 108.2177394,
@@ -57135,7 +57135,7 @@
   {
     "id": "osm_node_6152603585",
     "name": "Ốc bươu trộn Cô Hà",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "348-352, Ông Ích Khiêm",
     "latitude": 16.0673375,
     "longitude": 108.2139836,
@@ -57164,7 +57164,7 @@
   {
     "id": "osm_way_754677601",
     "name": "ỐC HÀN - ĐÀ NẴNG",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1B, Đường Lê Duẩn, Hải Châu, Đà Nẵng",
     "latitude": 16.0715281,
     "longitude": 108.2244372,
@@ -57193,7 +57193,7 @@
   {
     "id": "osm_node_4352303490",
     "name": "Ông Minh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "92, Đường Võ Nguyên Giáp",
     "latitude": 16.0803548,
     "longitude": 108.2466261,
@@ -57222,7 +57222,7 @@
   {
     "id": "osm_way_692331785",
     "name": "Palmier Café & Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "305, Đường Trần Hưng Đạo",
     "latitude": 16.0748254,
     "longitude": 108.229122,
@@ -57251,7 +57251,7 @@
   {
     "id": "osm_node_7253593585",
     "name": "Panorama",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "120а, Đường Nguyễn Văn Thoại",
     "latitude": 16.0547604,
     "longitude": 108.24349,
@@ -57280,7 +57280,7 @@
   {
     "id": "osm_node_13363428401",
     "name": "Passport Coffee Lab",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Mai Thúc Lân",
     "latitude": 16.0522966,
     "longitude": 108.2422176,
@@ -57309,7 +57309,7 @@
   {
     "id": "osm_node_13371126001",
     "name": "Passport Coffee Roastery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Trường Thi 6",
     "latitude": 16.059726,
     "longitude": 108.2045058,
@@ -57338,7 +57338,7 @@
   {
     "id": "osm_node_5558491521",
     "name": "Pavilion",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "122, Quang Trung",
     "latitude": 16.074262,
     "longitude": 108.2170832,
@@ -57367,7 +57367,7 @@
   {
     "id": "osm_node_4358812697",
     "name": "Phieu Thanh Toán",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "209, Trần Phú",
     "latitude": 16.0648231,
     "longitude": 108.2235176,
@@ -57396,7 +57396,7 @@
   {
     "id": "osm_node_13848456402",
     "name": "Phin Cũ Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "04, Đường An Cư 6",
     "latitude": 16.0750569,
     "longitude": 108.242043,
@@ -57425,7 +57425,7 @@
   {
     "id": "osm_node_12600686584",
     "name": "Phinn Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12, Kiệt 27 Thái Phiên",
     "latitude": 16.0643182,
     "longitude": 108.2226272,
@@ -57454,7 +57454,7 @@
   {
     "id": "osm_node_13075369202",
     "name": "Pho",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "31, Đường Phan Đăng Lưu",
     "latitude": 16.0375327,
     "longitude": 108.2225881,
@@ -57483,7 +57483,7 @@
   {
     "id": "osm_node_13382556901",
     "name": "Pho Tin",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Pasteur",
     "latitude": 16.0698542,
     "longitude": 108.2183553,
@@ -57512,7 +57512,7 @@
   {
     "id": "osm_node_13371161201",
     "name": "Pho Tin - 13 Lò Dúc",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Nguyễn Văn Thoại",
     "latitude": 16.054737,
     "longitude": 108.2410262,
@@ -57541,7 +57541,7 @@
   {
     "id": "osm_way_1463165341",
     "name": "Phố Cổ Bia Hơi Hà Nội",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "168, Đường Mai Thúc Lân, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0477657,
     "longitude": 108.243429,
@@ -57570,7 +57570,7 @@
   {
     "id": "osm_node_4759752150",
     "name": "Phố nướng Tokyo",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "4, Phạm Văn Đồng, Sơn Trà, Đà Nẵng",
     "latitude": 16.07061,
     "longitude": 108.2428955,
@@ -57599,7 +57599,7 @@
   {
     "id": "osm_way_1463167266",
     "name": "Phở An",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "360, Đường Võ Nguyên Giáp, Ngũ Hành Sơn, Da Nang",
     "latitude": 16.0438452,
     "longitude": 108.2475842,
@@ -57628,7 +57628,7 @@
   {
     "id": "osm_node_14069782201",
     "name": "PHỞ HOUSE",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "111, Đường Nại Nam 8",
     "latitude": 16.0348022,
     "longitude": 108.2297232,
@@ -57657,7 +57657,7 @@
   {
     "id": "osm_node_12114045301",
     "name": "Phở Long Hói",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "122, Đường Hồ Nghinh",
     "latitude": 16.0734896,
     "longitude": 108.2427479,
@@ -57686,7 +57686,7 @@
   {
     "id": "osm_node_4118223690",
     "name": "phở phú gia",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Lý Tự Trọng",
     "latitude": 16.0775366,
     "longitude": 108.2219306,
@@ -57715,7 +57715,7 @@
   {
     "id": "osm_node_6146812885",
     "name": "Phú Hồng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "19, Đường Yên Bái",
     "latitude": 16.0691035,
     "longitude": 108.2229133,
@@ -57744,7 +57744,7 @@
   {
     "id": "osm_node_4860107522",
     "name": "phú mỹ thành nhà hàng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Nguyễn Tất Thành",
     "latitude": 16.0761835,
     "longitude": 108.2071943,
@@ -57773,7 +57773,7 @@
   {
     "id": "osm_node_10813726005",
     "name": "Phương Nguyên",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "103, Đường Lê Hữu Trác",
     "latitude": 16.0590952,
     "longitude": 108.2414204,
@@ -57802,7 +57802,7 @@
   {
     "id": "osm_node_13407566501",
     "name": "Pillar Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Trần Văn Trứ",
     "latitude": 16.0562251,
     "longitude": 108.2227975,
@@ -57831,7 +57831,7 @@
   {
     "id": "osm_node_12866042122",
     "name": "Pizza Hut",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "62, Đường Nguyễn Văn Thoại",
     "latitude": 16.0542784,
     "longitude": 108.2396875,
@@ -57860,7 +57860,7 @@
   {
     "id": "osm_node_5327302782",
     "name": "Precious Plastic Da Nang Le café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35, Dam Rong 1, Hai Chau, Da Nang",
     "latitude": 16.0798652,
     "longitude": 108.217161,
@@ -57889,7 +57889,7 @@
   {
     "id": "osm_node_13380507401",
     "name": "Puna Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Lê Quang Đạo",
     "latitude": 16.0470158,
     "longitude": 108.2464439,
@@ -57918,7 +57918,7 @@
   {
     "id": "osm_node_6678249499",
     "name": "Pureza",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "905B, Ngô Quyền",
     "latitude": 16.0649939,
     "longitude": 108.2335163,
@@ -57947,7 +57947,7 @@
   {
     "id": "osm_node_5791814653",
     "name": "Qquán Chay Ďiêu Hoa",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "87/4, Nguyễn Du",
     "latitude": 16.0784588,
     "longitude": 108.2190936,
@@ -57976,7 +57976,7 @@
   {
     "id": "osm_node_12615312425",
     "name": "Quán 99",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "99, Hải Hồ",
     "latitude": 16.0818371,
     "longitude": 108.2163536,
@@ -58005,7 +58005,7 @@
   {
     "id": "osm_node_4948013624",
     "name": "Quán An Bún Chả Cá",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "109, Nguyễn Chí Thanh",
     "latitude": 16.0745962,
     "longitude": 108.2206238,
@@ -58034,7 +58034,7 @@
   {
     "id": "osm_node_12314059213",
     "name": "Quán ăn Cháo - Xôi A Tiều",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "37, Đường Ba Đình, Hải Châu, Đà Nẵng",
     "latitude": 16.0760478,
     "longitude": 108.2181955,
@@ -58063,7 +58063,7 @@
   {
     "id": "osm_node_6120622785",
     "name": "Quán ăn ngon Thìa Gỗ Danang-style",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "37, Đường Ba Đình, Hải Châu",
     "latitude": 16.0760522,
     "longitude": 108.2183879,
@@ -58092,7 +58092,7 @@
   {
     "id": "osm_node_5047614532",
     "name": "Quán Ăn Tuk Tuk",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "18, 18 Dương Thị Xuân Quys",
     "latitude": 16.0426449,
     "longitude": 108.2433938,
@@ -58121,7 +58121,7 @@
   {
     "id": "osm_node_10781135505",
     "name": "Quán Bé Út - Nem Lụi & Bún Thịt Nướng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "An Hải Đông 1",
     "latitude": 16.055949,
     "longitude": 108.2426508,
@@ -58150,7 +58150,7 @@
   {
     "id": "osm_node_14340243101",
     "name": "Quán Bình Định",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "208, Đường Chính Hữu",
     "latitude": 16.0631063,
     "longitude": 108.2398279,
@@ -58179,7 +58179,7 @@
   {
     "id": "osm_node_13738874785",
     "name": "Quán Bún chả Hà Nội Thanh Nga",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "60, Đường Nguyễn Hữu Hào",
     "latitude": 16.0279614,
     "longitude": 108.2440855,
@@ -58208,7 +58208,7 @@
   {
     "id": "osm_node_4076171123",
     "name": "Quán bún Liễu",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "15, Đường Hoàng Hoa Thám",
     "latitude": 16.0704264,
     "longitude": 108.2096385,
@@ -58237,7 +58237,7 @@
   {
     "id": "osm_node_13417588901",
     "name": "Quán Chay Hà",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "16, Đường Đoàn Thị Điểm",
     "latitude": 16.0666438,
     "longitude": 108.2175163,
@@ -58266,7 +58266,7 @@
   {
     "id": "osm_way_694479626",
     "name": "Quán Chay Phở 30",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "216, Đường Điện Biên Phủ",
     "latitude": 16.0659468,
     "longitude": 108.1964308,
@@ -58295,7 +58295,7 @@
   {
     "id": "osm_node_6429921485",
     "name": "Quán Chay Thanh Tâm",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "7, Ngô Gia Tự",
     "latitude": 16.0710615,
     "longitude": 108.2169829,
@@ -58324,7 +58324,7 @@
   {
     "id": "osm_node_13362942201",
     "name": "Quan Chay Thu",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "123, Đường Phạm Cự Lượng",
     "latitude": 16.0562893,
     "longitude": 108.2375729,
@@ -58353,7 +58353,7 @@
   {
     "id": "osm_node_10777150405",
     "name": "Quán chay Tỉnh Quán",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "11, Đường Trần Nhật Duật",
     "latitude": 16.1006667,
     "longitude": 108.2541354,
@@ -58382,7 +58382,7 @@
   {
     "id": "osm_node_4522677590",
     "name": "Quán Chay Vegetarian Restaurant Ngọc Chi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "32, Thái Phiên",
     "latitude": 16.0650511,
     "longitude": 108.2227097,
@@ -58411,7 +58411,7 @@
   {
     "id": "osm_node_13362942301",
     "name": "Quan Chay xinh",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "30, Đường An Thượng 8",
     "latitude": 16.0480317,
     "longitude": 108.244709,
@@ -58440,7 +58440,7 @@
   {
     "id": "osm_node_4900701521",
     "name": "Quán Chay XUÂN",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "631, Đường Trần Cao Vân",
     "latitude": 16.0716462,
     "longitude": 108.1861689,
@@ -58469,7 +58469,7 @@
   {
     "id": "osm_node_12628082301",
     "name": "Quan Com Truong Tho 25k",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "217, Đường Nguyễn Công Trứ",
     "latitude": 16.0659069,
     "longitude": 108.2387214,
@@ -58498,7 +58498,7 @@
   {
     "id": "osm_node_4076169309",
     "name": "Quán cơm 08",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "08, Đường Hoàng Hoa Thám, Thanh Khê, Đà Nẵng",
     "latitude": 16.0706465,
     "longitude": 108.2093784,
@@ -58527,7 +58527,7 @@
   {
     "id": "osm_node_12612220045",
     "name": "Quán Đại Lộc",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "97, Trưng Nữ Vương",
     "latitude": 16.0579908,
     "longitude": 108.2208559,
@@ -58556,7 +58556,7 @@
   {
     "id": "osm_node_12612220933",
     "name": "Quán Hồng Nguyệt",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "10, Kiệt 178 Hoàng Diệu",
     "latitude": 16.0628411,
     "longitude": 108.2172545,
@@ -58585,7 +58585,7 @@
   {
     "id": "osm_node_10819049905",
     "name": "Quán Mai - Bún chả Obama",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "40, Đường An Thượng 5",
     "latitude": 16.0482464,
     "longitude": 108.2455492,
@@ -58614,7 +58614,7 @@
   {
     "id": "osm_node_6152679485",
     "name": "Quán Mậu - Bánh tráng thịt heo",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "35, Đỗ Thúc Tịnh",
     "latitude": 16.0248521,
     "longitude": 108.2100572,
@@ -58643,7 +58643,7 @@
   {
     "id": "osm_node_12615301813",
     "name": "Quán Nga 2",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Hải Hồ, 43B",
     "latitude": 16.0797334,
     "longitude": 108.2151698,
@@ -58672,7 +58672,7 @@
   {
     "id": "osm_node_12606953537",
     "name": "Quán Nhân",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "83, Phan Tứ",
     "latitude": 16.0462457,
     "longitude": 108.2455441,
@@ -58701,7 +58701,7 @@
   {
     "id": "osm_node_4875985021",
     "name": "quán nhậu lộc viên",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Nguyễn Sinh Sắc",
     "latitude": 16.0659502,
     "longitude": 108.1552232,
@@ -58730,7 +58730,7 @@
   {
     "id": "osm_node_4378701501",
     "name": "quan pho hong",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "19, Lý Tự Trọng",
     "latitude": 16.0775502,
     "longitude": 108.2217728,
@@ -58759,7 +58759,7 @@
   {
     "id": "osm_node_10807491807",
     "name": "Quán Tý",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1, Đường An Thượng 6",
     "latitude": 16.0489561,
     "longitude": 108.2450031,
@@ -58788,7 +58788,7 @@
   {
     "id": "osm_node_13417598901",
     "name": "Quan Ut Com",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "201, Đường Nguyễn Công Trứ",
     "latitude": 16.0665956,
     "longitude": 108.2365487,
@@ -58817,7 +58817,7 @@
   {
     "id": "osm_node_13165207773",
     "name": "Rainbowl Poke",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "95, Mai Thuc Lan, Ngu Hanh Son, Đà Nẵng",
     "latitude": 16.0479151,
     "longitude": 108.2438673,
@@ -58846,7 +58846,7 @@
   {
     "id": "osm_node_6152681085",
     "name": "Ram cuốn cải Dì Hoả",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "K232/10, Lê Duẩn",
     "latitude": 16.0686844,
     "longitude": 108.2091895,
@@ -58875,7 +58875,7 @@
   {
     "id": "osm_node_7253450586",
     "name": "Red window food and cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "46, Đường Mỹ Khê 4",
     "latitude": 16.0577425,
     "longitude": 108.2456116,
@@ -58904,7 +58904,7 @@
   {
     "id": "osm_node_13597097601",
     "name": "Restaurant Cabanon Palace",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27 - 29, Loseby street",
     "latitude": 16.0737327,
     "longitude": 108.240949,
@@ -58933,7 +58933,7 @@
   {
     "id": "osm_node_12976267223",
     "name": "Riverside Terrace Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "493, Đ. Trần Hưng Đạo, Sơn Trà, Đà Nẵng",
     "latitude": 16.0631261,
     "longitude": 108.2302807,
@@ -58962,7 +58962,7 @@
   {
     "id": "osm_node_12850675090",
     "name": "Roly Poly Fresh Spring Rolls & Coffee Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "05, Đường An Thượng 6, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0487934,
     "longitude": 108.2450404,
@@ -58991,7 +58991,7 @@
   {
     "id": "osm_node_13373300801",
     "name": "Roost Roasters",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Bà Huyện Thanh Quan",
     "latitude": 16.043415,
     "longitude": 108.244032,
@@ -59020,7 +59020,7 @@
   {
     "id": "osm_node_10749874405",
     "name": "Roots Plant-Based Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27, Trần Bạch Đằng, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 16.0486599,
     "longitude": 108.2478755,
@@ -59049,7 +59049,7 @@
   {
     "id": "osm_node_5437839417",
     "name": "Samwon",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "74, Dương Đình Nghệ, Đà Nẵng",
     "latitude": 16.069034,
     "longitude": 108.2374986,
@@ -59078,7 +59078,7 @@
   {
     "id": "osm_node_4854309123",
     "name": "Sàn giao dịch bất động sản ĐẤT LÀNH",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "267, Dương Đình Nghệ",
     "latitude": 16.0697237,
     "longitude": 108.2356103,
@@ -59107,7 +59107,7 @@
   {
     "id": "osm_node_14320771501",
     "name": "Season coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "288, Đường Đoàn Khuê",
     "latitude": 16.0236104,
     "longitude": 108.2450332,
@@ -59136,7 +59136,7 @@
   {
     "id": "osm_node_14134320401",
     "name": "Shuyi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "113, Đường Nguyễn Văn Thoại",
     "latitude": 16.0544247,
     "longitude": 108.2395669,
@@ -59165,7 +59165,7 @@
   {
     "id": "osm_node_13306417601",
     "name": "Si Dining",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1, Đường Giang Châu 2",
     "latitude": 16.0302522,
     "longitude": 108.2379864,
@@ -59194,7 +59194,7 @@
   {
     "id": "osm_node_5360440323",
     "name": "Simpur",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "165, Trần Hưng Đạo, Đà Nẵng",
     "latitude": 16.0792103,
     "longitude": 108.2290755,
@@ -59223,7 +59223,7 @@
   {
     "id": "osm_node_12603960658",
     "name": "Sinh Tố Chè Thái A.Bé",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "101, Thái Phiên",
     "latitude": 16.0652141,
     "longitude": 108.2201962,
@@ -59252,7 +59252,7 @@
   {
     "id": "osm_node_14115263501",
     "name": "Sita",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "48, Đường Trần Duy Chiến",
     "latitude": 16.0873487,
     "longitude": 108.2434897,
@@ -59281,7 +59281,7 @@
   {
     "id": "osm_node_5432960921",
     "name": "SIX ON SIX",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64, Đường Bà Huyện Thanh Quan",
     "latitude": 16.0432955,
     "longitude": 108.2441897,
@@ -59310,7 +59310,7 @@
   {
     "id": "osm_node_12608970059",
     "name": "Slow Breeze",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12a, Kiệt 54 Ông Ích Khiêm",
     "latitude": 16.0777638,
     "longitude": 108.2112063,
@@ -59339,7 +59339,7 @@
   {
     "id": "osm_node_4430043290",
     "name": "Sofia Restaurant",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Phạm Văn Đồng",
     "latitude": 16.0705038,
     "longitude": 108.2423861,
@@ -59368,7 +59368,7 @@
   {
     "id": "osm_node_7287589653",
     "name": "Son Tra Ocean View Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "95, Đường Ngô Quyền, Sơn Trà, Đà Nẵng",
     "latitude": 16.0970047,
     "longitude": 108.2458775,
@@ -59397,7 +59397,7 @@
   {
     "id": "osm_node_12603332725",
     "name": "Soncha Roastery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "20, Kiệt 21 Ông Ích Khiêm",
     "latitude": 16.0765055,
     "longitude": 108.2129242,
@@ -59426,7 +59426,7 @@
   {
     "id": "osm_node_5964310288",
     "name": "Sổ Zách",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "47, Đường Trưng Nữ Vương",
     "latitude": 16.059107,
     "longitude": 108.2214952,
@@ -59455,7 +59455,7 @@
   {
     "id": "osm_node_4301483689",
     "name": "Sơn",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12, Võ Văn Tần",
     "latitude": 16.0672283,
     "longitude": 108.2047003,
@@ -59484,7 +59484,7 @@
   {
     "id": "osm_node_12612220720",
     "name": "Sơn Hải",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "40b, Đường Nguyễn Hữu Thọ",
     "latitude": 16.0484071,
     "longitude": 108.209222,
@@ -59513,7 +59513,7 @@
   {
     "id": "osm_node_13848489601",
     "name": "Spanda Yoga Café",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường An Cư 6",
     "latitude": 16.0749373,
     "longitude": 108.2417797,
@@ -59542,7 +59542,7 @@
   {
     "id": "osm_node_13619314947",
     "name": "Starbucks",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "496, Đường Ngô Quyền",
     "latitude": 16.0717994,
     "longitude": 108.2300306,
@@ -59571,7 +59571,7 @@
   {
     "id": "osm_node_7518538886",
     "name": "Street food corner",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Phạm Hồng Thái",
     "latitude": 16.0674098,
     "longitude": 108.2210728,
@@ -59600,7 +59600,7 @@
   {
     "id": "osm_way_692331788",
     "name": "Suki Plaza",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "325, Đường Trần Hưng Đạo",
     "latitude": 16.0742259,
     "longitude": 108.229127,
@@ -59629,7 +59629,7 @@
   {
     "id": "osm_node_6544417155",
     "name": "Sunrise",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Phạm Văn Đồng",
     "latitude": 16.0706544,
     "longitude": 108.2359101,
@@ -59658,7 +59658,7 @@
   {
     "id": "osm_node_6152585585",
     "name": "Sữa chua nếp cẩm Cô Phúc",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "65, Lý Thường Kiệt",
     "latitude": 16.080151,
     "longitude": 108.218796,
@@ -59687,7 +59687,7 @@
   {
     "id": "osm_way_694309399",
     "name": "T T Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "12, Đường Nguyễn Chí Thanh",
     "latitude": 16.0771858,
     "longitude": 108.2201935,
@@ -59716,7 +59716,7 @@
   {
     "id": "osm_node_13387865401",
     "name": "Tabiji Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 72 Nguyễn Văn Thoại",
     "latitude": 16.0530294,
     "longitude": 108.2406141,
@@ -59745,7 +59745,7 @@
   {
     "id": "osm_node_7108269050",
     "name": "Tacos Danang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "72/17, Nguyễn Văn Thoại",
     "latitude": 16.0538341,
     "longitude": 108.2404975,
@@ -59774,7 +59774,7 @@
   {
     "id": "osm_node_12171219561",
     "name": "TaHi Garden",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64, Đường Mỹ Khê 7, Đà Nẵng",
     "latitude": 16.0628735,
     "longitude": 108.2386512,
@@ -59803,7 +59803,7 @@
   {
     "id": "osm_node_13722666902",
     "name": "Tamarind Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "15, Đường Mỹ Khê 3, Đà Nẵng",
     "latitude": 16.0611938,
     "longitude": 108.2390339,
@@ -59832,7 +59832,7 @@
   {
     "id": "osm_node_14237933201",
     "name": "Taste of Slavia",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "147, Đường Dương Trí Trạch",
     "latitude": 16.0717789,
     "longitude": 108.2404105,
@@ -59861,7 +59861,7 @@
   {
     "id": "osm_node_6079848286",
     "name": "Teddy Garden burgers",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "22, Dương Đình Nghệ",
     "latitude": 16.0688374,
     "longitude": 108.2416294,
@@ -59890,7 +59890,7 @@
   {
     "id": "osm_node_5429167110",
     "name": "Thai Market",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "4, Trần Quốc Toản, Đà Nẵng",
     "latitude": 16.0661423,
     "longitude": 108.2242408,
@@ -59919,7 +59919,7 @@
   {
     "id": "osm_node_5429181331",
     "name": "Thai Market",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "46, Thái Phiên, Đà Nẵng",
     "latitude": 16.0651331,
     "longitude": 108.2225171,
@@ -59948,7 +59948,7 @@
   {
     "id": "osm_node_6617189371",
     "name": "Thai Market",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "43, Đường Bình Minh 5, Đà Nẵng",
     "latitude": 16.0552391,
     "longitude": 108.2227388,
@@ -59977,7 +59977,7 @@
   {
     "id": "osm_node_2623768438",
     "name": "Thang Bom",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "171, Đường Lê Độ, Đà Nẵng",
     "latitude": 16.0663525,
     "longitude": 108.2019752,
@@ -60006,7 +60006,7 @@
   {
     "id": "osm_node_6108965845",
     "name": "Thanh Tam",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Ngô Thì Sĩ",
     "latitude": 16.0478808,
     "longitude": 108.246362,
@@ -60035,7 +60035,7 @@
   {
     "id": "osm_node_4260382168",
     "name": "The Amazing Taco | In Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "29, Mỹ An 5, Ngũ Hành Sơn, Da Nang",
     "latitude": 16.0485168,
     "longitude": 108.2369175,
@@ -60064,7 +60064,7 @@
   {
     "id": "osm_node_4814994722",
     "name": "The Chói's Kitchen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "02, Đường Hoàng Hoa Thám, Thanh Khê, Đà Nẵng",
     "latitude": 16.0707738,
     "longitude": 108.2093349,
@@ -60093,7 +60093,7 @@
   {
     "id": "osm_way_698776690",
     "name": "The Coffee House",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Trưng Nữ Vương",
     "latitude": 16.0550948,
     "longitude": 108.2203767,
@@ -60122,7 +60122,7 @@
   {
     "id": "osm_node_13860331501",
     "name": "The Green Ramen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "71, Kiệt 227 Đường Nguyễn Văn Thoại",
     "latitude": 16.0579373,
     "longitude": 108.2444873,
@@ -60151,7 +60151,7 @@
   {
     "id": "osm_way_1442969735",
     "name": "The Local Bean",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "186, Đường Phan Châu Trinh, Hải Châu, Đà Nẵng",
     "latitude": 16.0615007,
     "longitude": 108.2194244,
@@ -60180,7 +60180,7 @@
   {
     "id": "osm_node_5699718559",
     "name": "The Pizza Company",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Tầng trệt, Coopmart, 478 Điện Biên Phủ, Q. Thanh Khê, TP, Thanh Khê Đông, Thanh Khê, Đà Nẵng, Vietnam",
     "latitude": 16.0667331,
     "longitude": 108.1870304,
@@ -60209,7 +60209,7 @@
   {
     "id": "osm_node_13449488301",
     "name": "The Tamarind Tree",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Tô Hiến Thành",
     "latitude": 16.0563736,
     "longitude": 108.2442551,
@@ -60238,7 +60238,7 @@
   {
     "id": "osm_node_13403678801",
     "name": "The Third House Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "3, Kiệt 142 Lê Độ",
     "latitude": 16.0668833,
     "longitude": 108.2013525,
@@ -60267,7 +60267,7 @@
   {
     "id": "osm_node_12395066001",
     "name": "The Wagon",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 72 Nguyễn Văn Thoại",
     "latitude": 16.0523264,
     "longitude": 108.240883,
@@ -60296,7 +60296,7 @@
   {
     "id": "osm_node_14165243301",
     "name": "Thien an coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "48, Đường Tố Hữu",
     "latitude": 16.03471,
     "longitude": 108.2207869,
@@ -60325,7 +60325,7 @@
   {
     "id": "osm_node_14186980401",
     "name": "Thien Com Tam Sai Gon",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "2, Đường Nam Trân",
     "latitude": 16.0580551,
     "longitude": 108.1724011,
@@ -60354,7 +60354,7 @@
   {
     "id": "osm_node_6525009326",
     "name": "Tiần Lê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "275, Đường Lê Đại Hành",
     "latitude": 16.020723,
     "longitude": 108.1978876,
@@ -60383,7 +60383,7 @@
   {
     "id": "osm_node_5110691331",
     "name": "Tiem An Vu Gia",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "426, Trần Cao Vân",
     "latitude": 16.071065,
     "longitude": 108.1984644,
@@ -60412,7 +60412,7 @@
   {
     "id": "osm_node_13784209321",
     "name": "Tiệm cà phê Nắng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "42, Đường Nguyễn Dục, Ngũ Hành Sơn, Đà Nẵng",
     "latitude": 15.980102,
     "longitude": 108.2526322,
@@ -60441,7 +60441,7 @@
   {
     "id": "osm_node_7281943485",
     "name": "Tiêm Cafè",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Hà Thị Thân",
     "latitude": 16.059008,
     "longitude": 108.2349241,
@@ -60470,7 +60470,7 @@
   {
     "id": "osm_node_5421670777",
     "name": "Time Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "509, Trần Hưng Đạo, Đà Nẵng",
     "latitude": 16.062767,
     "longitude": 108.2303962,
@@ -60499,7 +60499,7 @@
   {
     "id": "osm_node_6108930790",
     "name": "Tokbokki Ly",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64, An Thượng 20, Đà Nẵng",
     "latitude": 16.0514127,
     "longitude": 108.2405714,
@@ -60528,7 +60528,7 @@
   {
     "id": "osm_node_14141370201",
     "name": "Tomini’s Pizza",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Giang Châu 1",
     "latitude": 16.030539,
     "longitude": 108.2380618,
@@ -60557,7 +60557,7 @@
   {
     "id": "osm_node_13724829101",
     "name": "Totoro Nướng & Sushi",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "287, Đường Nguyễn Chí Thanh",
     "latitude": 16.0647155,
     "longitude": 108.2207954,
@@ -60586,7 +60586,7 @@
   {
     "id": "osm_node_10314394509",
     "name": "Tôn Lê",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "60, Đường Võ Nguyên Giáp",
     "latitude": 16.0849263,
     "longitude": 108.2479754,
@@ -60615,7 +60615,7 @@
   {
     "id": "osm_node_7265347998",
     "name": "Trạm Bơm Cafe",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "1083, Đường Ngô Quyền, Sơn Trà, Đà Nẵng",
     "latitude": 16.0574473,
     "longitude": 108.235798,
@@ -60644,7 +60644,7 @@
   {
     "id": "osm_node_4267912389",
     "name": "Tran",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "4, Lê Duẩn",
     "latitude": 16.0717989,
     "longitude": 108.2226291,
@@ -60673,7 +60673,7 @@
   {
     "id": "osm_node_13715453001",
     "name": "TripleCoffee - Bánh Mỳ TôNy",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "70, Đường Phạm Tu",
     "latitude": 16.0669803,
     "longitude": 108.2404183,
@@ -60702,7 +60702,7 @@
   {
     "id": "osm_node_7281943185",
     "name": "Trung Hoa",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 128 Huyền Trần Công Chúa",
     "latitude": 16.001168,
     "longitude": 108.2641009,
@@ -60731,7 +60731,7 @@
   {
     "id": "osm_node_13230561977",
     "name": "Trường Thọ Ha Noi KeBab Rice Noodlse®",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "01, Đường Trần Đức Thông, Sơn Trà",
     "latitude": 16.0818056,
     "longitude": 108.247242,
@@ -60760,7 +60760,7 @@
   {
     "id": "osm_node_13423167702",
     "name": "Tue Tam Quan Chay",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "58, Đường Lý Văn Tố",
     "latitude": 16.0664379,
     "longitude": 108.2411695,
@@ -60789,7 +60789,7 @@
   {
     "id": "osm_node_13368831001",
     "name": "Um Mani",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Nguyễn Chí Thanh",
     "latitude": 16.0732641,
     "longitude": 108.2207958,
@@ -60818,7 +60818,7 @@
   {
     "id": "osm_node_12611808584",
     "name": "V7 Tab",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "8B, Kiệt 46 2 Tháng 9",
     "latitude": 16.0581671,
     "longitude": 108.2222355,
@@ -60847,7 +60847,7 @@
   {
     "id": "osm_node_12853200250",
     "name": "Vietnam Daily Group",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "10, Đường An Thượng 29",
     "latitude": 16.0523354,
     "longitude": 108.2461038,
@@ -60876,7 +60876,7 @@
   {
     "id": "osm_node_13165190395",
     "name": "Vietnom Local Eatery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "97, Mai Thuc Lan, Đà Nẵng",
     "latitude": 16.047867,
     "longitude": 108.2438751,
@@ -60905,7 +60905,7 @@
   {
     "id": "osm_node_14041058901",
     "name": "VINEGRETTE",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Kiệt 16 Mỹ Đa Đông 12",
     "latitude": 16.0456605,
     "longitude": 108.2468312,
@@ -60934,7 +60934,7 @@
   {
     "id": "osm_node_14314444102",
     "name": "Vua cam sanh co hai",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "166, Đường Lê Đình Lý",
     "latitude": 16.0526987,
     "longitude": 108.2105907,
@@ -60963,7 +60963,7 @@
   {
     "id": "osm_node_12464306501",
     "name": "Waffle queen",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "68, Đường Châu Thị Vĩnh Tế",
     "latitude": 16.0517229,
     "longitude": 108.2400797,
@@ -60992,7 +60992,7 @@
   {
     "id": "osm_node_13739882101",
     "name": "Webe Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "14-16, Đường Nguyễn Hữu Thông",
     "latitude": 16.0708125,
     "longitude": 108.2419375,
@@ -61021,7 +61021,7 @@
   {
     "id": "osm_node_12918575654",
     "name": "Westwood Da Nang",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "68, Nguyễn Tư Giản, Ngũ Hành Sơn",
     "latitude": 16.0474663,
     "longitude": 108.2350925,
@@ -61050,7 +61050,7 @@
   {
     "id": "osm_way_1181332013",
     "name": "XLIII Specialty Coffee",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "422, Đường Ngô Thì Sĩ",
     "latitude": 16.0480775,
     "longitude": 108.2459757,
@@ -61079,7 +61079,7 @@
   {
     "id": "osm_node_12032859170",
     "name": "XÓM MỚI GARDEN ĐÀ NẴNG (씀모이가든 다낭)",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "222, Đường Trần Phú",
     "latitude": 16.0635146,
     "longitude": 108.2232424,
@@ -61108,7 +61108,7 @@
   {
     "id": "osm_node_6152595285",
     "name": "Xôi gà Bà Bé",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "27, Ngô Gia Tự",
     "latitude": 16.0695779,
     "longitude": 108.2172394,
@@ -61137,7 +61137,7 @@
   {
     "id": "osm_node_6151202686",
     "name": "Yaourt muối Cây Bàng",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "64, Phan Huy Chú",
     "latitude": 16.0518187,
     "longitude": 108.234043,
@@ -61166,7 +61166,7 @@
   {
     "id": "osm_node_14314444201",
     "name": "Yume izakaya",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "42, Đường An Thượng 9",
     "latitude": 16.0478581,
     "longitude": 108.2440818,
@@ -61195,7 +61195,7 @@
   {
     "id": "osm_node_13463805801",
     "name": "Z! Coffee and Roastery",
-    "category": "nha_hang",
+    "category": "an_uong",
     "address": "Đường Lê Quang Đạo",
     "latitude": 16.0525641,
     "longitude": 108.2447206,
