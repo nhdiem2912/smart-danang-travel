@@ -6,383 +6,143 @@ export const HOME_HTML = `<!doctype html>
 
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden}
-body{font-family:system-ui,sans-serif;background:var(--background,#f6f9fc);color:var(--text,#253347)}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:system-ui,sans-serif;background:var(--background,#f6f9fc);color:var(--text,#253347);-webkit-text-size-adjust:100%}
 button{font:inherit;border:0;cursor:pointer;color:inherit}
 button:active{opacity:.8}
 button:focus-visible{outline:3px solid #f59e0b;outline-offset:-3px}
 h2,h3,p{margin:0}
-.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
 .cut{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .muted{color:var(--muted,#718096)}
 
-.app{
-  height:100%;
-  max-width:650px;
-  margin:auto;
-  padding:10px 12px;
-  display:grid;
-  grid-template-rows:44px minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1fr) 50px;
-  gap:8px
-}
-
-.app.week{
-  grid-template-rows:44px minmax(0,.8fr) minmax(0,2.2fr) minmax(0,.8fr) 50px
-}
-
-.header{display:flex;align-items:center;gap:9px;background:var(--card,#fff);border-radius:15px;padding:5px 9px}
-.icon{width:30px;height:30px;border-radius:50%;background:var(--pale,#ecfdf5);color:var(--green,#087f61);font-size:17px}
+/* The WebView owns its scroll area. Short screens keep readable cards instead of shrinking them. */
+.app{width:100%;height:100%;height:100dvh;max-width:1280px;margin:auto;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"header" "hero" "weather" "night" "trip";grid-template-rows:48px repeat(3,minmax(184px,1fr)) minmax(52px,auto);gap:10px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;scroll-padding:12px;-webkit-overflow-scrolling:touch}
+.app>*{min-width:0}
+.header{grid-area:header;display:flex;align-items:center;gap:10px;background:var(--card,#fff);border-radius:16px;padding:4px 8px}
+.icon{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:var(--pale,#ecfdf5);color:var(--green,#087f61);display:grid;place-items:center}
+.header .icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .identity{flex:1;min-width:0}
-.identity small{font-size:9px;display:block}
-.identity strong{font-size:12px}
-.account{font-size:8px;color:var(--green,#087f61);margin-left:5px;background:var(--pale,#ecfdf5);padding:2px 5px;border-radius:8px}
+.identity small{font-size:11px;display:block}
+.identity strong{font-size:15px}
+.account{display:none}
+.avatar-button{padding:0;overflow:hidden;border-radius:50%}
+.avatar-image{width:100%;height:100%;object-fit:cover;display:block}
+.avatar-image[hidden]{display:none}
 
-.hero{position:relative;overflow:hidden;border-radius:18px;background:#164e42;min-height:0;color:white;touch-action:pan-y}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.shade{position:absolute;inset:0;background:linear-gradient(180deg,#041b1920,#071c2dd9)}
-.hero-top{position:absolute;left:10px;right:10px;top:9px}
-.tag{background:#07825ce6;color:white;border-radius:20px;padding:4px 8px;font-size:9px;font-weight:800}
-.rating{font-size:10px;color:#ffd060;background:#0005;padding:4px 8px;border-radius:20px}
-.arrows{position:absolute;left:8px;right:8px;top:43%}
-.arrows button{width:26px;height:26px;border-radius:50%;background:#0005;color:white;font-size:17px}
-.hero-content{position:absolute;bottom:9px;left:12px;right:12px}
-.hero h2{font-size:clamp(14px,4vw,19px);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.subtitle{font-size:10px;margin-top:4px}
-.hero-bottom{margin-top:8px}
-.hero-open{font-size:10px;color:white;background:#ffffff30;border-radius:20px;padding:6px 9px}
-.dots{display:flex;gap:4px}
-.dots button{padding:0;width:6px;height:5px;background:#ffffff66;border-radius:5px}
-.dots button.active{width:18px;background:white}
+.hero{grid-area:hero;position:relative;overflow:hidden;border-radius:20px;background:#164e42;color:white;touch-action:pan-y;min-height:184px}
+.hero img,.event img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,#041b1920,#071c2de8)}
+.hero-top{position:absolute;left:12px;right:12px;top:12px}
+.tag{background:#07825ce6;color:white;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:750;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rating{font-size:12px;color:#ffd060;background:#0005;padding:5px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.rating:empty{display:none}
+.hero-content{position:absolute;bottom:12px;left:14px;right:14px}
+.hero h2{font-size:clamp(17px,3.6vw,23px);line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.subtitle{display:none}
+.hero-bottom{margin-top:10px}
+.banner-controls{display:flex;align-items:center;gap:10px;min-width:0}
+.arrows{display:flex;gap:4px;flex-shrink:0}
+.arrows button{width:36px;height:40px;border-radius:12px;background:#0005;color:white;font-size:23px}
+.hero-open{min-height:40px;font-size:12px;color:white;background:#ffffff30;border-radius:20px;padding:8px 12px;white-space:nowrap;flex-shrink:0}
+.dots{display:flex;gap:4px;align-items:center}
+.dots button{padding:0;width:6px;height:6px;background:#ffffff66;border-radius:6px}
+.dots button.active{width:16px;background:white}
 
-.weather{min-height:0;padding:10px;border-radius:18px;background:linear-gradient(120deg,#0085c5,#0bb1df);color:white;display:flex;flex-direction:column;gap:6px;justify-content:space-between}
-.weather h3{font-size:12px}
-.condition{font-size:9px;margin-top:2px}
-.temperature{font-size:26px;font-weight:800}
-.weather-small{font-size:8px;text-align:right}
-.stats{display:flex;justify-content:space-around;background:#00486b40;border-radius:8px;padding:5px;font-size:9px}
-.forecast-header{font-size:9px}
-.switch{display:flex;background:#00486b40;padding:2px;border-radius:7px}
-.switch button{font-size:9px;padding:3px 7px;background:none;color:#e8f6ff;border-radius:5px}
+.weather{grid-area:weather;min-height:184px;padding:10px;border-radius:20px;background:linear-gradient(120deg,#0085c5,#0bb1df);color:white;display:flex;flex-direction:column;gap:6px;justify-content:space-between;container:weather / size}
+.weather h3{font-size:15px}
+.condition{font-size:11px;line-height:15px;margin-top:3px}
+.temperature{font-size:30px;line-height:34px;font-weight:800}
+.weather-small{font-size:11px;text-align:right}
+.stats{display:none;justify-content:space-around;gap:6px;background:#00486b40;border-radius:10px;padding:7px;font-size:12px}
+.forecast-header{flex-wrap:wrap;gap:4px}
+.switch{display:flex;background:#00486b40;padding:2px;border-radius:10px;flex-shrink:0}
+.switch button{font-size:12px;min-height:32px;padding:5px 9px;background:none;color:#e8f6ff;border-radius:8px;white-space:nowrap}
 .switch .active{background:white;color:#087fad}
-.hourly{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
-.hour{background:#ffffff20;border-radius:8px;padding:5px 1px;text-align:center;display:flex;flex-direction:column;gap:3px;font-size:9px}
-.hour b{font-size:12px}
-.hour small{font-size:8px}
-.weekly{display:grid;gap:3px}
-.day{display:grid;grid-template-columns:50px 18px 1fr 37px 24px;gap:4px;align-items:center;font-size:9px;min-height:17px;background:#00699a40;padding:3px 6px;border-radius:6px}
-.day .range{display:flex;align-items:center;gap:4px}
-.bar{flex:1;height:4px;border-radius:8px;background:linear-gradient(90deg,#f9db58,#ff9e32)}
-.weather button.refresh{background:none;color:#e8f6ff;font-size:8px;padding:0}
+.weather button.refresh{background:none;color:#e8f6ff;font-size:12px;min-height:32px;padding:5px 3px;white-space:nowrap}
+.forecast-track{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;min-height:60px;flex-shrink:0;scroll-snap-type:x proximity}
+.forecast-track::-webkit-scrollbar{display:none}
+.forecast-card{flex:0 0 70px;scroll-snap-align:start;background:#ffffff20;border-radius:10px;padding:6px 4px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:center;font-size:12px}
+.forecast-card strong,.forecast-card small{font-size:11px;line-height:14px;white-space:nowrap}
+.forecast-card b{font-size:14px;line-height:18px;white-space:nowrap}
 
-.night{display:flex;flex-direction:column;gap:6px;min-height:0}
-.night h3{font-size:12px}
-.night small{font-size:8px}
-.link{background:none;color:var(--green,#087f61);font-weight:700;font-size:10px;padding:4px}
-.event-track{display:flex;gap:9px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;flex:1;min-height:0}
+.night{grid-area:night;display:flex;flex-direction:column;gap:8px;min-height:184px}
+.night>.row{min-height:36px}
+.night>.row>div{min-width:0}
+.night h3{font-size:clamp(13px,2.6vw,17px);line-height:18px}
+.night>.row small{display:none}
+.link{background:none;color:var(--green,#087f61);font-weight:700;font-size:12px;min-height:36px;padding:5px 0 5px 8px;white-space:nowrap;flex-shrink:0}
+.event-track{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;flex:1;min-height:132px}
 .event-track::-webkit-scrollbar{display:none}
-.event{flex:0 0 77%;position:relative;border-radius:16px;overflow:hidden;background:#163f4c;color:white;scroll-snap-align:start;min-width:0}
-.event img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.event .tag{position:absolute;top:7px;left:8px;font-size:8px;padding:3px 6px}
-.event-content{position:absolute;bottom:8px;left:9px;right:9px;display:flex;align-items:flex-end;gap:7px;justify-content:space-between}
-.event-content strong{font-size:11px;display:block}
-.event-content small{font-size:8px;display:block;margin-top:3px}
-.navigate{background:#f3a000;color:white;border-radius:18px;padding:7px 9px;font-size:9px;font-weight:800;white-space:nowrap}
-
-.trip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:16px;background:linear-gradient(110deg,#00946f,#3e8e4f);color:white;text-align:left}
-.trip strong{font-size:11px}
-.trip p{font-size:9px;margin-top:3px}
-.trip .cta{background:white;color:#087f61;padding:7px 9px;border-radius:20px;font-size:9px;white-space:nowrap}
-
-.overlay{position:fixed;inset:0;background:#10203199;z-index:10;display:flex;align-items:flex-end}
-.overlay[hidden]{display:none}
-.sheet{background:var(--card,#fff);width:100%;max-height:90%;border-radius:24px 24px 0 0;padding:17px 15px;overflow-y:auto}
-.sheet h3{font-size:14px}
-.sheet-note{font-size:10px;line-height:1.5;margin:8px 0 12px}
-.event-row{display:flex;align-items:center;gap:9px;border:1px solid var(--line,#e1e9f1);border-radius:14px;padding:11px;margin-top:9px}
-.event-row strong{display:block;font-size:12px;margin:4px 0}
-.event-row small{font-size:10px}
-.event-row .tag{font-size:8px;padding:3px 6px}
-.close{border-radius:50%;width:28px;height:28px;background:var(--background,#f6f9fc);font-size:17px}
-
-@media(max-height:560px){
-  .app{padding:6px 10px;gap:6px;grid-template-rows:40px minmax(0,1.1fr) minmax(0,1.8fr) minmax(0,.9fr) 44px}
-  .app.week{grid-template-rows:40px minmax(0,.8fr) minmax(0,2.4fr) minmax(0,.8fr) 44px}
-  .weather{padding:7px;gap:3px}
-  .temperature{font-size:22px}
-  .stats{padding:3px;font-size:8px}
-  .day{min-height:14px;padding:2px 4px;font-size:8px}
-  .weekly{gap:2px}
-  .hour{padding:4px 1px;gap:2px}
-  .hero-content{bottom:7px}
-  .hero-top{top:6px}
-  .hero-bottom{margin-top:5px}
-  .subtitle{display:none}
-  .event .tag{top:5px;font-size:7px}
-  .event-content{bottom:6px}
-  .event-content small{display:none}
-  .navigate{padding:6px 8px;font-size:8px}
-  .night h3{font-size:11px}
-  .night small{display:none}
-  .trip{padding:6px 10px}
-}
-
-@media(max-height:470px){
-  .hour{padding:2px 1px;gap:1px;line-height:10px}
-  .hour b{font-size:11px;line-height:12px}
-  .hour span{font-size:13px;line-height:14px}
-  .weather{gap:2px}
-  .condition{font-size:8px}
-  .temperature{line-height:1}
-  .weather-small{line-height:10px}
-  .switch button{line-height:10px}
-  .day{line-height:10px;height:13px;min-height:13px;padding:1px 4px}
-  .hero h2{font-size:12px}
-  .hero .tag{font-size:7px;padding:2px 5px}
-  .hero .rating{font-size:8px;padding:2px 5px}
-}
-  .event-hit{
-  position:absolute;
-  inset:0;
-  background:transparent;
-  width:100%;
-  height:100%;
-  border-radius:16px
-}
-
-.event-content{pointer-events:none}
+.event{flex:0 0 88%;position:relative;border-radius:18px;overflow:hidden;background:#163f4c;color:white;scroll-snap-align:start;min-width:0}
+.event .tag{position:absolute;top:10px;left:10px;right:10px;width:fit-content;max-width:calc(100% - 20px);font-size:10px}
+.event-hit{position:absolute;inset:0;background:transparent;width:100%;height:100%;border-radius:18px}
+.event-content{position:absolute;bottom:10px;left:12px;right:12px;display:flex;align-items:flex-end;gap:8px;justify-content:space-between;pointer-events:none}
+.event-content>div{flex:1;min-width:0}
+.event-content strong{font-size:14px;line-height:18px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.event-content small{font-size:11px;display:block;margin-top:4px}
 .event-content .navigate{pointer-events:auto}
+.navigate{background:#f3a000;color:white;border-radius:22px;padding:8px 11px;min-height:40px;font-size:12px;font-weight:750;white-space:nowrap;flex-shrink:0}
 
-.event-info{
-  flex:1;
-  min-width:0;
-  background:transparent;
-  text-align:left;
-  padding:0
-}
-  .avatar-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.avatar-image[hidden] {
-  display: none;
-}
-.avatar-button {
-  padding: 0;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-  /* Cân ba khối chính */
-.app,
-.app.week {
-  grid-template-rows:
-    44px
-    repeat(3, minmax(0, 1fr))
-    48px;
-  gap: 8px;
+.trip{grid-area:trip;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:18px;background:linear-gradient(110deg,#00946f,#3e8e4f);color:white;text-align:left;min-width:0}
+.trip strong{font-size:14px;line-height:19px;overflow-wrap:anywhere}
+.trip p{display:none}
+.trip .cta{background:white;color:#087f61;padding:9px 11px;border-radius:22px;font-size:12px;white-space:nowrap;flex-shrink:0}
+
+.overlay{position:fixed;inset:0;background:#10203199;z-index:10;display:flex;align-items:flex-end;justify-content:center;padding-top:12px}
+.overlay[hidden]{display:none}
+.sheet{background:var(--card,#fff);width:100%;max-width:760px;max-height:100%;border-radius:24px 24px 0 0;padding:18px 16px max(18px,env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain}
+.sheet h3{font-size:17px}
+.sheet>.row small{font-size:12px}
+.sheet-note{font-size:12px;line-height:1.5;margin:10px 0 14px}
+.event-row{display:flex;align-items:center;gap:10px;border:1px solid var(--line,#e1e9f1);border-radius:16px;padding:12px;margin-top:10px;min-width:0}
+.event-row strong{display:block;font-size:14px;margin:6px 0;overflow-wrap:anywhere}
+.event-row small{font-size:12px}
+.event-row .tag{display:inline-block;font-size:10px;padding:4px 7px;white-space:normal}
+.event-info{flex:1;min-width:0;background:transparent;text-align:left;padding:0}
+.close{border-radius:50%;width:40px;height:40px;flex-shrink:0;background:var(--background,#f6f9fc);font-size:23px}
+
+@container weather (min-height:210px){.stats{display:flex}
+.forecast-card{flex-basis:78px;padding:9px 6px}
+.forecast-card b{font-size:16px}
 }
 
-/* Bỏ những dòng phụ lặp lại */
-.hero .subtitle,
-.account,
-.night > .row small,
-.trip p {
-  display: none;
+/* Unfolded phones and tablets get two columns within the same portrait-locked app. */
+@media(min-width:700px){.app{padding:16px 20px;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"header header" "hero weather" "night night" "trip trip";grid-template-rows:52px repeat(2,minmax(230px,1fr)) minmax(58px,auto)}
+.header{padding:6px 12px}
+.identity strong{font-size:17px}
+.hero,.weather{min-height:230px}
+.hero h2{font-size:clamp(20px,2.4vw,28px)}
+.night{min-height:230px}
+.night h3{font-size:18px;line-height:23px}
+.night>.row{min-height:40px}
+.event-track{min-height:174px;gap:16px}
+.event{flex-basis:calc((100% - 16px)/2)}
+.event-content strong{font-size:16px;line-height:21px}
+.trip strong{font-size:16px}
+.trip .cta{font-size:14px}
+.sheet{border-radius:24px 24px 0 0}
 }
 
-.identity small {
-  font-size: 11px;
+@media(max-width:359px){.app{padding:8px;gap:8px}
+.header{gap:6px;padding-inline:5px}
+.identity strong{font-size:14px}
+.hero-content{left:10px;right:10px}
+.hero h2{font-size:17px}
+.banner-controls{gap:6px}
+.arrows button{width:30px}
+.hero-open{padding-inline:9px;font-size:11px}
+.dots{gap:3px}
+.dots button.active{width:12px}
+.event{flex-basis:94%}
+.event-content{left:10px;right:10px;gap:6px}
+.navigate{padding-inline:9px;font-size:11px}
+.trip{padding-inline:10px}
+.trip strong{font-size:13px}
+.trip .cta{padding-inline:9px;font-size:11px}
+.event-row{padding:9px;gap:7px}
 }
 
-.identity strong {
-  font-size: 14px;
-}
-
-.weather {
-  padding: 8px;
-  gap: 4px;
-}
-
-.weather h3,
-.night h3 {
-  font-size: 14px;
-}
-
-.condition {
-  font-size: 11px;
-}
-
-.stats,
-.forecast-header,
-.switch button {
-  font-size: 11px;
-}
-
-.forecast-header .refresh {
-  font-size: 11px;
-  white-space: nowrap;
-  padding: 3px 0;
-}
-
-/* Dự báo giờ và tuần đều vuốt ngang */
-.forecast-track {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  min-height: 0;
-  flex-shrink: 0;
-}
-
-.forecast-track::-webkit-scrollbar {
-  display: none;
-}
-
-.forecast-card {
-  flex: 0 0 68px;
-  background: #ffffff20;
-  border-radius: 9px;
-  padding: 6px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  text-align: center;
-  font-size: 11px;
-}
-
-.forecast-card strong,
-.forecast-card small {
-  font-size: 11px;
-  line-height: 14px;
-}
-
-.forecast-card b {
-  font-size: 14px;
-  line-height: 18px;
-}
-
-.event-content strong {
-  font-size: 13px;
-  line-height: 17px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.event-content small {
-  font-size: 11px;
-}
-
-.event .tag {
-  font-size: 10px;
-}
-
-.navigate,
-.hero-open {
-  font-size: 11px;
-}
-
-.trip strong {
-  font-size: 13px;
-}
-
-.trip .cta {
-  font-size: 11px;
-}
-
-/* Màn hình thấp: giảm nội dung phụ */
-@media (max-height: 600px) {
-  .weather {
-    padding: 8px;
-    gap: 4px;
-  }
-
-  .weather .stats {
-    display: none;
-  }
-
-  .condition {
-    font-size: 10px;
-  }
-
-  .forecast-card {
-    padding: 4px;
-    gap: 2px;
-  }
-
-  .temperature {
-    font-size: 24px;
-  }
-}
-
-@media (max-height: 500px) {
-  .app,
-  .app.week {
-    padding: 6px 10px;
-    gap: 6px;
-    grid-template-rows:
-      40px
-      repeat(3, minmax(0, 1fr))
-      40px;
-  }
-
-  .weather .condition,
-  .weather-small {
-    display: none;
-  }
-
-  .forecast-card {
-    padding: 3px;
-    gap: 1px;
-  }
-
-  .weather h3,
-  .night h3 {
-    font-size: 12px;
-  }
-
-  .forecast-header {
-    font-size: 10px;
-  }
-
-  .weather {
-    padding: 6px;
-  }
-
-  .temperature {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .switch button {
-    line-height: 14px;
-    padding: 2px 6px;
-  }
-}
-  .header > .icon:not(.avatar-button) {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: var(--pale, #ecfdf5);
-}
-
-.header .icon svg {
-  width: 21px;
-  height: 21px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  pointer-events: none;
-}
 </style>
 </head>
 
@@ -442,17 +202,12 @@ h2,h3,p{margin:0}
       <span class="rating" id="hero-rating"></span>
     </div>
 
-    <div class="arrows row">
-      <button data-action="prev" aria-label="Banner trước">‹</button>
-      <button data-action="next" aria-label="Banner tiếp">›</button>
-    </div>
-
-    <div class="hero-content">
+<div class="hero-content">
       <h2 id="hero-name">Khám phá Đà Nẵng</h2>
       <p class="subtitle cut" id="hero-subtitle"></p>
 
       <div class="hero-bottom row">
-        <div class="dots" id="dots"></div>
+        <div class="banner-controls"><div class="arrows"><button data-action="prev" aria-label="Banner trước">‹</button><button data-action="next" aria-label="Banner tiếp">›</button></div><div class="dots" id="dots"></div></div>
         <button class="hero-open" data-action="hero-open">
           Khám phá ngay →
         </button>

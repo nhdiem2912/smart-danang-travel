@@ -221,6 +221,8 @@ avatar,
       style={{
         flex: 1,
         paddingTop: insets.top,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
         backgroundColor: c.background,
       }}
     >
@@ -228,7 +230,7 @@ avatar,
         ref={webview}
         source={{ html: HOME_HTML }}
         originWhitelist={['about:blank']}
-        scrollEnabled={false}
+        scrollEnabled
         bounces={false}
         onLoadEnd={() => {
           webview.current?.injectJavaScript(script);
