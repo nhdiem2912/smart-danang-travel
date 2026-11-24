@@ -47,6 +47,8 @@ type ChatRequest = {
 };
 
 const ERRORS: Record<string, string> = {
+    AI_WARMING:
+    'Máy chủ AI vẫn đang khởi động. Bạn hãy chờ một chút rồi bấm Thử lại.',
   DAILY_LIMIT:
     'Trợ lý đã hết lượt phục vụ hôm nay. Vui lòng quay lại sau.',
   RATE_LIMIT:
@@ -167,9 +169,9 @@ export default function AssistantScreen() {
     const abort = new AbortController();
     controller.current = abort;
 
-    const timer = setTimeout(
+       const timer = setTimeout(
       () => abort.abort(),
-      75000,
+      125000,
     );
 
     try {
@@ -493,7 +495,7 @@ export default function AssistantScreen() {
                       fontSize: 12,
                     }}
                   >
-                    Đang trả lời…
+                    Đang kết nối và chờ AI…
                   </Text>
 
                   <Text
@@ -502,7 +504,7 @@ export default function AssistantScreen() {
                       fontSize: 10,
                     }}
                   >
-                    Lần đầu kết nối có thể mất lâu hơn.
+                    Máy chủ có thể cần khởi động. Lần đầu có thể chờ khoảng 1–2 phút.
                   </Text>
                 </View>
               </View>
