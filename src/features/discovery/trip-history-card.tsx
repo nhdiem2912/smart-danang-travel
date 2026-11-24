@@ -28,17 +28,15 @@ import {
   type TripArchive,
 } from './trip-history-api';
 
-import {
-  Action,
-  s,
-  Sheet,
-} from './ui';
+import { Action, Sheet, useDiscoveryUI } from './ui';
 
 export function TripHistoryCard({
   compact = false,
 }: {
   compact?: boolean;
 }) {
+  const { s } = useDiscoveryUI();
+
 
   const { user } = useAccount();
 
@@ -156,6 +154,8 @@ function HistorySheet({
   uid: string;
   close: () => void;
 }) {
+  const { s } = useDiscoveryUI();
+
   const [trips, setTrips] =
     useState<TripArchive[]>([]);
 

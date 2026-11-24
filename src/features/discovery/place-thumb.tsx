@@ -1,3 +1,4 @@
+import { useDiscoveryUI } from '@/features/discovery/ui';
 import { Image } from 'expo-image';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
@@ -23,6 +24,8 @@ export function PlaceThumb({
   place: Place;
   size?: number;
 }) {
+  const { C } = useDiscoveryUI();
+
   const [failedUri, setFailedUri] = useState<string | null>(null);
 
   if (place.image_url && place.image_url !== failedUri) {
@@ -36,7 +39,7 @@ export function PlaceThumb({
           width: size,
           height: size,
           borderRadius: 12,
-          backgroundColor: '#E4F3EC',
+          backgroundColor: C.pale,
         }}
       />
     );
@@ -49,7 +52,7 @@ export function PlaceThumb({
         width: size,
         height: size,
         borderRadius: 12,
-        backgroundColor: '#E4F3EC',
+        backgroundColor: C.pale,
         justifyContent: 'center',
         alignItems: 'center',
         gap: 4,
@@ -60,7 +63,7 @@ export function PlaceThumb({
       </Text>
 
       {size > 60 && (
-        <Text style={{ fontSize: 8, color: '#639581' }}>
+        <Text style={{ fontSize: 8, color: C.muted }}>
           {PLACE_CATEGORIES[place.category]}
         </Text>
       )}

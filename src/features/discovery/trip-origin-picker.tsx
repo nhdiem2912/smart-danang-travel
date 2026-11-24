@@ -35,7 +35,7 @@ import {
   type RoutePoint,
 } from './trip-routing';
 
-import { Action, C, s } from './ui';
+import { Action, useDiscoveryUI } from './ui';
 
 type Props = {
   value: TripSettings;
@@ -54,6 +54,8 @@ export function TripOriginPicker({
   onChange,
   onBusyChange,
 }: Props) {
+  const { C, s } = useDiscoveryUI();
+
     const { places } = usePlacesCatalog();
   const [query, setQuery] = useState('');
 

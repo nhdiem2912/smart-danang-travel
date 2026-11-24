@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 
 import type { DraftStop, TravelMode } from './trip-model';
-import { Action, s } from './ui';
+import { Action, useDiscoveryUI } from './ui';
 
 export default function TripGuidance({
   onClose,
@@ -10,6 +10,8 @@ export default function TripGuidance({
   travelMode: TravelMode;
   onClose: () => void;
 }) {
+  const { s } = useDiscoveryUI();
+
   return (
     <View
       style={{

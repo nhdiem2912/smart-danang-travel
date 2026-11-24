@@ -42,7 +42,7 @@ export function Action({
   danger?: boolean;
   style?: StyleProp<ViewStyle>;
 }) { 
-     const { s } = useDiscoveryUI();
+     const { C, s } = useDiscoveryUI();
   return (
     <Pressable
       accessibilityRole="button"
@@ -51,14 +51,8 @@ export function Action({
       onPress={onPress}
       style={({ pressed }) => [
         s.button,
-               solid && {
-          backgroundColor: '#087F61',
-          borderColor: '#087F61',
-        },
-        danger && {
-          backgroundColor: '#FFF1F2',
-          borderColor: '#FECDD3',
-        },
+               solid && { backgroundColor: C.deep, borderColor: C.deep },
+        danger && { backgroundColor: C.dangerBg, borderColor: C.danger },
         (pressed || disabled) && { opacity: 0.55 },
         style,
       ]}
@@ -66,8 +60,8 @@ export function Action({
       <Text
         style={[
           s.buttonText,
-          solid && { color: '#FFF' },
-          danger && { color: '#E65565' },
+          solid && { color: C.onAccent },
+          danger && { color: C.danger },
         ]}
       >
         {label}
@@ -319,33 +313,42 @@ export const s = StyleSheet.create({
     backgroundColor: C.pale,
   },
 });
-export function useDiscoveryUI() {
-  const colors = useSettingsColors();
+// Discovery theme fix v1
+export function discoveryUIForColors(
+  colors: ReturnType<typeof useSettingsColors>,
+) {
+  const dark = colors.background === '#0C1421';
 
-  return useMemo(() => ({
-    C: {
-      ...C,
-      bg: colors.background,
-      ink: colors.text,
-      muted: colors.muted,
-      deep: colors.green,
-      pale: colors.pale,
-      line: colors.line,
-    },
+  const palette = {
+    ...C,
+    isDark: dark,
+    bg: colors.background,
+    background: colors.background,
+    card: colors.card,
+    input: colors.input,
+    ink: colors.text,
+    text: colors.text,
+    muted: colors.muted,
+    green: colors.green,
+    deep: colors.green,
+    pale: colors.pale,
+    line: colors.line,
+    danger: colors.danger,
+    overlay: colors.overlay,
+    onAccent: dark ? '#09251B' : '#FFFFFF',
+    warning: dark ? '#F5CC77' : '#9A6200',
+    warningBg: dark ? '#392D19' : '#FFFBEE',
+    successBg: dark ? '#15382D' : '#F1FCF6',
+    dangerBg: dark ? '#40232D' : '#FFF1F2',
+  };
+
+  return {
+    C: palette,
     s: {
       ...s,
-      title: [
-        s.title,
-        { color: colors.text },
-      ],
-      muted: [
-        s.muted,
-        { color: colors.muted },
-      ],
-      label: [
-        s.label,
-        { color: colors.muted },
-      ],
+      title: [s.title, { color: colors.text }],
+      muted: [s.muted, { color: colors.muted }],
+      label: [s.label, { color: colors.muted }],
       card: [
         s.card,
         {
@@ -372,9 +375,10 @@ export function useDiscoveryUI() {
         s.buttonText,
         { color: colors.green },
       ],
-      error: [
-        s.error,
-        { color: colors.danger },
+      error: [s.error, { color: colors.danger }],
+      backdrop: [
+        s.backdrop,
+        { backgroundColor: colors.overlay },
       ],
       sheet: [
         s.sheet,
@@ -405,8 +409,20 @@ export function useDiscoveryUI() {
       ],
       pillActive: [
         s.pillActive,
-        { backgroundColor: colors.pale },
+        {
+          backgroundColor: colors.pale,
+          borderColor: colors.green,
+        },
       ],
     },
-  }), [colors]);
+  };
+}
+
+export function useDiscoveryUI() {
+  const colors = useSettingsColors();
+
+  return useMemo(
+    () => discoveryUIForColors(colors),
+    [colors],
+  );
 }

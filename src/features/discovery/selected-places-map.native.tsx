@@ -1,3 +1,4 @@
+import { useDiscoveryUI } from '@/features/discovery/ui';
 import {
   Camera,
   GeoJSONSource,
@@ -37,6 +38,8 @@ export default function SelectedPlacesMap({
   totalStops = places.length,
   onError,
 }: OverviewMapProps) {
+  const { C } = useDiscoveryUI();
+
   const camera = useRef<CameraRef | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -224,13 +227,13 @@ export default function SelectedPlacesMap({
       collapsable={false}
       style={{
         flex: 1,
-        backgroundColor: '#EAF2F4',
+        backgroundColor: C.input,
       }}
     >
       <Map
         style={{ flex: 1 }}
         androidView="texture"
-        mapStyle="https://tiles.openfreemap.org/styles/liberty"
+        mapStyle={C.isDark ? 'https://tiles.openfreemap.org/styles/dark' : 'https://tiles.openfreemap.org/styles/liberty'}
         attribution
         onLayout={event => {
           const {

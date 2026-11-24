@@ -13,7 +13,7 @@ import {
 
 import { formatTravelTime } from './trip-metrics';
 import type { LegResult } from './trip-model';
-import { Action, C, s } from './ui';
+import { Action, useDiscoveryUI } from './ui';
 import {
   useTripDraft,
 } from './use-trip-draft';
@@ -33,6 +33,8 @@ export function TripResultsSheet({
   onContinue,
   onClose,
 }: Props) {
+  const { C, s } = useDiscoveryUI();
+
   const { draft } = useTripDraft();
   const [rating, setRating] = useState(draft?.review?.rating ?? 0);
   const [note, setNote] = useState(draft?.review?.note ?? '');
@@ -122,7 +124,7 @@ export function TripResultsSheet({
             width: '100%',
             maxWidth: 440,
             alignSelf: 'center',
-            backgroundColor: '#FFFFFF',
+            backgroundColor: C.card,
             borderRadius: 24,
             overflow: 'hidden',
           }}

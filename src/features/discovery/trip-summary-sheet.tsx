@@ -30,7 +30,7 @@ import { TripOriginPicker } from './trip-origin-picker';
 import { currentPlan } from './trip-plan';
 import { pendingDayView } from './trip-summary-view';
 import { vietnamClock } from './trip-time-policy';
-import { Action, s, Sheet } from './ui';
+import { Action, Sheet, useDiscoveryUI } from './ui';
 import {
   tripActions,
   useTripDraft,
@@ -45,6 +45,9 @@ export function TripSummarySheet({
   close,
   onEdit,
 }: Props) {
+  const { C, s } = useDiscoveryUI();
+  const st = createSt(C);
+
   const { draft, saving } = useTripDraft();
   const c = useSettingsColors();
 
@@ -763,7 +766,7 @@ export function TripSummarySheet({
   );
 }
 
-const st = StyleSheet.create({
+const createSt = (C: ReturnType<typeof useDiscoveryUI>['C']) => StyleSheet.create({
   footer: {
     flexDirection: 'row',
     gap: 8,
@@ -799,7 +802,7 @@ const st = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: '#64748B',
+    color: C.muted,
   },
   stop: {
     flexDirection: 'row',

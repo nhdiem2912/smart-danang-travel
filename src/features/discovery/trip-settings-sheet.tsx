@@ -21,17 +21,15 @@ import {
     useTripDraft,
 } from './use-trip-draft';
 
-import {
-    Action,
-    s,
-    Sheet,
-} from './ui';
+import { Action, Sheet, useDiscoveryUI } from './ui';
 
 export function TripSettingsSheet({
   close,
 }: {
   close: () => void;
 }) {
+  const { s } = useDiscoveryUI();
+
   const {
     draft,
     saving,

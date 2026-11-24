@@ -50,12 +50,7 @@ import { PlaceThumb } from '@/features/discovery/place-thumb';
 import type { DraftStop } from '@/features/discovery/trip-model';
 import { TripSummarySheet } from '@/features/discovery/trip-summary-sheet';
 import { isUpcomingStop } from '@/features/discovery/trip-summary-view';
-import {
-  Action,
-  C,
-  Loading,
-  s,
-} from '@/features/discovery/ui';
+import { Action, Loading, useDiscoveryUI } from '@/features/discovery/ui';
 import {
   tripStore,
   useTripDraft,
@@ -75,6 +70,9 @@ const categories: [PlaceCategory | 'all', string][] = [
 ];
 
 export default function ExploreScreen() {
+  const { C, s } = useDiscoveryUI();
+  const st = createSt(C);
+
   const params = useLocalSearchParams<{
     placeId?: string;
     openToken?: string;
@@ -177,11 +175,7 @@ export default function ExploreScreen() {
         placeId: undefined,
         openToken: undefined,
       });
-    }, [
-      params.placeId,
-      params.openToken,
-      places,
-    ]),
+    }, [params.placeId, params.openToken, places, setAddPlace, setSummary, setCategory, setActiveFilters, setQuery, setLimit, setDetails]),
   );
 
   const deferredQuery =
@@ -289,7 +283,7 @@ export default function ExploreScreen() {
         <Text
           style={{
             fontSize: 23,
-            color: '#94A3B8',
+            color: C.muted,
           }}
         >
           ⌕
@@ -303,7 +297,7 @@ export default function ExploreScreen() {
             setLimit(20);
           }}
           placeholder="Tìm địa điểm, khách sạn, nhà hàng, bãi biển"
-          placeholderTextColor="#94A3B8"
+          placeholderTextColor={C.muted}
           style={st.searchInput}
         />
 
@@ -401,7 +395,7 @@ export default function ExploreScreen() {
                   color:
                     category === id
                       ? C.deep
-                      : '#596579',
+                      : C.muted,
                 }}
               >
                 {label}
@@ -625,9 +619,9 @@ export default function ExploreScreen() {
                       },
                       selected.has(item.id) && {
                         backgroundColor:
-                          '#334155',
+                          C.ink,
                         borderColor:
-                          '#334155',
+                          C.ink,
                       },
                     ]}
                     onPress={() =>
@@ -738,7 +732,7 @@ export default function ExploreScreen() {
   );
 }
 
-const st = StyleSheet.create({
+const createSt = (C: ReturnType<typeof useDiscoveryUI>['C']) => StyleSheet.create({
   content: {
     padding: 14,
     paddingBottom: 18,
@@ -751,7 +745,7 @@ const st = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#FFF',
+    backgroundColor: C.card,
     borderWidth: 1,
     borderColor: C.line,
     borderRadius: 16,
@@ -775,8 +769,8 @@ const st = StyleSheet.create({
     height: 16,
     paddingHorizontal: 3,
     borderRadius: 8,
-    backgroundColor: '#087F61',
-    color: '#FFF',
+    backgroundColor: C.deep,
+    color: C.onAccent,
     fontSize: 9,
     fontWeight: '800',
     textAlign: 'center',
@@ -800,7 +794,7 @@ const st = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 10,
     padding: 11,
-    backgroundColor: '#FFF',
+    backgroundColor: C.card,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: C.line,
@@ -809,7 +803,7 @@ const st = StyleSheet.create({
   rating: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#D99A20',
+    color: C.warning,
   },
 
   footer: {
@@ -817,7 +811,7 @@ const st = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 16,
     paddingHorizontal: 14,
-    backgroundColor: '#FFFFFFF2',
+    backgroundColor: C.card,
     borderTopWidth: 1,
     borderTopColor: C.line,
     width: '100%',

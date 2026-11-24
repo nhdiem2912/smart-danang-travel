@@ -51,14 +51,11 @@ import {
   useTripDraft,
 } from '@/features/discovery/use-trip-draft';
 
-import {
-  Action,
-  C,
-  Loading,
-  s,
-} from '@/features/discovery/ui';
+import { Action, Loading, useDiscoveryUI } from '@/features/discovery/ui';
 
 export default function ItineraryScreen() {
+  const { C, s } = useDiscoveryUI();
+
   usePlacesCatalog();
     const startAlive = useRef(false);
 
@@ -386,7 +383,7 @@ if (session) {
                     fontWeight: '700',
                     color:
                       activeDay === index
-                        ? '#FFF'
+                        ? C.onAccent
                         : C.muted,
                   }}
                 >

@@ -14,7 +14,7 @@ import {
   type StopSchedule
 } from './trip-model';
 
-import { Action, s } from './ui';
+import { Action, useDiscoveryUI } from './ui';
 
 type Props = {
   stop: DraftStop;
@@ -39,6 +39,8 @@ export function TripStopCard({
   onCheckIn,
   onCancel,
 }: Props) {
+  const { C, s } = useDiscoveryUI();
+
   const place = findPlaceById(stop.placeId);
   const schedule =
     plannedSchedule ??
@@ -59,16 +61,16 @@ export function TripStopCard({
   const active = !!stop.progress;
 
   const color = active
-    ? '#D58208'
+    ? C.warning
     : stop.completed
-      ? '#168267'
-      : '#536B83';
+      ? C.deep
+      : C.muted;
 
   const background = active
-    ? '#FFFBEE'
+    ? C.warningBg
     : stop.completed
-      ? '#F1FCF6'
-      : '#F6F8FC';
+      ? C.successBg
+      : C.input;
 
     const wanted =
     stop.visitMinutes ??
@@ -85,7 +87,7 @@ export function TripStopCard({
     <View
       style={{
         borderWidth: 1,
-        borderColor: active ? '#F1BE51' : '#DFE8EF',
+        borderColor: active ? C.warning : C.line,
         borderRadius: 15,
         backgroundColor: background,
         overflow: 'hidden',
@@ -138,8 +140,8 @@ export function TripStopCard({
               minHeight: 38,
               marginTop: 8,
               backgroundColor: active
-                ? '#F6D389'
-                : '#DCE6EE',
+                ? C.warning
+                : C.line,
             }}
           />
         </View>
@@ -181,7 +183,7 @@ export function TripStopCard({
             >
               <Text
                 style={{
-                  color: '#8593A4',
+                  color: C.muted,
                   fontSize: 17,
                 }}
               >
@@ -197,8 +199,8 @@ export function TripStopCard({
               paddingHorizontal: 7,
               paddingVertical: 3,
               backgroundColor: active
-                ? '#FFF0C7'
-                : '#E6EEF3',
+                ? C.warningBg
+                : C.input,
             }}
           >
             <Text
@@ -285,7 +287,7 @@ export function TripStopCard({
       <View
         style={{
           borderTopWidth: 1,
-          borderTopColor: '#E1E8ED',
+          borderTopColor: C.line,
           padding: 10,
           gap: 8,
         }}

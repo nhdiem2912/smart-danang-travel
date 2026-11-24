@@ -9,12 +9,7 @@ import {
     View,
 } from 'react-native';
 
-import {
-    Action,
-    C,
-    s,
-    Sheet,
-} from './ui';
+import { Action, Sheet, useDiscoveryUI } from './ui';
 
 import {
     tripActions,
@@ -47,6 +42,8 @@ export function TripCalendarSheet({
   close: () => void;
   onSaved: () => void;
 }) {
+  const { C, s } = useDiscoveryUI();
+
   const {
     draft,
     saving,
@@ -347,7 +344,7 @@ export function TripCalendarSheet({
                   style={{
                     color:
                       active
-                        ? '#FFF'
+                        ? C.onAccent
                         : C.ink,
                   }}
                 >

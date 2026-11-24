@@ -1,3 +1,4 @@
+import { useDiscoveryUI } from '@/features/discovery/ui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useMemo, useRef, useState, type ComponentProps, type ReactNode } from 'react';
 import {
@@ -11,7 +12,6 @@ import {
 } from './place-filters';
 import { getTripLocation } from './trip-location';
 
-const FILTER_COLORS = { background: '#F7FAFE', card: '#FFFFFF', text: '#334155', muted: '#64748B', line: '#E2E8F0', input: '#F1F5F9', green: '#087F61', pale: '#ECFDF5', danger: '#DC2626' };
 
 type IconName = ComponentProps<typeof Ionicons>['name'];
 
@@ -19,7 +19,10 @@ type IconName = ComponentProps<typeof Ionicons>['name'];
 function Chip({ label, active, disabled = false, onPress }: {
   label: string; active: boolean; disabled?: boolean; onPress: () => void;
 }) {
-  const c = FILTER_COLORS;
+  const { C } = useDiscoveryUI();
+  const st = createSt(C);
+
+  const { C: c } = useDiscoveryUI();
   return <Pressable accessibilityRole="button" accessibilityState={{ selected: active, disabled }}
     disabled={disabled} onPress={onPress} style={[st.chip, {
       borderColor: active ? c.green : c.line, backgroundColor: active ? c.pale : c.card,
@@ -31,7 +34,10 @@ function Chip({ label, active, disabled = false, onPress }: {
 function Section({ icon, tint, title, badge, children }: {
   icon: IconName; tint: string; title: string; badge?: string; children: ReactNode;
 }) {
-  const c = FILTER_COLORS;
+  const { C } = useDiscoveryUI();
+  const st = createSt(C);
+
+  const { C: c } = useDiscoveryUI();
   return <View style={[st.section, { backgroundColor: c.card, borderColor: c.line }]}>
     <View style={st.sectionHeader}>
       <Ionicons name={icon} size={15} color={tint} />
@@ -45,7 +51,7 @@ function RangeControl({ value, min, max, step, onChange, label, disabled = false
   value: number; min: number; max: number; step: number; onChange: (value: number) => void;
   label: string; disabled?: boolean;
 }) {
-  const c = FILTER_COLORS;
+  const { C: c } = useDiscoveryUI();
   const [width, setWidth] = useState(0);
   const ratio = Math.max(0, Math.min(1, (value - min) / (max - min)));
   function changeFromTouch(event: GestureResponderEvent) {
@@ -90,7 +96,10 @@ export function AdvancedPlaceFiltersSheet({
   onApply: (filters: DiscoveryFilters) => void;
   close: () => void;
 }) {
-  const c = FILTER_COLORS;
+  const { C } = useDiscoveryUI();
+  const st = createSt(C);
+
+  const { C: c } = useDiscoveryUI();
   const insets = useSafeAreaInsets();
 const [draft, setDraft] = useState(
   () => copyDiscoveryFilters(initialFilters),
@@ -310,7 +319,7 @@ const [areasOpen, setAreasOpen] = useState(false);  const [locating, setLocating
           <Pressable disabled={Boolean(validationError) || locating} accessibilityRole="button"
             onPress={() => { const message = discoveryFilterError(draft); if (message) { setError(message); return; } onApply(copyDiscoveryFilters(draft)); }}
             style={[st.apply, { opacity: validationError || locating ? 0.45 : 1 }]}>
-            <Text style={{ color: '#FFF', fontWeight: '800', fontSize: 12 }}>Áp dụng bộ lọc{total === null ? '' : ` · ${total} điểm`}</Text>
+            <Text style={{ color: C.onAccent, fontWeight: '800', fontSize: 12 }}>Áp dụng bộ lọc{total === null ? '' : ` · ${total} điểm`}</Text>
           </Pressable>
         </View>
       </View>
@@ -318,7 +327,7 @@ const [areasOpen, setAreasOpen] = useState(false);  const [locating, setLocating
   </Modal>;
 }
 
-const st = StyleSheet.create({
+const createSt = (C: ReturnType<typeof useDiscoveryUI>['C']) => StyleSheet.create({
   areaSelect: {
   minHeight: 44,
   paddingHorizontal: 12,
@@ -344,5 +353,5 @@ areaOption: {
   gps: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6, padding: 6 },
   footer: { flexDirection: 'row', gap: 9, padding: 13, borderTopWidth: 1 },
   reset: { borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, justifyContent: 'center' },
-  apply: { flex: 1, borderRadius: 12, paddingHorizontal: 10, paddingVertical: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: '#087F61' },
+  apply: { flex: 1, borderRadius: 12, paddingHorizontal: 10, paddingVertical: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: C.deep },
 });

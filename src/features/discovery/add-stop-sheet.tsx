@@ -33,12 +33,7 @@ import {
   placeSlotError,
 } from './trip-time-policy';
 
-import {
-  Action,
-  C,
-  s,
-  Sheet,
-} from './ui';
+import { Action, Sheet, useDiscoveryUI } from './ui';
 
 import {
   tripActions,
@@ -58,6 +53,8 @@ export function AddStopSheet({
   onSaved: () => void;
   onDuplicate?: () => void;
 }) {
+  const { C, s } = useDiscoveryUI();
+
   const {
     draft,
     saving,
@@ -448,7 +445,7 @@ const slotError = (
             width: 30,
             height: 30,
             borderRadius: 10,
-            backgroundColor: '#E8F5EF',
+            backgroundColor: C.pale,
             alignItems: 'center',
             justifyContent: 'center',
           }}
