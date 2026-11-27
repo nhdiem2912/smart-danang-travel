@@ -3,7 +3,7 @@ import {
   Camera,
   GeoJSONSource,
   Layer,
-  Map,
+  Map as MapView,
   Marker,
   type CameraRef,
 } from '@maplibre/maplibre-react-native';
@@ -15,6 +15,7 @@ import {
   useState,
 } from 'react';
 
+import type { Place } from '@/data/place.types';
 import type { Feature, LineString } from 'geojson';
 import { Text, View } from 'react-native';
 
@@ -64,6 +65,22 @@ export default function SelectedPlacesMap({
         item.place.coordinates_valid &&
         validRoutePoint(item.place),
     );
+
+  // Route points keep every visit; a shared location shows all visit numbers.
+  const groupedPins = new Map<string, { place: Place; numbers: number[] }>();
+
+  for (const pin of pins) {
+    const existing = groupedPins.get(pin.place.id);
+
+    if (existing) {
+      existing.numbers.push(pin.number);
+    } else {
+      groupedPins.set(pin.place.id, {
+        place: pin.place,
+        numbers: [pin.number],
+      });
+    }
+  }
 
   const points = [
     ...(
@@ -230,7 +247,7 @@ export default function SelectedPlacesMap({
         backgroundColor: C.input,
       }}
     >
-      <Map
+      <MapView
         style={{ flex: 1 }}
         androidView="texture"
         mapStyle={C.isDark ? 'https://tiles.openfreemap.org/styles/dark' : 'https://tiles.openfreemap.org/styles/liberty'}
@@ -338,10 +355,10 @@ export default function SelectedPlacesMap({
             </Marker>
           )}
 
-        {pins.map(({ place, number }) => (
+        {[...groupedPins.values()].map(({ place, numbers: visitNumbers }) => (
           <Marker
-            key={`${place.id}-${number}`}
-            id={`trip-place-${number}`}
+            key={place.id}
+            id={`trip-place-${visitNumbers[0]}`}
             lngLat={[
               place.longitude,
               place.latitude,
@@ -349,7 +366,7 @@ export default function SelectedPlacesMap({
           >
             <View
               accessibilityLabel={
-                `${number}. ${place.name}`
+                `${visitNumbers.join(', ')}. ${place.name}`
               }
               style={{
                 minWidth: 30,
@@ -370,12 +387,12 @@ export default function SelectedPlacesMap({
                   fontSize: 13,
                 }}
               >
-                {number}
+                {visitNumbers.join(', ')}
               </Text>
             </View>
           </Marker>
         ))}
-      </Map>
+      </MapView>
 
       <Text
         style={{

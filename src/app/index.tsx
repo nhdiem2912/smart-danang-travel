@@ -33,6 +33,7 @@ import { useAppSettings } from '@/features/settings/settings-store';
 
 import { AddStopSheet } from '@/features/discovery/add-stop-sheet';
 import { PlaceDetailsSheet } from '@/features/discovery/place-details-sheet';
+import { displayDate } from '@/features/discovery/trip-model';
 import { hasActiveTrip } from '@/features/discovery/trip-time-policy';
 import { useTripDraft } from '@/features/discovery/use-trip-draft';
 
@@ -198,7 +199,7 @@ avatar,
 
     tripNote: active
       ? (
-          `${draft.startDate.split('-').reverse().join('/')} · ` +
+          `${displayDate(draft.startDate)} · ` +
           `${draft.stops.filter(stop => stop.completed).length} điểm đã hoàn thành`
         )
       : 'Chọn ngày → chọn địa điểm → tối ưu lộ trình',

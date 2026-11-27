@@ -9,6 +9,7 @@ import {
     View,
 } from 'react-native';
 
+import { displayDate } from './trip-model';
 import { Action, Sheet, useDiscoveryUI } from './ui';
 
 import {
@@ -316,7 +317,7 @@ export function TripCalendarSheet({
                 key={index}
                 disabled={disabled}
                 accessibilityRole="button"
-                accessibilityLabel={date}
+                accessibilityLabel={displayDate(date)}
                 accessibilityState={{
                   selected: active,
                   disabled,
@@ -357,9 +358,9 @@ export function TripCalendarSheet({
       </View>
 
       <Text style={s.title}>
-        {start || 'Ngày bắt đầu'}
+        {start ? displayDate(start) : 'Ngày bắt đầu'}
         {' → '}
-        {end || 'Ngày kết thúc'}
+        {end ? displayDate(end) : 'Ngày kết thúc'}
       </Text>
 
       <Text style={s.muted}>

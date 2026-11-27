@@ -6,8 +6,10 @@ import {
   useSyncExternalStore,
 } from 'react';
 import {
+  DUPLICATE_STOP_MESSAGE,
   isValidDate,
   sortedStops,
+  stopSelectionKey,
   type DraftStop,
   type TripDraft,
   type TripSettings,
@@ -144,21 +146,15 @@ export const tripActions = {
         place.visit_duration_minutes,
       );
 
-      const duplicate =
-        draft.stops.some(
-          stop =>
-            stop.id !== input.id &&
-            stop.placeId ===
-              input.placeId &&
-            stop.dayIndex ===
-              input.dayIndex,
-        );
+      const selection = stopSelectionKey(input);
+      const duplicate = draft.stops.some(
+        stop =>
+          stop.id !== input.id &&
+          stopSelectionKey(stop) === selection,
+      );
 
       if (duplicate) {
-        throw new Error(
-          'Địa điểm đã có trong ngày này. ' +
-          'Hãy sửa điểm hiện có hoặc chọn ngày khác.',
-        );
+        throw new Error(DUPLICATE_STOP_MESSAGE);
       }
 
       const sameGroup =
@@ -422,7 +418,7 @@ export const tripActions = {
       dayCount > 14
     ) {
       throw new Error(
-        'Nhập ngày YYYY-MM-DD ' +
+        'Chọn ngày bắt đầu hợp lệ ' +
         'và số ngày từ 1 đến 14.',
       );
     }

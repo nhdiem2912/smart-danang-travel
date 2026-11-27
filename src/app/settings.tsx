@@ -44,6 +44,8 @@ import {
   type ThemeMode,
 } from '@/features/settings/settings-store';
 
+import { formatVietnameseDateTime } from '@/utils/date-format';
+
 import packageInfo from '../../package.json';
 
 type PanelName = 'theme' | 'language' | 'inbox';
@@ -760,15 +762,7 @@ export default function SettingsScreen() {
                             fontSize: 11,
                           }}
                         >
-                          {new Date(
-                            item.createdAt,
-                          ).toLocaleString(
-                            language,
-                            {
-                              timeZone:
-                                'Asia/Ho_Chi_Minh',
-                            },
-                          )}
+                          {formatVietnameseDateTime(item.createdAt)}
                         </Text>
                       </Pressable>
                     )}

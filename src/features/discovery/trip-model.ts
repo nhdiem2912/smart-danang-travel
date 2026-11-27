@@ -1,3 +1,5 @@
+import { formatVietnameseDate } from '@/utils/date-format';
+
 export const PERIODS = [
   { id: 'morning', label: 'Buổi sáng', icon: '🌅' },
   { id: 'noon', label: 'Buổi trưa', icon: '☀️' },
@@ -139,6 +141,20 @@ export type DraftStop = {
   };
 };
 
+export const DUPLICATE_STOP_MESSAGE =
+  'Địa điểm đã có trong buổi này của ngày đã chọn. ' +
+  'Hãy chọn buổi hoặc ngày khác.';
+
+export function stopSelectionKey(
+  stop: Pick<DraftStop, 'placeId' | 'dayIndex' | 'period'>,
+): string {
+  return JSON.stringify([
+    stop.dayIndex,
+    stop.period,
+    stop.placeId,
+  ]);
+}
+
 export type TripSettings = {
   startLabel: string;
   latitude: number | null;
@@ -214,9 +230,7 @@ export function dateForDay(
 }
 
 export function displayDate(value: string): string {
-  const [year, month, day] = value.split('-');
-
-  return `${day}/${month}/${year}`;
+  return formatVietnameseDate(value);
 }
 
 export function sortedStops(

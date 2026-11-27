@@ -22,7 +22,9 @@ import type {
 import {
   dateForDay,
   displayDate,
+  DUPLICATE_STOP_MESSAGE,
   PERIODS,
+  stopSelectionKey,
   type DraftStop,
   type Period,
   type TripDraft,
@@ -59,19 +61,34 @@ export function AddStopSheet({
     draft,
     saving,
   } = useTripDraft();
-const slotError = (
-  trip: TripDraft,
-  dayIndex: number,
-  selected: Period,
-  at: number,
-) =>
-  placeSlotError(
-    trip,
-    dayIndex,
-    selected,
-    place.opening_hours_raw,
-    at,
-  );
+  const slotError = (
+    trip: TripDraft,
+    dayIndex: number,
+    selected: Period,
+    at: number,
+    ignoredStopId: string | null | undefined = editing?.id,
+  ) => {
+    const selection = stopSelectionKey({
+      placeId: place.id,
+      dayIndex,
+      period: selected,
+    });
+
+    if (trip.stops.some(stop =>
+      stop.id !== ignoredStopId &&
+      stopSelectionKey(stop) === selection,
+    )) {
+      return DUPLICATE_STOP_MESSAGE;
+    }
+
+    return placeSlotError(
+      trip,
+      dayIndex,
+      selected,
+      place.opening_hours_raw,
+      at,
+    );
+  };
   const [now, setNow] = useState(
     () => Date.now(),
   );
@@ -104,15 +121,6 @@ const slotError = (
           },
           (_, index) => index,
         ).find(index => {
-          const alreadyAdded =
-            draft.stops.some(
-              stop =>
-                stop.placeId ===
-                  place.id &&
-                stop.dayIndex ===
-                  index,
-            );
-
           const available =
             PERIODS.some(
               period =>
@@ -124,10 +132,7 @@ const slotError = (
                 ),
             );
 
-          return (
-            !alreadyAdded &&
-            available
-          );
+          return available;
         }) ?? 0
       );
     },
@@ -213,6 +218,13 @@ const slotError = (
     period,
     now,
   );
+
+  const canAddAnother = Array.from(
+    { length: draft.dayCount },
+    (_, index) => index,
+  ).some(index => PERIODS.some(item =>
+    !slotError(draft, index, item.id, now, null),
+  ));
 
   async function submit() {
     try {
@@ -305,7 +317,7 @@ const slotError = (
           {editing && (
             <Action
               danger
-              label="Xóa địa điểm khỏi ngày này"
+              label="Xóa lượt ghé này"
               disabled={saving}
               onPress={() =>
                 void remove()
@@ -380,16 +392,10 @@ const slotError = (
 
       {editing && onDuplicate && (
         <Action
-          label="＋ Thêm điểm này ở ngày khác"
+          label="＋ Thêm lượt ghé ở buổi/ngày khác"
           onPress={onDuplicate}
           disabled={
-            saving ||
-            draft.stops.filter(
-              stop =>
-                stop.placeId ===
-                place.id,
-            ).length >=
-              draft.dayCount
+            saving || !canAddAnother
           }
         />
       )}
@@ -689,9 +695,9 @@ onPress={() => {
       />
 
       <Text style={s.muted}>
-        Một địa điểm chỉ xuất hiện một lần
-        trong mỗi ngày. Có thể chọn lại ở
-        ngày khác.
+        Có thể ghé lại cùng địa điểm trong ngày
+        ở các buổi khác nhau. Mỗi buổi chỉ thêm
+        một lần.
       </Text>
 
       {!!error && (

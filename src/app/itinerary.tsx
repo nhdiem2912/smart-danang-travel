@@ -25,7 +25,6 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { Place } from '@/data/place.types';
 import { findPlaceById } from '@/data/places.local';
 
 import { AddStopSheet } from '@/features/discovery/add-stop-sheet';
@@ -103,15 +102,13 @@ export default function ItineraryScreen() {
     [draft?.stops, activeDay],
   );
 
- const mapPlaces = stops
-  .map(stop =>
-    findPlaceById(stop.placeId),
-  )
-  .filter(
-    (place): place is Place =>
-      !!place &&
-      place.coordinates_valid,
-  );
+  const mapVisits = stops.flatMap((stop, index) => {
+    const place = findPlaceById(stop.placeId);
+
+    return place?.coordinates_valid
+      ? [{ place, number: index + 1 }]
+      : [];
+  });
 const [session, setSession] = useState<{
   stops: DraftStop[];
   travelMode: TravelMode;
@@ -428,14 +425,8 @@ if (session) {
             }}
           >
             <SelectedPlacesMap
-              places={mapPlaces}
-              numbers={mapPlaces.map(
-                place =>
-                  stops.findIndex(
-                    stop =>
-                      stop.placeId === place.id,
-                  ) + 1,
-              )}
+              places={mapVisits.map(visit => visit.place)}
+              numbers={mapVisits.map(visit => visit.number)}
               origin={
                 draft.settings.latitude !== null &&
                 draft.settings.longitude !== null

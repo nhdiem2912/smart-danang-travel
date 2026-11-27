@@ -3,9 +3,11 @@ import {
 } from './trip-metrics';
 
 import {
+  DUPLICATE_STOP_MESSAGE,
   emptyDraft,
   isValidDate,
   PERIODS,
+  stopSelectionKey,
   type TripDraft,
 } from './trip-model';
 
@@ -201,16 +203,14 @@ export function validateDraft(
 
     validateStopExtras(stop);
 
-    const selection =
-      `${stop.dayIndex}:${stop.placeId}`;
+    const selection = stopSelectionKey(stop);
 
-    if (
-      ids.has(stop.id) ||
-      selections.has(selection)
-    ) {
-      throw new Error(
-        'Địa điểm đã có trong ngày này.',
-      );
+    if (ids.has(stop.id)) {
+      throw new Error('Mã lượt ghé bị trùng.');
+    }
+
+    if (selections.has(selection)) {
+      throw new Error(DUPLICATE_STOP_MESSAGE);
     }
 
     ids.add(stop.id);
