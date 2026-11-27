@@ -17,7 +17,7 @@ h2,h3,p{margin:0}
 .muted{color:var(--muted,#718096)}
 
 /* The WebView owns its scroll area. Short screens keep readable cards instead of shrinking them. */
-.app{width:100%;height:100%;height:100dvh;max-width:1280px;margin:auto;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"header" "hero" "weather" "night" "trip";grid-template-rows:48px minmax(184px,1fr) minmax(200px,1fr) minmax(184px,1fr) minmax(52px,auto);gap:10px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;scroll-padding:12px;-webkit-overflow-scrolling:touch}
+.app{width:100%;height:100%;height:100dvh;max-width:1280px;margin:auto;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"header" "hero" "weather" "night" "trip";grid-template-rows:48px minmax(184px,1fr) minmax(max-content,1fr) minmax(184px,1fr) minmax(52px,auto);gap:10px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;scroll-padding:12px;-webkit-overflow-scrolling:touch}
 .app>*{min-width:0}
 .header{grid-area:header;display:flex;align-items:center;gap:10px;background:var(--card,#fff);border-radius:16px;padding:4px 8px}
 .icon{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:var(--pale,#ecfdf5);color:var(--green,#087f61);display:grid;place-items:center}
@@ -47,7 +47,7 @@ h2,h3,p{margin:0}
 .dots button{padding:0;width:6px;height:6px;background:#ffffff66;border-radius:6px}
 .dots button.active{width:16px;background:white}
 
-.weather{grid-area:weather;min-height:200px;padding:10px;border-radius:20px;background:linear-gradient(120deg,#0085c5,#0bb1df);color:white;display:flex;flex-direction:column;gap:4px;justify-content:space-between;container:weather / size}
+.weather{grid-area:weather;min-height:200px;min-width:0;padding:10px;border-radius:20px;background:linear-gradient(120deg,#0085c5,#0bb1df);color:white;display:flex;flex-direction:column;gap:4px;justify-content:space-between;container:weather / inline-size}
 .weather h3{font-size:15px}
 .condition{font-size:11px;line-height:15px;margin-top:3px}
 .temperature{font-size:30px;line-height:34px;font-weight:800}
@@ -58,13 +58,13 @@ h2,h3,p{margin:0}
 .switch button{font-size:12px;min-height:32px;padding:5px 9px;background:none;color:#e8f6ff;border-radius:8px;white-space:nowrap}
 .switch .active{background:white;color:#087fad}
 .weather button.refresh{background:none;color:#e8f6ff;font-size:12px;min-height:32px;padding:5px 3px;white-space:nowrap}
-.weather-update,.forecast-hint{font-size:10px;line-height:13px;color:#f0faff}
+.weather-update,.forecast-hint{font-size:10px;line-height:1.3;color:#f0faff}
 .forecast-card.current{outline:2px solid #fff;outline-offset:-2px;background:#ffffff38}
 .forecast-track{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;min-height:60px;flex-shrink:0;scroll-snap-type:x proximity}
 .forecast-track::-webkit-scrollbar{display:none}
-.forecast-card{flex:0 0 70px;scroll-snap-align:start;background:#ffffff20;border-radius:10px;padding:6px 4px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:center;font-size:12px}
-.forecast-card strong,.forecast-card small{font-size:11px;line-height:14px;white-space:nowrap}
-.forecast-card b{font-size:14px;line-height:18px;white-space:nowrap}
+.forecast-card{flex:0 0 auto;min-width:70px;scroll-snap-align:start;background:#ffffff20;border-radius:10px;padding:6px 4px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:center;font-size:12px}
+.forecast-card strong,.forecast-card small{font-size:11px;line-height:1.3;white-space:nowrap}
+.forecast-card b{font-size:14px;line-height:1.3;white-space:nowrap}
 
 .night{grid-area:night;display:flex;flex-direction:column;gap:8px;min-height:184px}
 .night>.row{min-height:36px}
@@ -102,13 +102,13 @@ h2,h3,p{margin:0}
 .event-info{flex:1;min-width:0;background:transparent;text-align:left;padding:0}
 .close{border-radius:50%;width:40px;height:40px;flex-shrink:0;background:var(--background,#f6f9fc);font-size:23px}
 
-@container weather (min-height:210px){.stats{display:flex}
-.forecast-card{flex-basis:78px;padding:9px 6px}
+@container weather (min-width:350px){.stats{display:flex;flex-wrap:wrap}
+.forecast-card{min-width:78px;padding:9px 6px}
 .forecast-card b{font-size:16px}
 }
 
 /* Unfolded phones and tablets get two columns within the same portrait-locked app. */
-@media(min-width:700px){.app{padding:16px 20px;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"header header" "hero weather" "night night" "trip trip";grid-template-rows:52px repeat(2,minmax(230px,1fr)) minmax(58px,auto)}
+@media(min-width:700px){.app{padding:16px 20px;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"header header" "hero weather" "night night" "trip trip";grid-template-rows:52px minmax(max-content,1fr) minmax(230px,1fr) minmax(58px,auto)}
 .header{padding:6px 12px}
 .identity strong{font-size:17px}
 .hero,.weather{min-height:230px}

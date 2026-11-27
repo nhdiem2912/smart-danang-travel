@@ -102,15 +102,18 @@ export function TripStopCard({
       >
         <View
           style={{
-            width: 48,
+            width: 64,
             alignItems: 'center',
           }}
         >
           <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
             style={{
               color,
               fontWeight: '800',
               fontSize: 15,
+              fontVariant: ['tabular-nums'],
             }}
           >
             {schedule
