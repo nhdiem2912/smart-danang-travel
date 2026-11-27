@@ -17,7 +17,7 @@ h2,h3,p{margin:0}
 .muted{color:var(--muted,#718096)}
 
 /* The WebView owns its scroll area. Short screens keep readable cards instead of shrinking them. */
-.app{width:100%;height:100%;height:100dvh;max-width:1280px;margin:auto;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"header" "hero" "weather" "night" "trip";grid-template-rows:48px repeat(3,minmax(184px,1fr)) minmax(52px,auto);gap:10px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;scroll-padding:12px;-webkit-overflow-scrolling:touch}
+.app{width:100%;height:100%;height:100dvh;max-width:1280px;margin:auto;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"header" "hero" "weather" "night" "trip";grid-template-rows:48px minmax(184px,1fr) minmax(200px,1fr) minmax(184px,1fr) minmax(52px,auto);gap:10px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-width:thin;scroll-padding:12px;-webkit-overflow-scrolling:touch}
 .app>*{min-width:0}
 .header{grid-area:header;display:flex;align-items:center;gap:10px;background:var(--card,#fff);border-radius:16px;padding:4px 8px}
 .icon{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:var(--pale,#ecfdf5);color:var(--green,#087f61);display:grid;place-items:center}
@@ -42,14 +42,12 @@ h2,h3,p{margin:0}
 .subtitle{display:none}
 .hero-bottom{margin-top:10px}
 .banner-controls{display:flex;align-items:center;gap:10px;min-width:0}
-.arrows{display:flex;gap:4px;flex-shrink:0}
-.arrows button{width:36px;height:40px;border-radius:12px;background:#0005;color:white;font-size:23px}
 .hero-open{min-height:40px;font-size:12px;color:white;background:#ffffff30;border-radius:20px;padding:8px 12px;white-space:nowrap;flex-shrink:0}
 .dots{display:flex;gap:4px;align-items:center}
 .dots button{padding:0;width:6px;height:6px;background:#ffffff66;border-radius:6px}
 .dots button.active{width:16px;background:white}
 
-.weather{grid-area:weather;min-height:184px;padding:10px;border-radius:20px;background:linear-gradient(120deg,#0085c5,#0bb1df);color:white;display:flex;flex-direction:column;gap:6px;justify-content:space-between;container:weather / size}
+.weather{grid-area:weather;min-height:200px;padding:10px;border-radius:20px;background:linear-gradient(120deg,#0085c5,#0bb1df);color:white;display:flex;flex-direction:column;gap:4px;justify-content:space-between;container:weather / size}
 .weather h3{font-size:15px}
 .condition{font-size:11px;line-height:15px;margin-top:3px}
 .temperature{font-size:30px;line-height:34px;font-weight:800}
@@ -60,6 +58,8 @@ h2,h3,p{margin:0}
 .switch button{font-size:12px;min-height:32px;padding:5px 9px;background:none;color:#e8f6ff;border-radius:8px;white-space:nowrap}
 .switch .active{background:white;color:#087fad}
 .weather button.refresh{background:none;color:#e8f6ff;font-size:12px;min-height:32px;padding:5px 3px;white-space:nowrap}
+.weather-update,.forecast-hint{font-size:10px;line-height:13px;color:#f0faff}
+.forecast-card.current{outline:2px solid #fff;outline-offset:-2px;background:#ffffff38}
 .forecast-track{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;min-height:60px;flex-shrink:0;scroll-snap-type:x proximity}
 .forecast-track::-webkit-scrollbar{display:none}
 .forecast-card{flex:0 0 70px;scroll-snap-align:start;background:#ffffff20;border-radius:10px;padding:6px 4px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:center;font-size:12px}
@@ -130,7 +130,6 @@ h2,h3,p{margin:0}
 .hero-content{left:10px;right:10px}
 .hero h2{font-size:17px}
 .banner-controls{gap:6px}
-.arrows button{width:30px}
 .hero-open{padding-inline:9px;font-size:11px}
 .dots{gap:3px}
 .dots button.active{width:12px}
@@ -207,7 +206,7 @@ h2,h3,p{margin:0}
       <p class="subtitle cut" id="hero-subtitle"></p>
 
       <div class="hero-bottom row">
-        <div class="banner-controls"><div class="arrows"><button data-action="prev" aria-label="Banner trước">‹</button><button data-action="next" aria-label="Banner tiếp">›</button></div><div class="dots" id="dots"></div></div>
+        <div class="banner-controls"><div class="dots" id="dots"></div></div>
         <button class="hero-open" data-action="hero-open">
           Khám phá ngay →
         </button>
@@ -249,7 +248,9 @@ h2,h3,p{margin:0}
       </div>
     </div>
 
-    <div id="forecast"></div>
+    <div class="weather-update" id="weather-update" aria-live="polite"></div>
+    <div class="forecast-hint" id="forecast-hint">24 giờ hôm nay · Vuốt để xem</div>
+    <div id="forecast" tabindex="0" role="region" aria-label="Dự báo thời tiết theo giờ"></div>
   </section>
 
   <section class="night">
@@ -318,6 +319,42 @@ h2,h3,p{margin:0}
   var mode = 'hour';
   var auto = null;
   var focusBefore = null;
+  var forecastKey = '';
+  var requestedWeatherDate = '';
+
+  function vietnamDate() {
+    return new Date(Date.now() + 7 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  }
+
+  function vietnamClock() {
+    return new Intl.DateTimeFormat('vi-VN', {timeZone:'Asia/Ho_Chi_Minh',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(new Date());
+  }
+
+  function updateWeatherClock() {
+    var w = state.weather;
+    el('condition').textContent = (w ? w.description + ' · ' : '') + vietnamClock();
+    if (!w) {
+      el('weather-update').textContent = state.weatherError || 'Đang tải thời tiết…';
+      return;
+    }
+    var today = vietnamDate();
+    if (mode === 'hour' && w.date && w.date !== today) {
+      el('forecast-hint').textContent = 'Dự báo ' + w.date.slice(8, 10) + '/' + w.date.slice(5, 7) + ' · Vuốt để xem';
+    }
+    if (w.date && w.date !== today && requestedWeatherDate !== today) {
+      requestedWeatherDate = today;
+      send('refresh');
+    }
+    var stale = Date.now() - Date.parse(w.fetchedAt) > 20 * 60 * 1000;
+    var observed = w.observedAt ? new Intl.DateTimeFormat('vi-VN', {timeZone:'Asia/Ho_Chi_Minh',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(w.observedAt)) : w.updated;
+    el('weather-update').textContent = 'Dữ liệu lúc ' + observed + (state.weatherError ? ' · Chưa làm mới được' : stale ? ' · Dữ liệu cũ, hãy làm mới' : ' · Tự làm mới mỗi 5 phút');
+    var hour = vietnamClock().slice(0, 2) + ':00';
+    el('forecast').querySelectorAll('[data-hour]').forEach(function(card) {
+      card.classList.toggle('current', card.dataset.hour === hour);
+    });
+  }
+
+  setInterval(updateWeatherClock, 1000);
 
   function el(id) {
     return document.getElementById(id);
@@ -438,9 +475,7 @@ h2,h3,p{margin:0}
   el('weather-icon').textContent =
     w ? w.icon : '⛅';
 
-  el('condition').textContent = w
-    ? w.description + ' · ' + w.updated
-    : state.weatherError || 'Đang tải thời tiết…';
+  updateWeatherClock();
 
   el('today-range').textContent =
     w && w.days[0]
@@ -479,7 +514,13 @@ h2,h3,p{margin:0}
   el('forecast-label').textContent = 'Dự báo ↻';
 
   var forecast = el('forecast');
+  var key = mode + ':' + (w ? w.date : '');
+  var changed = key !== forecastKey;
+  var previousScroll = forecast.scrollLeft;
+  forecastKey = key;
   forecast.className = 'forecast-track';
+  forecast.setAttribute('aria-label', mode === 'hour' ? 'Dự báo 24 giờ hôm nay, vuốt ngang để xem' : 'Dự báo 7 ngày tới');
+  el('forecast-hint').textContent = mode === 'hour' ? '24 giờ hôm nay · Vuốt để xem' : '7 ngày tới · Vuốt để xem';
   forecast.replaceChildren();
 
   if (!w) return;
@@ -487,7 +528,7 @@ h2,h3,p{margin:0}
   var rows =
     mode === 'hour' ? w.hours : w.days;
 
-  rows.forEach(function (item, index) {
+  rows.forEach(function (item) {
     var card = document.createElement('div');
     card.className = 'forecast-card';
 
@@ -495,7 +536,8 @@ h2,h3,p{margin:0}
 
     if (mode === 'hour') {
       label = item.time;
-    } else if (index === 0) {
+      card.dataset.hour = item.time;
+    } else if (item.date === vietnamDate()) {
       label = 'Hôm nay';
     } else {
       label = new Intl.DateTimeFormat(
@@ -538,6 +580,13 @@ h2,h3,p{margin:0}
     card.title = item.description || label;
     forecast.append(card);
   });
+  updateWeatherClock();
+  if (changed && mode === 'hour') {
+    var current = forecast.querySelector('.current');
+    forecast.scrollLeft = current ? current.offsetLeft - forecast.offsetLeft : 0;
+  } else {
+    forecast.scrollLeft = changed ? 0 : previousScroll;
+  }
 }
 
   function navigateButton(event) {
@@ -728,11 +777,6 @@ h2,h3,p{margin:0}
     }
 
     var action = button.dataset.action;
-
-    if (action === 'prev' || action === 'next') {
-      advance(action === 'next' ? 1 : -1);
-      restart();
-    }
 
     if (action === 'hero-open') {
       var place = (state.featured || [])[slide];

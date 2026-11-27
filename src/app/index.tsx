@@ -39,10 +39,7 @@ import { useTripDraft } from '@/features/discovery/use-trip-draft';
 
 import { HOME_HTML } from '@/features/home/home-html';
 
-import {
-  loadHomeWeather,
-  type HomeWeather,
-} from '@/features/home/home-weather';
+import { useHomeWeather } from '@/features/home/use-home-weather';
 
 function oldPhoto(key: string): string | null {
   return (
@@ -114,11 +111,7 @@ const avatar = useHomeAvatar(
 
   const webview = useRef<WebView<object>>(null);
 
-  const [weather, setWeather] =
-    useState<HomeWeather | null>(null);
-
-  const [weatherError, setWeatherError] = useState('');
-  const [attempt, setAttempt] = useState(0);
+  const { weather, weatherError, refreshWeather } = useHomeWeather();
 
   const [detail, setDetail] =
     useState<Place | null>(null);
@@ -129,41 +122,6 @@ const [directions, setDirections] =
   useState<Place | null>(null);
 
 const [eventDetail, setEventDetail] = useState(false);
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const timer = setTimeout(() => {
-      controller.abort();
-    }, 15000);
-
-    let alive = true;
-
-    void loadHomeWeather(controller.signal)
-      .then(value => {
-        if (alive) {
-          setWeather(value);
-          setWeatherError('');
-        }
-      })
-      .catch(() => {
-        if (alive) {
-          setWeather(null);
-          setWeatherError(
-            'Chưa tải được thời tiết · Nhấn làm mới',
-          );
-        }
-      })
-      .finally(() => {
-        clearTimeout(timer);
-      });
-
-    return () => {
-      alive = false;
-      clearTimeout(timer);
-      controller.abort();
-    };
-  }, [attempt]);
-
  const featured = HOME_BANNERS.map(banner => {
   const place = findPlaceById(banner.placeId);
 
@@ -298,7 +256,7 @@ avatar,
     }
 
     if (message.action === 'refresh') {
-      setAttempt(value => value + 1);
+      refreshWeather();
     }
 
     if (message.action === 'notifications') {

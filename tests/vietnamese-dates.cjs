@@ -67,6 +67,7 @@ function harness() {
     '@/features/home/event-directions': 'EventDirections',
     '@/features/home/home-events': { getEventPlace: () => null },
     '@/features/home/home-weather': { loadHomeWeather: async () => null },
+    '@/features/home/use-home-weather': { useHomeWeather: () => ({ weather: null, weatherError: '', refreshWeather() {} }) },
     '@/features/home/home-html': { HOME_HTML: '<html></html>' },
     '../../data/sdt-html': '',
   };

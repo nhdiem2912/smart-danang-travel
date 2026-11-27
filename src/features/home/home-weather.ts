@@ -6,6 +6,9 @@ export type HomeWeather = {
   wind: number;
   uv: number | null;
   updated: string;
+  observedAt: string;
+  fetchedAt: string;
+  date: string;
 
   days: {
     date: string;
@@ -17,6 +20,7 @@ export type HomeWeather = {
   }[];
 
   hours: {
+    timestamp: string;
     time: string;
     temperature: number;
     rain: number | null;
@@ -46,13 +50,21 @@ export async function loadHomeWeather(
     '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
     '&timezone=Asia%2FHo_Chi_Minh&forecast_days=7';
 
-  const response = await fetch(url, { signal });
+  const response = await fetch(url, { signal, cache: 'no-store' });
 
   if (!response.ok) {
     throw new Error('Chưa tải được thời tiết');
   }
 
-  const data = await response.json();
+  return parseHomeWeather(await response.json());
+}
+
+export function parseHomeWeather(
+  data: Record<string, any>,
+  now = Date.now(),
+): HomeWeather {
+  const today = new Date(now + 7 * 60 * 60 * 1000)
+    .toISOString().slice(0, 10);
   const current = data?.current;
   const daily = data?.daily;
   const hourly = data?.hourly;
@@ -60,6 +72,8 @@ export async function loadHomeWeather(
   if (
     !current ||
     typeof current.time !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(current.time) ||
+    !Number.isFinite(Date.parse(current.time + '+07:00')) ||
     ![
       current.temperature_2m,
       current.relative_humidity_2m,
@@ -110,17 +124,9 @@ export async function loadHomeWeather(
     },
   );
 
-  const next = hourly.time.findIndex(
-    (time: string) => time >= current.time,
-  );
-
-  if (next < 0) {
-    throw new Error('Thiếu dự báo theo giờ');
-  }
-
-  const hours = hourly.time.slice(next, next + 6).map(
-    (time: unknown, offset: number) => {
-      const index = next + offset;
+  const hours = hourly.time.flatMap(
+    (time: unknown, index: number) => {
+      if (typeof time !== 'string' || time.slice(0, 10) !== today) return [];
       const temperature = number(
         hourly.temperature_2m?.[index],
       );
@@ -128,22 +134,28 @@ export async function loadHomeWeather(
 
       if (
         typeof time !== 'string' ||
+        !/T(?:[01]\d|2[0-3]):00$/.test(time) ||
         temperature === null ||
         code === null
       ) {
         throw new Error('Thiếu dự báo theo giờ');
       }
 
-      return {
+      return [{
+        timestamp: time + '+07:00',
         time: time.slice(11, 16),
         temperature,
         icon: condition(code)[1],
         rain: number(
           hourly.precipitation_probability?.[index],
         ),
-      };
+      }];
     },
   );
+
+  if (hours.length !== 24 || new Set(hours.map((hour: HomeWeather['hours'][number]) => hour.time)).size !== 24 || !days.some((day: HomeWeather['days'][number]) => day.date === today)) {
+    throw new Error('Thiếu dự báo trong ngày');
+  }
 
   const currentHour = hourly.time.findIndex(
     (time: string) =>
@@ -170,7 +182,10 @@ export async function loadHomeWeather(
         ? uv
         : null,
     updated: current.time.slice(11, 16),
-    days,
+    observedAt: current.time + '+07:00',
+    fetchedAt: new Date(now).toISOString(),
+    date: today,
+    days: days.filter((day: HomeWeather['days'][number]) => day.date >= today),
     hours,
   };
 }

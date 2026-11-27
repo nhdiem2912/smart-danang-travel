@@ -1,3 +1,5 @@
+import { makeChatTurns, type ChatTurn } from '@/features/assistant/chat-content';
+import { pickChatImage, type SelectedChatImage } from '@/features/assistant/pick-chat-image';
 import { personalizedQuestion } from '@/features/profile/personalization';
 import { useTravelerProfile } from '@/features/profile/profile-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -6,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -31,12 +34,10 @@ import {
 const BACKEND_URL =
   'https://smart-danang-chat.ngohongdiem2912.workers.dev';
 
-type Turn = {
-  role: 'user' | 'assistant';
-  text: string;
-};
+type Turn = ChatTurn;
 
-type Message = Turn & {
+type Message = Omit<Turn, 'image'> & {
+  imageUri?: string;
   id: string;
   status: 'done' | 'loading' | 'error';
 };
@@ -70,7 +71,9 @@ const ERRORS: Record<string, string> = {
   BAD_REQUEST:
     'Không gửi được nội dung này. Hãy thử câu hỏi ngắn hơn.',
   TOO_LARGE:
-    'Hội thoại quá dài. Hãy tạo cuộc trò chuyện mới.',
+    'Ảnh hoặc hội thoại quá lớn. Bạn hãy chọn ảnh nhỏ hơn hoặc tạo cuộc trò chuyện mới.',
+  IMAGE_UNREADABLE:
+    'AI chưa đọc được ảnh này. Bạn hãy chọn ảnh rõ hơn hoặc định dạng khác.',
   NO_ANSWER:
     'AI chưa tạo được câu trả lời phù hợp. Hãy thử hỏi ngắn gọn hơn.',
 };
@@ -81,29 +84,6 @@ const SUGGESTIONS = [
   'Đi Đà Nẵng 2 ngày nên chuẩn bị gì?',
 ];
 
-function makeTurns(
-  previous: Turn[],
-  text: string,
-): Turn[] {
-  let turns: Turn[] = [
-    ...previous.slice(-6),
-    {
-      role: 'user',
-      text,
-    },
-  ];
-
-  // Bỏ cả cặp hỏi/đáp cũ nếu nội dung quá dài.
-  while (
-    turns.length > 1 &&
-    JSON.stringify(turns).length > 5000
-  ) {
-    turns = turns.slice(2);
-  }
-
-  return turns;
-}
-
 export default function AssistantScreen() {
     const { profile } = useTravelerProfile();
   const c = useSettingsColors();
@@ -112,6 +92,10 @@ export default function AssistantScreen() {
 
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
+  const [attachment, setAttachment] = useState<SelectedChatImage | null>(null);
+  const [preparingImage, setPreparingImage] = useState(false);
+  const picking = useRef(false);
+  const blocked = busy || preparingImage;
 
   const [failed, setFailed] =
     useState<ChatRequest | null>(null);
@@ -277,10 +261,26 @@ export default function AssistantScreen() {
     }
   }
 
-  function send(value = input) {
-    const text = value.trim();
+  async function chooseImage() {
+    if (locked.current || picking.current) return;
+    picking.current = true;
+    setPreparingImage(true);
+    try {
+      const image = await pickChatImage();
+      if (active.current && image) setAttachment(image);
+    } catch (error) {
+      if (active.current) Alert.alert('Chưa chọn được ảnh', error instanceof Error ? error.message : 'Bạn hãy thử chọn ảnh khác.');
+    } finally {
+      picking.current = false;
+      if (active.current) setPreparingImage(false);
+    }
+  }
 
-    if (!text || locked.current) return;
+  function send(value = input) {
+    if (locked.current || picking.current) return;
+    const image = attachment;
+    const text = value.trim() || (image ? 'Bạn hãy phân tích ảnh này và gợi ý thông tin phù hợp cho chuyến du lịch Đà Nẵng.' : '');
+    if (!text) return;
 
     if (text.length > 1000) {
       Alert.alert(
@@ -296,10 +296,11 @@ export default function AssistantScreen() {
     const id = `message-${sequence.current}`;
 
     const assistantId = `${id}-assistant`;
-    const turns = makeTurns(
-  history.current,
-  personalizedQuestion(text, profile),
-);
+    const turns = makeChatTurns(
+      history.current,
+      personalizedQuestion(text, profile),
+      image ? { mimeType: image.mimeType, data: image.data } : undefined,
+    );
 
     setMessages(previous => [
       ...previous,
@@ -307,6 +308,7 @@ export default function AssistantScreen() {
         id,
         role: 'user' as const,
         text,
+        imageUri: image?.uri,
         status: 'done' as const,
       },
       {
@@ -318,6 +320,7 @@ export default function AssistantScreen() {
     ].slice(-60));
 
     setInput('');
+    setAttachment(null);
 
     void perform({
       turns,
@@ -326,7 +329,7 @@ export default function AssistantScreen() {
   }
 
   function clearChat() {
-    if (locked.current) return;
+    if (locked.current || picking.current) return;
 
     Alert.alert(
       'Cuộc trò chuyện mới',
@@ -343,6 +346,7 @@ export default function AssistantScreen() {
             setMessages([]);
             setFailed(null);
             setInput('');
+            setAttachment(null);
           },
         },
       ],
@@ -407,7 +411,7 @@ export default function AssistantScreen() {
 
         <Pressable
           onPress={clearChat}
-          disabled={busy}
+          disabled={blocked}
           accessibilityRole="button"
           accessibilityLabel="Cuộc trò chuyện mới"
           hitSlop={10}
@@ -415,7 +419,7 @@ export default function AssistantScreen() {
           <Ionicons
             name="create-outline"
             size={24}
-            color={busy ? c.muted : c.green}
+            color={blocked ? c.muted : c.green}
           />
         </Pressable>
       </View>
@@ -436,9 +440,8 @@ export default function AssistantScreen() {
             lineHeight: 17,
           }}
         >
+          Bạn có thể gửi ảnh địa điểm, món ăn hoặc thực đơn để AI phân tích.
           Gợi ý từ AI cần được kiểm tra lại.
-          Bản này chưa đọc hoặc chỉnh lịch trình,
-          chưa tra cứu giá, giờ mở cửa và thời tiết trực tiếp.
         </Text>
       </View>
 
@@ -481,6 +484,12 @@ export default function AssistantScreen() {
               borderColor: c.line,
             }}
           >
+            {item.imageUri && (
+              <Image source={{ uri: item.imageUri }}
+                accessibilityLabel="Ảnh đã gửi cho AI"
+                style={{ width: 220, maxWidth: '100%', height: 170, borderRadius: 12 }}
+                resizeMode="contain" />
+            )}
             {item.status === 'loading' ? (
               <View style={styles.loadingRow}>
                 <ActivityIndicator
@@ -560,7 +569,7 @@ export default function AssistantScreen() {
               {SUGGESTIONS.map(text => (
                 <Pressable
                   key={text}
-                  disabled={busy}
+                  disabled={blocked}
                   onPress={() => send(text)}
                   style={{
                     borderWidth: 1,
@@ -585,6 +594,24 @@ export default function AssistantScreen() {
         }
       />
 
+      {(attachment || preparingImage) && (
+        <View style={{ padding: 12, gap: 8, backgroundColor: c.card, borderTopWidth: 1, borderColor: c.line }}>
+          {attachment && (
+            <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+              <Image source={{ uri: attachment.uri }} accessibilityLabel="Ảnh đính kèm chờ gửi"
+                style={{ width: 72, height: 72, borderRadius: 12 }} resizeMode="cover" />
+              <Text style={{ flex: 1, color: c.muted, fontSize: 11, lineHeight: 17 }}>
+                Ảnh chỉ được gửi cho AI khi bạn bấm Gửi.
+              </Text>
+              <Pressable onPress={() => setAttachment(null)} disabled={blocked}
+                accessibilityRole="button" accessibilityLabel="Gỡ ảnh đính kèm" hitSlop={10}>
+                <Ionicons name="close-circle" size={26} color={c.muted} />
+              </Pressable>
+            </View>
+          )}
+          {preparingImage && <ActivityIndicator size="small" color={c.green} accessibilityLabel="Đang chuẩn bị ảnh" />}
+        </View>
+      )}
       <View
         style={{
           paddingHorizontal: 12,
@@ -598,12 +625,17 @@ export default function AssistantScreen() {
           gap: 9,
         }}
       >
+        <Pressable onPress={() => { void chooseImage(); }} disabled={blocked}
+          accessibilityRole="button" accessibilityLabel="Chọn ảnh gửi cho AI"
+          style={{ width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: c.pale, opacity: blocked ? 0.45 : 1 }}>
+          <Ionicons name="image-outline" size={24} color={c.green} />
+        </Pressable>
         <TextInput
           value={input}
           onChangeText={setInput}
           multiline
           maxLength={1000}
-          editable={!busy}
+          editable={!blocked}
           accessibilityLabel="Câu hỏi cho trợ lý"
           placeholder="Bạn muốn khám phá gì ở Đà Nẵng?"
           placeholderTextColor={c.muted}
@@ -624,7 +656,7 @@ export default function AssistantScreen() {
 
         <Pressable
           onPress={() => send()}
-          disabled={busy || !input.trim()}
+          disabled={blocked || (!input.trim() && !attachment)}
           accessibilityRole="button"
           accessibilityLabel="Gửi câu hỏi"
           style={{
@@ -635,7 +667,7 @@ export default function AssistantScreen() {
             alignItems: 'center',
             justifyContent: 'center',
             opacity:
-              busy || !input.trim()
+              blocked || (!input.trim() && !attachment)
                 ? 0.45
                 : 1,
           }}

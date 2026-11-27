@@ -1,0 +1,25 @@
+name: Deploy AI chat relay
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: production-ai-chat-relay
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test chat relay
+        run: node --test cloudflare/*.test.mjs
+      - name: Deploy existing Cloudflare Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: node scripts/deploy-chat-worker.mjs
+      - name: Verify live image chat with a synthetic picture
+        run: node scripts/smoke-chat-images.mjs

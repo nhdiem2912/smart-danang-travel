@@ -1,4 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {
   router,
   useFocusEffect,
@@ -59,14 +61,18 @@ import {
 import { sortForProfile } from '@/features/profile/personalization';
 import { useTravelerProfile } from '@/features/profile/profile-context';
 
-const categories: [PlaceCategory | 'all', string][] = [
-  ['all', '🌐 Tất cả'],
-  ['tham_quan', '♜ Tham quan'],
-  ['khach_san', '▥ Khách sạn'],
-  ['an_uong', '♨ Ăn uống'],
-  ['mua_sam', '♧ Mua sắm'],
-  ['giai_tri', '✧ Giải trí'],
-  ['bai_bien', '☀ Bãi biển'],
+const categories: {
+  id: PlaceCategory | 'all';
+  label: string;
+  icon: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
+}[] = [
+  { id: 'all', label: 'Tất cả', icon: 'earth' },
+  { id: 'tham_quan', label: 'Tham quan', icon: 'map-marker-radius-outline' },
+  { id: 'khach_san', label: 'Khách sạn', icon: 'office-building-outline' },
+  { id: 'an_uong', label: 'Ăn uống', icon: 'silverware-fork-knife' },
+  { id: 'mua_sam', label: 'Mua sắm', icon: 'basket-outline' },
+  { id: 'giai_tri', label: 'Giải trí', icon: 'ferris-wheel' },
+  { id: 'bai_bien', label: 'Bãi biển', icon: 'beach' },
 ];
 
 export default function ExploreScreen() {
@@ -369,7 +375,7 @@ export default function ExploreScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 7 }}
         >
-          {categories.map(([id, label]) => (
+          {categories.map(({ id, label, icon }) => (
             <Pressable
               key={id}
               accessibilityRole="button"
@@ -388,6 +394,21 @@ export default function ExploreScreen() {
                   s.pillActive,
               ]}
             >
+              <View style={{ width: 25, height: 25, alignItems: 'center', justifyContent: 'center' }}>
+                {id === 'khach_san' ? (
+                  <FontAwesome5 name="hotel" size={20} color={category === id ? C.deep : C.muted} />
+                ) : (
+                  <MaterialCommunityIcons name={icon} size={22} color={category === id ? C.deep : C.muted} />
+                )}
+                {id === 'bai_bien' && (
+                  <MaterialCommunityIcons
+                    name="weather-sunny"
+                    size={10}
+                    color={category === id ? C.deep : C.muted}
+                    style={{ position: 'absolute', top: 0, right: -2 }}
+                  />
+                )}
+              </View>
               <Text
                 style={{
                   fontSize: 11,
@@ -784,6 +805,10 @@ const createSt = (C: ReturnType<typeof useDiscoveryUI>['C']) => StyleSheet.creat
   },
 
   category: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    minHeight: 42,
     paddingVertical: 7,
     paddingHorizontal: 10,
     borderRadius: 18,
