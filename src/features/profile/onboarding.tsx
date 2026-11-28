@@ -2,6 +2,7 @@ import {
   TripAccountGate,
 } from '@/features/discovery/trip-account-gate';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { StatusBar } from 'expo-status-bar';
 import {
   router,
   useRootNavigationState,
@@ -21,6 +22,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from 'react-native';
 
@@ -570,6 +572,10 @@ function ProfileEntry({
   const c = useSettingsColors();
   const data = useTravelerProfile();
   const account = useAccount();
+  const insets = useSafeAreaInsets();
+  const { width, height } = useWindowDimensions();
+  const compact = height < 600 || width < 360;
+  const gutter = compact ? 16 : 24;
 
   const [welcome, setWelcome] =
     useState(true);
@@ -618,25 +624,31 @@ function ProfileEntry({
 
   if (welcome) {
     return (
-      <Frame>
-        <ImageBackground
-          source={{ uri: WELCOME_IMAGE }}
-          imageStyle={{ opacity: 0.55 }}
-          style={{
-            flex: 1,
-            minHeight: 540,
-            backgroundColor: '#0A0F18',
-            borderRadius: 24,
-            overflow: 'hidden',
+      <ImageBackground
+        source={{ uri: WELCOME_IMAGE }}
+        resizeMode="cover"
+        imageStyle={{ opacity: 0.55 }}
+        style={{ flex: 1, backgroundColor: '#0A0F18' }}
+      >
+        <StatusBar style="light" />
+        <ScrollView
+          style={{ flex: 1, backgroundColor: '#061D1855' }}
+          contentInsetAdjustmentBehavior="never"
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'flex-end',
+            paddingTop: insets.top + gutter,
+            paddingBottom: insets.bottom + gutter,
+            paddingLeft: insets.left + gutter,
+            paddingRight: insets.right + gutter,
           }}
         >
           <View
             style={{
-              flex: 1,
-              padding: 24,
-              gap: 22,
-              justifyContent: 'flex-end',
-              backgroundColor: '#061D1855',
+              width: '100%',
+              maxWidth: 560,
+              alignSelf: 'center',
+              gap: compact ? 14 : 22,
             }}
           >
             <Text
@@ -652,8 +664,8 @@ function ProfileEntry({
             <Text
               style={{
                 color: '#FFF',
-                fontSize: 34,
-                lineHeight: 43,
+                fontSize: compact ? 28 : 34,
+                lineHeight: compact ? 35 : 43,
                 fontWeight: '900',
               }}
             >
@@ -698,8 +710,8 @@ function ProfileEntry({
               </Text>
             </Pressable>
           </View>
-        </ImageBackground>
-      </Frame>
+        </ScrollView>
+      </ImageBackground>
     );
   }
 
